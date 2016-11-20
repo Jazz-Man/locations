@@ -5,7 +5,6 @@
     <option name="jscsExecutable" value="/usr/bin/jscs" />
     <option name="nodeInterpreter" value="/usr/bin/node" />
     <option name="treatAllIssuesAsWarnings" value="true" />
-    <option name="pluginEnabled" value="true" />
     <option name="esnext" value="true" />
     <option name="esprima" value="" />
   </component>
