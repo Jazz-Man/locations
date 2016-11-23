@@ -1,0 +1,33 @@
+{
+  "name": "locations_dev",
+  "description": "A resume website",
+  "main": "index.js",
+  "authors": [
+    "TirasTec"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "multifile": "^2.2.0",
+    "fitvids": "^1.2.0",
+    "jquery": "2.2.4",
+    "jquery-migrate": "1.4.0",
+    "jquery-validation": "1.15.1",
+    "jssocials": "1.4.0",
+    "masonry": "4.1.1",
+    "nouislider": "^9.0.0",
+    "owl.carousel": "^2.2.0",
+    "readmore-js": "^2.2.0",
+    "iCheck": "icheck#^1.0.2",
+    "bootstrap-datepicker": "^1.6.4",
+    "bootstrap-select": "1.12.0",
+    "font-awesome": "^4.7.0"
+  }
+}

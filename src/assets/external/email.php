@@ -1,0 +1,1 @@
+<div class="status-icon invalid"><i class="icon_close"></i></div>
