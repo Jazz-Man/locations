@@ -3,10 +3,10 @@ var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var bootstrapEntryPoints = require('./bootstrap.config.js');
 
 var extractSCSS = new ExtractTextPlugin({
   filename : 'css/[name].css?[hash]',
+  // disable: true,
   allChunks: true
 });
 
@@ -22,36 +22,78 @@ var pages = [
   'wikiviewer',
 ];
 
+function htmlPage(name) {
+  return new HtmlWebpackPlugin({
+    filename    : 'assets/external/' + name + '.html',
+    favicon : false,
+    template    : './assets/external/' + name + '.html',
+    inject      : false,
+  })
+}
+
 function jadePage(name) {
   return new HtmlWebpackPlugin({
-    filename: name + '.html',
-    favicon : false,
-    template: path.join(__dirname, 'src/' + name + '.pug'),
-    // inject: false
+    filename    : name + '.html?[hash]',
+    mobile      : true,
+    title       : 'App',
+    lang        : 'en',
+    // favicon : false,
+    template    : '!!pug!./src/' + name + '.pug',
+    inject      : false,
+    injectExtras: {
+      head: [
+        "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
+        "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
+        {
+          "tag" : 'link',
+          "href": 'https://fonts.googleapis.com/css?family=Lato:400,300,700,900,400italic',
+          "rel" : "stylesheet",
+          "type": "text/css"
+        }
+      ],
+      body: [
+        {
+          "tag": "script",
+          "src": "http://maps.google.com/maps/api/js?key=AIzaSyBEDfNcQRmKQEyulDN8nGWjLYPm8s4YB58&libraries=places"
+        },
+        "https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js",
+        "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
+        {
+          "tag"      : "noscript",
+          "innerHTML": "JavaScript is disabled in your browser. <a href='http://www.enable-javascript.com/' target='_blank'>Here</a> is how to enable it."
+        }
+      ]
+    }
   })
 }
 
 module.exports = {
   context: path.join(__dirname, 'src'),
   entry  : {
-    vendor: bootstrapEntryPoints.dev,
-    index : [
-      './home'
+    index: [
+      './index'
     ],
   },
   output : {
-    filename: 'js/[name].js',
-    // chunkFilename: "assets/js/[id].js",
-    path    : path.join(__dirname, 'dist'),
-    publicPath: "",
+    filename     : 'js/[name].js',
+    chunkFilename: "js/[id].js",
+    path         : path.join(__dirname, 'dist'),
+    publicPath   : "",
   },
   
   target: 'web',
   
+  externals: { // object
+    $     : "jQuery",
+    jquery: 'jQuery',
+    google: 'google'
+  },
+  
   resolve      : {
     modules   : [
       path.resolve(__dirname, 'src'),
-      'node_modules'
+      'node_modules',
+      'bower_components'
     ],
     extensions: [
       '.js',
@@ -63,19 +105,45 @@ module.exports = {
       '.png',
       '.jpg',
       '.gif'
-    ]
+    ],
+    alias:{
+      'trackpad-scroll-js':'trackpad-scroll-emulator/jquery.trackpad-scroll-emulator.js',
+      'trackpad-scroll-css':'trackpad-scroll-emulator/css/trackpad-scroll-emulator.css',
+      'nouislider_js':'nouislider/distribute/jquery.nouislider.all.js',
+      'countdown':'countdown/dist/jquery.countdown.js',
+      'zabuto_calendar_js':'zabuto_calendar/zabuto_calendar.js',
+      'zabuto_calendar_css':'zabuto_calendar/zabuto_calendar.css'
+    }
   },
   resolveLoader: {
     moduleExtensions: ['-loader'],
-    extensions      : ['.pug','.html','.js','.scss','.css','png','gif','jpeg','ttf','eot','svg','woff','woff2']
+    extensions      : [
+      '.pug',
+      '.html',
+      '.js',
+      '.scss',
+      '.css',
+      'png',
+      'gif',
+      'jpeg',
+      'ttf',
+      'eot',
+      'svg',
+      'woff',
+      'woff2'
+    ]
   },
   module       : {
     loaders: [
       {
-        test: /\.pug$/,
+        test  : /\.html/,
+        loader: 'html',
+      },
+      {
+        test   : /\.pug$/,
         exclude: /node_modules/,
         loader : 'pug',
-        query : {
+        query  : {
           pretty: true
         }
       },
@@ -83,8 +151,8 @@ module.exports = {
         test   : /\.scss$/,
         include: path.join(__dirname, 'src'),
         
-        loader : extractSCSS.extract({
-          publicPath:'../',
+        loader: extractSCSS.extract({
+          publicPath    : '../',
           fallbackLoader: 'style',
           loader        : [
             {
@@ -115,15 +183,15 @@ module.exports = {
         loader: 'file',
         query : {
           publicPath: '',
-          name: 'font/[name].[ext]?[hash]'
+          name      : 'font/[name].[ext]?[hash]'
         }
       },
       {
-        test  : /\.(png|gif|jpe?g)$/,
+        test  : /\.(png|gif|jpg|jpeg)$/,
         loader: 'file',
         query : {
           publicPath: '',
-          name: 'img/[name].[ext]?[hash]'
+          name      : 'img/[name].[ext]?[hash]'
         }
       },
     ],
@@ -134,25 +202,25 @@ module.exports = {
     new webpack.ProvidePlugin({
       $              : "jquery",
       jQuery         : "jquery",
-      "window.jQuery": "jquery",
-      Tether         : "tether",
-      "window.Tether": "tether",
-      Tooltip        : "exports?Tooltip!bootstrap-sass/assets/javascripts/bootstrap/tooltip",
-      Alert          : "exports?Alert!bootstrap-sass/assets/javascripts/bootstrap/alert",
-      Button         : "exports?Button!bootstrap-sass/assets/javascripts/bootstrap/button",
-      Carousel       : "exports?Carousel!bootstrap-sass/assets/javascripts/bootstrap/carousel",
-      Collapse       : "exports?Collapse!bootstrap-sass/assets/javascripts/bootstrap/collapse",
-      Dropdown       : "exports?Dropdown!bootstrap-sass/assets/javascripts/bootstrap/dropdown",
-      Modal          : "exports?Modal!bootstrap-sass/assets/javascripts/bootstrap/modal",
-      Popover        : "exports?Popover!bootstrap-sass/assets/javascripts/bootstrap/popover",
-      Scrollspy      : "exports?Scrollspy!bootstrap-sass/assets/javascripts/bootstrap/scrollspy",
-      Tab            : "exports?Tab!bootstrap-sass/assets/javascripts/bootstrap/tab",
-      Util           : "exports?Util!bootstrap-sass/assets/javascripts/bootstrap/util",
+      "window.jQuery": "jquery"
     }),
+    // new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"]),
     
     extractSCSS,
-    jadePage('home/index'),
-    // jadePage('faq'),
+    jadePage('index'),
+    jadePage('map'),
+    jadePage('detail'),
+    
+    htmlPage('data'),
+    htmlPage('email'),
+    htmlPage('infobox'),
+    htmlPage('modal_item'),
+    htmlPage('modal_register'),
+    htmlPage('modal_reset_password'),
+    htmlPage('modal_sign_in'),
+    htmlPage('modal_submit'),
+    htmlPage('sidebar_detail'),
+    htmlPage('sidebar_results'),
   ],
   
   devServer: {

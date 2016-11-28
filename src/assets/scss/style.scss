@@ -26,29 +26,15 @@ Body copy:		'Lato', sans-serif; 14px;
 Headers:		'Lato', sans-serif;
 
 -------------------------------------------------------------------*/
-@import 'compass/css3/appearance';
-@import 'compass/css3/border-radius';
-@import 'compass/css3/box-shadow';
-@import 'compass/css3/box-sizing';
-@import 'compass/css3/text-shadow';
-@import 'compass/css3/transition';
-@import 'compass/css3/transform';
-@import 'compass/css3/background-clip';
-@import 'compass/css3/opacity';
-@import 'compass/css3/filter';
-@import 'helpers/mixin';
-@import 'helpers/variables';
-/* 1. Header */
-@import 'helpers/header';
-/* 2. Hero Slider */
+@import "vendor/vendor";
+@import "../../../node_modules/compass-mixins/lib/compass";
+
+@import "helpers/mixin";
+@import "helpers/variables";
+@import "helpers/header";
 //@import 'helpers/hero-slider';
-/* 3. Elements Styling */
-@import 'helpers/elements';
-/* 4. Universal classes */
-@import 'helpers/universal-classes';
-/* 5. Classes */
-@import 'helpers/classes';
-/* 6. Forms */
-@import 'helpers/forms';
-/* 7. Responsive */
-@import 'helpers/responsive';
+@import "helpers/elements";
+@import "helpers/universal-classes";
+@import "helpers/classes";
+@import "helpers/forms";
+@import "helpers/responsive";

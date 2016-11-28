@@ -1,17 +1,19 @@
+@import "variables";
+
 input[type="text"], input[type="email"], input[type="date"], input[type="time"], input[type="search"], input[type="password"], input[type="number"], input[type="tel"], textarea.form-control {
   @include box-shadow(0px 0px 0px 2px rgba(#000, .1), inset 1px 0 5px rgba(#000, .03));
   @include border-radius(0);
   @include transition(.3s);
   @include transform-style(preserve-3d);
-  -webkit-appearance : none;
-  background-color   : #ffffff;
-  border             : none;
-  font-size          : 14px;
-  font-weight        : 400;
-  outline            : none !important;
-  width              : 100%;
-  height             : inherit;
-  padding            : 12px;
+  -webkit-appearance: none;
+  background-color: #ffffff;
+  border: none;
+  font-size: 14px;
+  font-weight: 400;
+  outline: none !important;
+  width: 100%;
+  height: inherit;
+  padding: 12px;
   @include transform-style(preserve-3d);
   &:active, &:focus {
     @include box-shadow(0px 0px 0px 2px rgba(#000, .2), inset 1px 0 5px rgba(#000, .0));
@@ -20,29 +22,29 @@ input[type="text"], input[type="email"], input[type="date"], input[type="time"],
     @include box-shadow(0px 0px 0px 2px rgba(#000, .2), inset 1px 0 5px rgba(#000, .0));
     }
   &.input-dark {
-    background-color : rgba(#000, .3);
-    color            : #ffffff;
+    background-color: rgba(#000, .3);
+    color: #ffffff;
     }
   }
 
 input::-webkit-calendar-picker-indicator {
-  display : none;
+  display: none;
   }
 
 input[type="date"].form-control, input[type="time"].form-control, input[type="datetime-local"].form-control, input[type="month"].form-control {
-  line-height : inherit;
+  line-height: inherit;
   }
 
 input[type="date"]::-webkit-input-placeholder {
-  visibility : hidden !important;
+  visibility: hidden !important;
   }
 
 .bootstrap-select {
   &.open {
     .dropdown-menu {
-      visibility     : visible;
+      visibility: visible;
       @include opacity(1);
-      pointer-events : auto;
+      pointer-events: auto;
       @include transform(scale(1));
       }
     }
@@ -50,39 +52,39 @@ input[type="date"]::-webkit-input-placeholder {
     @include border-radius(0);
     @include transit;
     @include box-shadow(0px 0px 0px 2px rgba(#000, .1), 0px 2px 5px rgba(0, 0, 0, 0.1));
-    background-color : #ffffff;
-    border           : none;
-    outline          : none !important;
-    text-transform   : none;
-    padding          : 12px;
-    padding-right    : 30px;
-    font-size        : 14px;
+    background-color: #ffffff;
+    border: none;
+    outline: none !important;
+    text-transform: none;
+    padding: 12px;
+    padding-right: 30px;
+    font-size: 14px;
     &:active, &:focus, &:hover {
       @include box-shadow(0px 0px 0px 2px rgba(#000, .2), 0px 2px 5px rgba(0, 0, 0, 0.1));
-      top              : 0;
-      background-color : #ffffff;
-      outline          : none !important;
-      border           : none;
+      top: 0;
+      background-color: #ffffff;
+      outline: none !important;
+      border: none;
       }
     }
   .dropdown-menu {
     @include border-radius(0);
-    display         : block !important;
-    visibility      : hidden;
+    display: block !important;
+    visibility: hidden;
     @include opacity(0);
     @include transit;
     @include transform(scale(.98));
-    pointer-events  : none;
-    padding         : 0;
-    border          : none;
-    background-clip : none;
-    margin          : 0;
+    pointer-events: none;
+    padding: 0;
+    border: none;
+    background-clip: none;
+    margin: 0;
     &.inner {
 
       }
     }
   .dropdown-menu > li > a {
-    padding : 5px 12px;
+    padding: 5px 12px;
     }
   }
 
@@ -95,15 +97,15 @@ input[type="date"]::-webkit-input-placeholder {
   @include shadow;
   @include transform(translateY(0px));
   @include transform-style(preserve-3d);
-  border-width   : 2px;
-  border-style   : solid;
-  font-size      : 12px;
-  font-weight    : bold;
-  text-transform : uppercase;
-  position       : relative;
+  border-width: 2px;
+  border-style: solid;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: relative;
   &:active, &:active:hover, &:focus {
     @include box-shadow(none);
-    outline : none !important;
+    outline: none !important;
     }
   &:hover {
     @include shadow;
@@ -112,119 +114,119 @@ input[type="date"]::-webkit-input-placeholder {
     @include transform(translateY(1px));
     }
   &.btn-primary {
-    background-color : $color-default;
-    color            : #ffffff;
-    border-color     : $color-default;
+    background-color: $color-default;
+    color: #ffffff;
+    border-color: $color-default;
     &:hover, &:active, &:active:hover, &:focus {
-      background-color : darken($color-default, 8%);
-      border-color     : darken($color-default, 8%);
+      background-color: darken($color-default, 8%);
+      border-color: darken($color-default, 8%);
       }
     &.btn-framed {
       @include box-shadow(none);
-      color            : $color-default;
-      background-color : transparent;
+      color: $color-default;
+      background-color: transparent;
       &:hover, &:active, &:active:hover, &:focus {
-        background-color : transparent;
-        border-color     : darken($color-default, 8%);
+        background-color: transparent;
+        border-color: darken($color-default, 8%);
         }
       &.btn-light-frame {
-        border-color : rgba(#000, .2);
+        border-color: rgba(#000, .2);
         &:hover, &:active, &:active:hover, &:focus {
-          border-color     : rgba(#000, .3);
-          background-color : transparent;
+          border-color: rgba(#000, .3);
+          background-color: transparent;
           }
         }
       }
     }
   &.btn-default {
-    background-color : #ffffff;
-    color            : #000000;
-    border-color     : #ffffff;
+    background-color: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
     &:hover, &:active, &:active:hover, &:focus {
-      background-color : #ffffff;
-      border-color     : #ffffff;
+      background-color: #ffffff;
+      border-color: #ffffff;
       }
     &.btn-framed {
       @include box-shadow(none);
-      color            : #ffffff;
-      background-color : transparent;
-      border-color     : #ffffff;
+      color: #ffffff;
+      background-color: transparent;
+      border-color: #ffffff;
       &:hover, &:active, &:active:hover, &:focus {
-        background-color : rgba(#fff, .1);
+        background-color: rgba(#fff, .1);
         }
       &.btn-light-frame {
-        border-color : rgba(#fff, .4);
+        border-color: rgba(#fff, .4);
         &:hover, &:active, &:active:hover, &:focus {
-          border-color     : rgba(#fff, .6);
-          background-color : transparent;
+          border-color: rgba(#fff, .6);
+          background-color: transparent;
           }
         }
       }
     }
   &.icon {
     i {
-      margin-left  : 5px;
-      margin-right : 5px;
+      margin-left: 5px;
+      margin-right: 5px;
       }
     }
   &.btn-rounded {
     @include border-radius(30px);
     }
   &.arrow {
-    padding-right : 30px;
+    padding-right: 30px;
     &:after {
       @include elegant-font;
       @include opacity(.6);
-      content   : "$";
-      position  : absolute;
-      font-size : 14px;
-      right     : 10px;
-      top       : 0;
-      bottom    : 0;
-      margin    : auto;
-      height    : 14px;
+      content: "$";
+      position: absolute;
+      font-size: 14px;
+      right: 10px;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      height: 14px;
       }
     }
   &.roll-effect {
-    padding-bottom : 4px;
+    padding-bottom: 4px;
     }
   &.btn-small {
-    padding : 3px 8px;
+    padding: 3px 8px;
     }
   &.btn-xs {
-    font-size : 10px;
-    padding   : 2px 7px;
+    font-size: 10px;
+    padding: 2px 7px;
     }
   }
 
 .form-control {
-  background-color : transparent;
-  height           : auto;
+  background-color: transparent;
+  height: auto;
   }
 
 .icheckbox {
   @include box-shadow(inset 0px 0px 0px 2px #e8e8e8);
-  background-color : #ffffff;
-  cursor           : pointer;
-  position         : relative;
-  display          : inline-block;
-  vertical-align   : middle;
-  display          : inline-block;
-  height           : 20px;
-  margin-right     : 10px;
-  position         : relative;
-  width            : 20px;
-  top              : -1px;
+  background-color: #ffffff;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  display: inline-block;
+  height: 20px;
+  margin-right: 10px;
+  position: relative;
+  width: 20px;
+  top: -1px;
   &:after {
     @include transition(.3s);
     @include opacity(0);
     @include font-awesome;
-    color       : $color-grey-dark;
-    content     : "\f00c";
-    position    : absolute;
-    line-height : 20px;
-    font-size   : 10px;
-    left        : 5.5px;
+    color: $color-grey-dark;
+    content: "\f00c";
+    position: absolute;
+    line-height: 20px;
+    font-size: 10px;
+    left: 5.5px;
     }
   &.checked {
     &:after {
@@ -237,24 +239,24 @@ input[type="date"]::-webkit-input-placeholder {
   .form {
     &.vertical {
       ::-webkit-input-placeholder {
-        color : rgba(#fff, 1);
+        color: rgba(#fff, 1);
         }
       :-moz-placeholder {
-        color : rgba(#fff, 1);
+        color: rgba(#fff, 1);
         }
       ::-moz-placeholder {
-        color : rgba(#fff, 1);
+        color: rgba(#fff, 1);
         }
       :-ms-input-placeholder {
-        color : rgba(#fff, 1);
+        color: rgba(#fff, 1);
         }
       .btn[type=submit] {
-        width      : inherit;
-        margin-top : 15px;
+        width: inherit;
+        margin-top: 15px;
         }
       &.search-form {
         .row, .container {
-          height : 0;
+          height: 0;
           }
         }
       }
@@ -263,21 +265,21 @@ input[type="date"]::-webkit-input-placeholder {
     @include shadow;
     @include transit;
     @include border-radius(0);
-    background-color : $color-default;
-    border           : none;
-    color            : #ffffff;
-    border-bottom    : 1px solid rgba(#fff, .2);
+    background-color: $color-default;
+    border: none;
+    color: #ffffff;
+    border-bottom: 1px solid rgba(#fff, .2);
     &:active, &:focus {
       @include box-shadow(none);
-      border-bottom : 1px solid rgba(#fff, .2);
+      border-bottom: 1px solid rgba(#fff, .2);
       }
     &:hover {
-      background-color : darken($color-default, 5%);
+      background-color: darken($color-default, 5%);
       }
     option {
-      background-color : #ffffff;
-      padding          : 8px;
-      color            : $color-grey-dark;
+      background-color: #ffffff;
+      padding: 8px;
+      color: $color-grey-dark;
       }
     }
   input[type="text"], input[type="email"], input[type="date"], input[type="time"], input[type="search"], input[type="password"], input[type="number"], input[type="tel"], textarea.form-control {
@@ -285,23 +287,23 @@ input[type="date"]::-webkit-input-placeholder {
     @include box-shadow(none);
     @include box-shadow(inset 0px 0px 6px 3px rgba(#000, .05));
     @include transit;
-    -webkit-appearance : none;
-    background-color   : $color-default;
-    border             : none;
-    border-bottom      : 1px solid rgba(#fff, .2);
-    color              : #ffffff;
+    -webkit-appearance: none;
+    background-color: $color-default;
+    border: none;
+    border-bottom: 1px solid rgba(#fff, .2);
+    color: #ffffff;
     &:active, &:focus, &:hover {
-      background-color : darken($color-default, 5%);
-      border-bottom    : 1px solid rgba(#fff, .2);
+      background-color: darken($color-default, 5%);
+      border-bottom: 1px solid rgba(#fff, .2);
       }
     }
 
   .bootstrap-select {
     &.open {
       .dropdown-menu {
-        visibility     : visible;
+        visibility: visible;
         @include opacity(1);
-        pointer-events : auto;
+        pointer-events: auto;
         @include transform(scale(1));
         }
       }
@@ -310,43 +312,43 @@ input[type="date"]::-webkit-input-placeholder {
       @include transit;
       @include box-shadow(none);
       @include shadow;
-      background-color : $color-default;
-      border           : none;
-      border-bottom    : 1px solid rgba(#fff, .2);
-      color            : #ffffff;
-      outline          : none !important;
-      text-transform   : none;
-      padding          : 12px;
-      font-size        : 14px;
+      background-color: $color-default;
+      border: none;
+      border-bottom: 1px solid rgba(#fff, .2);
+      color: #ffffff;
+      outline: none !important;
+      text-transform: none;
+      padding: 12px;
+      font-size: 14px;
       &:active, &:focus, &:hover {
-        top              : 0;
-        background-color : darken($color-default, 5%);
-        color            : #ffffff;
+        top: 0;
+        background-color: darken($color-default, 5%);
+        color: #ffffff;
         }
       }
     .dropdown-menu {
       @include border-radius(0);
-      display         : block !important;
-      visibility      : hidden;
+      display: block !important;
+      visibility: hidden;
       @include opacity(0);
       @include transit;
       @include transform(scale(.98));
-      pointer-events  : none;
-      padding         : 0;
-      border          : none;
-      background-clip : none;
-      margin          : 0;
-      margin-top      : -1px;
+      pointer-events: none;
+      padding: 0;
+      border: none;
+      background-clip: none;
+      margin: 0;
+      margin-top: -1px;
       }
     .dropdown-menu > li > a {
-      padding : 5px 12px;
+      padding: 5px 12px;
       }
     }
   .form-control {
-    height : auto;
+    height: auto;
     }
   .input-group {
-    margin-bottom : 15px;
+    margin-bottom: 15px;
     }
   form {
     @include shadow;
@@ -355,38 +357,38 @@ input[type="date"]::-webkit-input-placeholder {
   &.has-map {
     .btn[type=submit] {
       @include shadow;
-      border-bottom    : none;
-      margin-top       : 15px;
-      background-color : darken($color-default, 10%);
-      border           : none;
-      text-transform   : none;
-      outline          : none ! important;
-      font-size        : 14px;
-      padding          : 12px 30px;
-      position         : relative;
+      border-bottom: none;
+      margin-top: 15px;
+      background-color: darken($color-default, 10%);
+      border: none;
+      text-transform: none;
+      outline: none ! important;
+      font-size: 14px;
+      padding: 12px 30px;
+      position: relative;
       &:active {
-        top : 0;
+        top: 0;
         }
       &:before {
-        width        : 0;
-        height       : 0;
-        border-style : solid;
-        border-width : 0 0 9px 9px;
-        border-color : transparent transparent darken($color-default, 10%) transparent;
-        position     : absolute;;
-        content      : "";
-        right        : 0px;
-        top          : -9px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 0 9px 9px;
+        border-color: transparent transparent darken($color-default, 10%) transparent;
+        position: absolute;;
+        content: "";
+        right: 0px;
+        top: -9px;
         }
       i {
-        margin-left : 10px;
+        margin-left: 10px;
         }
       }
     .search-form {
-      position : absolute;
-      z-index  : 20;
-      height   : 0;
-      width    : 100%;
+      position: absolute;
+      z-index: 20;
+      height: 0;
+      width: 100%;
       &.show {
         form {
           @include opacity(1);
@@ -400,7 +402,7 @@ input[type="date"]::-webkit-input-placeholder {
     .form {
       &.horizontal {
         form {
-          padding : 20px 25px 5px 25px;
+          padding: 20px 25px 5px 25px;
           }
         }
       }
@@ -410,16 +412,16 @@ input[type="date"]::-webkit-input-placeholder {
       .input-group-btn {
         .btn[type="submit"] {
           @include box-shadow(none);
-          padding    : 11px 15px 12px 15px;
-          margin-top : 0;
+          padding: 11px 15px 12px 15px;
+          margin-top: 0;
           }
         }
       &.horizontal {
         form {
           @include border-radius(5px);
-          background-color : rgba($color-default, .8);
-          padding          : 18px;
-          padding-bottom   : 3px;
+          background-color: rgba($color-default, .8);
+          padding: 18px;
+          padding-bottom: 3px;
           }
         }
       }
@@ -427,140 +429,140 @@ input[type="date"]::-webkit-input-placeholder {
   }
 
 .horizontal-input-title {
-  display : table;
-  height  : 46px;
+  display: table;
+  height: 46px;
   * {
-    display        : table-cell;
-    vertical-align : middle;
+    display: table-cell;
+    vertical-align: middle;
     }
   }
 
 .form {
-  position : relative;
+  position: relative;
   &.vertical {
     .form-group {
-      margin-bottom : 0;
+      margin-bottom: 0;
       }
     }
   &.horizontal {
     form {
       @include shadow-big;
-      background-color : $color-default;
-      display          : table;
-      width            : 100%;
-      height           : 100%;
+      background-color: $color-default;
+      display: table;
+      width: 100%;
+      height: 100%;
       ::-webkit-input-placeholder {
-        color : rgba(#000, .5);
+        color: rgba(#000, .5);
         }
       :-moz-placeholder {
-        color : rgba(#000, .5);
+        color: rgba(#000, .5);
         }
       ::-moz-placeholder {
-        color : rgba(#000, .5);
+        color: rgba(#000, .5);
         }
       :-ms-input-placeholder {
-        color : rgba(#000, .5);
+        color: rgba(#000, .5);
         }
       }
     .row {
       > [class^="col-"], > [class*=" col-"] {
-        padding-right : 10px;
-        padding-left  : 10px;
+        padding-right: 10px;
+        padding-left: 10px;
         }
       }
     .row, .container {
-      height : inherit;
+      height: inherit;
       }
     input[type="text"], input[type="email"], input[type="date"], input[type="time"], input[type="search"], input[type="password"], input[type="number"], input[type="tel"], textarea.form-control {
       @include border-radius(0);
       @include box-shadow(none);
-      background-color : #ffffff;
-      border-bottom    : none;
-      color            : inherit;
+      background-color: #ffffff;
+      border-bottom: none;
+      color: inherit;
       &:active, &:focus, &:hover {
-        background-color : $color-grey-light;
-        border-bottom    : none;
+        background-color: $color-grey-light;
+        border-bottom: none;
         }
       }
     select.form-control, select {
       @include shadow;
       @include transit;
       @include border-radius(0);
-      background-color : #ffffff;
-      color            : inherit;
-      border-bottom    : none;
+      background-color: #ffffff;
+      color: inherit;
+      border-bottom: none;
       &:active, &:focus {
         @include box-shadow(none);
-        border-bottom : none;
+        border-bottom: none;
         }
       &:hover {
-        background-color : $color-grey-light;
+        background-color: $color-grey-light;
         }
       }
     .bootstrap-select {
       .btn {
-        background-color : #ffffff;
-        border-bottom    : none;
-        color            : inherit;
+        background-color: #ffffff;
+        border-bottom: none;
+        color: inherit;
         &:active, &:focus, &:hover {
-          background-color : $color-grey-light;
-          color            : inherit;
+          background-color: $color-grey-light;
+          color: inherit;
           }
         }
       }
     .btn[type=submit] {
-      margin-top : 0;
-      width      : 100%;
-      text-align : center;
+      margin-top: 0;
+      width: 100%;
+      text-align: center;
       &:before {
-        display : none;
+        display: none;
         }
       i {
-        margin-left : -5px;
+        margin-left: -5px;
         }
       }
     &.position-top {
-      top : 40px;
+      top: 40px;
       }
 
     &.position-bottom {
-      bottom : 0;
+      bottom: 0;
       form {
         @include transform(translateY(-100%));
-        position : relative;
-        bottom   : 40px;
+        position: relative;
+        bottom: 40px;
         }
       }
     }
   .checkboxes {
-    margin-bottom : 0;
+    margin-bottom: 0;
     }
   &.has-padding {
-    padding-top    : 40px;
-    padding-bottom : 30px;
+    padding-top: 40px;
+    padding-bottom: 30px;
     }
   &.no-background {
     @include box-shadow(none);
-    background-color : transparent !important;
+    background-color: transparent !important;
     form {
       @include box-shadow(none);
-      background-color : transparent !important;
+      background-color: transparent !important;
       }
     }
 
   label {
     @include opacity(.8);
-    font-size      : 13px;
-    text-transform : none;
-    margin-bottom  : 8px;
+    font-size: 13px;
+    text-transform: none;
+    margin-bottom: 8px;
     &.no-margin {
       @include opacity(1);
-      margin-bottom : 0;
+      margin-bottom: 0;
       }
     }
 
   h3 {
-    margin-bottom : 10px;
+    margin-bottom: 10px;
     }
 
   .btn[type=submit] {
@@ -570,94 +572,94 @@ input[type="date"]::-webkit-input-placeholder {
   &.inputs-dark {
     form {
       ::-webkit-input-placeholder {
-        color : rgba(#fff, .8);
+        color: rgba(#fff, .8);
         }
       :-moz-placeholder {
-        color : rgba(#fff, .8);
+        color: rgba(#fff, .8);
         }
       ::-moz-placeholder {
-        color : rgba(#fff, .8);
+        color: rgba(#fff, .8);
         }
       :-ms-input-placeholder {
-        color : rgba(#fff, .8);
+        color: rgba(#fff, .8);
         }
       }
     input[type="text"], input[type="email"], input[type="date"], input[type="time"], input[type="search"], input[type="password"], input[type="number"], input[type="tel"], textarea.form-control {
-      background-color : darken($color-default, 8%);
-      color            : #ffffff;
+      background-color: darken($color-default, 8%);
+      color: #ffffff;
       &:active, &:focus, &:hover {
-        background-color : darken($color-default, 12%);
-        border-bottom    : none;
+        background-color: darken($color-default, 12%);
+        border-bottom: none;
         }
       }
     select.form-control, select {
-      background-color : darken($color-default, 8%);
-      color            : #ffffff;
-      border-bottom    : none;
+      background-color: darken($color-default, 8%);
+      color: #ffffff;
+      border-bottom: none;
       &:active, &:focus {
         @include box-shadow(none);
-        border-bottom : none;
+        border-bottom: none;
         }
       &:hover {
-        background-color : darken($color-default, 12%);
+        background-color: darken($color-default, 12%);
         }
       }
     .bootstrap-select {
       @include shadow;
       .btn {
-        background-color : darken($color-default, 8%);
-        color            : #ffffff;
-        border-bottom    : none;
+        background-color: darken($color-default, 8%);
+        color: #ffffff;
+        border-bottom: none;
         &:active, &:focus, &:hover {
-          background-color : darken($color-default, 8%);
-          color            : #ffffff;
+          background-color: darken($color-default, 8%);
+          color: #ffffff;
           }
         }
       }
     .btn[type=submit] {
-      background-color : darken($color-default, 15%);
+      background-color: darken($color-default, 15%);
       }
     .checkboxes {
-      color : #ffffff;
+      color: #ffffff;
       }
     .icheckbox {
       @include box-shadow(inset 0px 0px 0px 2px darken($color-default, 8%));
-      background-color : darken($color-default, 8%);
+      background-color: darken($color-default, 8%);
       &:after {
-        color : #ffffff;
+        color: #ffffff;
         }
       }
     .ui-slider {
       .noUi-base {
-        background-color : lighten($color-default, 20%);
+        background-color: lighten($color-default, 20%);
         .noUi-connect {
-          background-color : #ffffff;
+          background-color: #ffffff;
           }
         .noUi-background {
-          background-color : lighten($color-default, 20%);
+          background-color: lighten($color-default, 20%);
           }
         .noUi-handle {
-          border           : 2px solid #ffffff;
-          background-color : $color-default;
+          border: 2px solid #ffffff;
+          background-color: $color-default;
           &:hover, &.noUi-active {
             @include box-shadow(0px 0px 0px 8px rgba(#fff, .07));
             }
           }
         }
       .values {
-        color : #ffffff;
+        color: #ffffff;
         input {
-          background-color : transparent;
-          border           : none;
-          width            : 49%;
+          background-color: transparent;
+          border: none;
+          width: 49%;
           }
         }
       }
     }
 
   .btn[type=submit] {
-    padding    : 13px;
-    margin-top : -2px;
+    padding: 13px;
+    margin-top: -2px;
     }
   }
 
@@ -667,34 +669,34 @@ form {
       @include scale(1);
       }
     .form-group, .input-group {
-      pointer-events : none;
+      pointer-events: none;
       }
     }
   .status {
     @include scale(.1);
     @include transit;
-    top      : -20px;
-    right    : -20px;
-    position : absolute;
+    top: -20px;
+    right: -20px;
+    position: absolute;
     .status-icon {
       @include border-radius(50%);
       @include transit;
       @include shadow-big;
-      width            : 40px;
-      height           : 40px;
-      background-color : grey;
-      color            : #ffffff;
-      text-align       : center;
-      line-height      : 40px;
+      width: 40px;
+      height: 40px;
+      background-color: grey;
+      color: #ffffff;
+      text-align: center;
+      line-height: 40px;
       &.valid {
-        background-color : #50aa8d;
+        background-color: #50aa8d;
         }
       &.invalid {
-        background-color : #e45544;
+        background-color: #e45544;
         }
       }
     i {
-      font-size : 18px;
+      font-size: 18px;
       }
     }
   }
@@ -703,98 +705,98 @@ form {
   &.inputs-underline {
     label:not(.no-margin) {
       @include opacity(.7);
-      font-size      : 10px;
-      font-weight    : 800;
-      text-transform : uppercase;
-      margin-bottom  : 0;
-      position       : relative;
-      bottom         : -5px;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 0;
+      position: relative;
+      bottom: -5px;
       }
     input[type="text"], input[type="email"], input[type="date"], input[type="time"], input[type="search"], input[type="password"], input[type="number"], input[type="tel"], textarea.form-control {
       @include box-shadow(none);
-      -webkit-appearance : none;
-      background-color   : transparent;
-      border             : none;
-      border-bottom      : 2px solid rgba(#000, .08);
-      padding-left       : 0;
+      -webkit-appearance: none;
+      background-color: transparent;
+      border: none;
+      border-bottom: 2px solid rgba(#000, .08);
+      padding-left: 0;
       &:active, &:focus {
         @include box-shadow(none);
-        padding-left  : 12px;
-        border-bottom : 2px solid rgba(#000, .15);
+        padding-left: 12px;
+        border-bottom: 2px solid rgba(#000, .15);
         }
       &:hover {
         @include box-shadow(none);
-        border-bottom : 2px solid rgba(#000, .1);
+        border-bottom: 2px solid rgba(#000, .1);
         }
       }
     .input-group {
       .btn {
-        background-color : transparent;
-        border-bottom    : 2px solid rgba(#000, .08);
-        padding          : 8px 12px 9px 12px;
+        background-color: transparent;
+        border-bottom: 2px solid rgba(#000, .08);
+        padding: 8px 12px 9px 12px;
         }
       }
     .input-group-btn {
       .btn {
         @include box-shadow(none);
-        padding : 14px 12px 13px 12px;
+        padding: 14px 12px 13px 12px;
         }
       }
     .bootstrap-select {
       @include box-shadow(none);
       .btn {
         @include box-shadow(none);
-        background-color : transparent;
-        border           : none;
-        border-bottom    : 2px solid rgba(#000, .08);
-        color            : inherit;
-        padding-left     : 0;
+        background-color: transparent;
+        border: none;
+        border-bottom: 2px solid rgba(#000, .08);
+        color: inherit;
+        padding-left: 0;
         &:active, &:focus, &:hover {
           @include box-shadow(none);
           }
         }
       }
     ::-webkit-input-placeholder {
-      color : rgba(#000, .3);
+      color: rgba(#000, .3);
       }
     :-moz-placeholder {
-      color : rgba(#000, .3);
+      color: rgba(#000, .3);
       }
     ::-moz-placeholder {
-      color : rgba(#000, .3);
+      color: rgba(#000, .3);
       }
     :-ms-input-placeholder {
-      color : rgba(#000, .3);
+      color: rgba(#000, .3);
       }
     }
   }
 
 .checkboxes {
   li {
-    display      : inline-block;
-    margin-right : 20px;
+    display: inline-block;
+    margin-right: 20px;
     }
   }
 
 .single-file-input {
-  overflow   : hidden;
-  position   : relative;
-  margin-top : 6px;
-  font-size  : 12px;
-  text-align : center;
-  padding    : 3px 0;
+  overflow: hidden;
+  position: relative;
+  margin-top: 6px;
+  font-size: 12px;
+  text-align: center;
+  padding: 3px 0;
   input[type="file"] {
-    padding-top : 40px;
-    position    : absolute;
-    width       : 100%;
-    cursor      : pointer;
-    outline     : none;
-    z-index     : 1;
+    padding-top: 40px;
+    position: absolute;
+    width: 100%;
+    cursor: pointer;
+    outline: none;
+    z-index: 1;
     }
   div {
     i {
       @include opacity(.5);
-      margin-left : 5px;
+      margin-left: 5px;
       }
     }
   }
@@ -802,59 +804,59 @@ form {
 .ui-slider {
   @include border-radius(0px);
   @include box-shadow(none);
-  border           : none;
-  background-color : transparent;
-  margin-top       : -2px;
+  border: none;
+  background-color: transparent;
+  margin-top: -2px;
   .noUi-base {
     @include border-radius(0px);
     @include box-shadow(none);
-    border           : none;
-    height           : 2px;
-    background-color : #e4e4e2;
-    margin-top       : 6px;
+    border: none;
+    height: 2px;
+    background-color: #e4e4e2;
+    margin-top: 6px;
     .noUi-connect {
       @include box-shadow(none);
-      background-color : $color-default;
+      background-color: $color-default;
       }
     .noUi-background {
       @include box-shadow(none);
-      background-color : #e4e4e2;
+      background-color: #e4e4e2;
       }
     .noUi-handle {
       @include transition(.2s);
       @include border-radius(50%);
       @include box-shadow(none);
-      border           : 2px solid $color-default;
-      background-color : $color-default;
-      cursor           : pointer;
-      height           : 10px;
-      width            : 10px;
-      left             : 0px;
-      top              : -4px;
+      border: 2px solid $color-default;
+      background-color: $color-default;
+      cursor: pointer;
+      height: 10px;
+      width: 10px;
+      left: 0px;
+      top: -4px;
       &:before, &:after {
-        display : none;
+        display: none;
         }
       &:hover, &.noUi-active {
         @include box-shadow(0px 0px 0px 8px rgba(0, 0, 0, .07));
         }
       &.noUi-handle-upper {
-        left : -8px;
+        left: -8px;
         }
       }
     }
   .values {
-    font-size : 10px;
+    font-size: 10px;
     input {
-      background-color : transparent;
-      border           : none;
-      width            : 49%;
+      background-color: transparent;
+      border: none;
+      width: 49%;
       }
     input:first-child {
-      float : left;
+      float: left;
       }
     input:last-child {
-      float      : right;
-      text-align : right;
+      float: right;
+      text-align: right;
       }
     }
   }

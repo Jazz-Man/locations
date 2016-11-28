@@ -1,0 +1,50 @@
+extends common/layout
+block append vars
+	- var bodyClass = 'homepage'
+block append content
+
+	.hero-section.full-screen.has-map.has-sidebar
+		.map-wrapper
+			#map-homepage.map
+		.results-wrapper
+			.sidebar-detail
+				.tse-scrollable
+					.tse-content
+						.sidebar-wrapper
+			.results
+				.tse-scrollable
+					.tse-content
+						.section-title
+							h2
+								| Search Results
+								span.results-number
+						.results-content
+		.form.search-form.vertical
+			.container
+				form
+					.row
+						.col-md-4.col-sm-4
+							.wrapper.clearfix
+								.form-group
+									input.form-control(type='text' name='keyword' placeholder='Enter keyword')
+								.form-group
+									select.form-control.selectpicker(name='location')
+										option(value='') Location
+										option(value='1') New York
+										option(value='2') Washington
+										option(value='3') London
+										option(value='4') Paris
+								.form-group
+									select.form-control.selectpicker(name='category')
+										option(value='') Category
+										option(value='1') Restaurant
+										option(value='2') Event
+										option(value='3') Adrenaline
+										option(value='4') Sport
+										option(value='5') Wellness
+								.form-group
+									input.form-control(type='text' name='min-price' placeholder='Minimal Price')
+								.form-group
+									button.btn.btn-primary.pull-right(type='submit')
+										| Search Now
+										i.fa.fa-search

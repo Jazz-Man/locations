@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --hot --inline --devtool eval",
-    "test": "rm -rf dist && webpack"
+    "test": "rm -rf dist && webpack",
+    "rest": "node rest-server.js"
   },
   "repository": {
     "type": "git",
@@ -18,20 +19,34 @@
   },
   "homepage": "https://bitbucket.org/tirastec/locations_dev#readme",
   "dependencies": {
-    "bootstrap-sass": "^3.3.7",
-    "font-awesome": "^4.7.0",
-    "jquery": "^2.2.4",
+    "bootstrap-datepicker": "^1.6.4",
+    "bootstrap-fileinput": "^4.3.4",
+    "bootstrap-select": "^1.12.1",
+    "compass-mixins": "^0.12.10",
+    "countdown": "https://github.com/hilios/jQuery.countdown/archive/2.0.2.tar.gz",
+    "gmaps": "^0.4.24",
+    "icheck": "^1.0.2",
+    "is_js": "^0.9.0",
+    "jquery-multifile": "git+https://github.com/fyneworks/multifile.git",
+    "jquery-validation": "^1.15.1",
+    "jssocials": "^1.4.0",
+    "nouislider": "^7.0.10",
+    "owl.carousel": "^2.2.0",
+    "simplebar": "^2.0.0-beta.3",
     "trackpad-scroll-emulator": "git+https://github.com/jnicol/trackpad-scroll-emulator.git"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.3",
-    "bootstrap-loader": "^2.0.0-beta.15",
     "css-loader": "^0.26.0",
     "exports-loader": "^0.6.3",
     "extract-loader": "0.0.2",
     "extract-text-webpack-plugin": "^2.0.0-beta.4",
+    "faker": "^3.1.0",
     "file-loader": "^0.9.0",
+    "html-loader": "^0.4.4",
     "html-webpack-plugin": "^2.24.1",
+    "json-server": "^0.9.1",
+    "lodash": "^4.17.2",
     "node-sass": "^3.13.0",
     "postcss-loader": "^1.1.1",
     "pug": "^2.0.0-beta6",
@@ -43,7 +58,6 @@
     "url-loader": "^0.5.7",
     "webpack": "^2.1.0-beta.27",
     "webpack-dev-server": "^2.1.0-beta.11",
-    "webpack-stats-plugin": "^0.1.4",
-    "webpack-validator": "^2.2.9"
+    "webpack-stats-plugin": "^0.1.4"
   }
 }
