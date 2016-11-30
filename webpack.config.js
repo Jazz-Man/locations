@@ -24,9 +24,9 @@ var pages = [
 
 function htmlPage(name) {
   return new HtmlWebpackPlugin({
-    filename    : 'assets/external/' + name + '.html',
+    filename    : 'assets/external/' + name + '.html?[hash]',
     favicon : false,
-    template    : './assets/external/' + name + '.html',
+    template    : './assets/external/' + name + '.pug',
     inject      : false,
   })
 }
@@ -136,8 +136,12 @@ module.exports = {
   module       : {
     loaders: [
       {
-        test  : /\.html/,
-        loader: 'html',
+        test  : /\.coffee$/,
+        exclude: /node_modules/,
+        loader: 'coffee',
+        query:{
+          
+        }
       },
       {
         test   : /\.pug$/,
@@ -211,7 +215,7 @@ module.exports = {
     jadePage('map'),
     jadePage('detail'),
     
-    htmlPage('data'),
+    // htmlPage('data'),
     htmlPage('email'),
     htmlPage('infobox'),
     htmlPage('modal_item'),

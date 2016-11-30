@@ -1143,7 +1143,6 @@ function infobox() {
              + '</div>';
   return JSON.stringify(html)
 }
-console.log(JSON.parse(infobox()));
 module.exports = {
   infobox: [infobox()],
   listings: listing()

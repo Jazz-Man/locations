@@ -1,22 +1,16 @@
 // require('font-awesome');
 require('./assets/scss/style.scss');
 
+var $$ = require('domtastic');
+
 var resizeId;
 var lastModal;
 
 var Main = require('./assets/js/main');
 
 
-$(document).ready(function ($) {
+$$(document).ready(function () {
   "use strict";
-  // var scrollableBox = $(".tse-scrollable");
-  // if (scrollableBox.length > 0) {
-  //   require.ensure([],function (require) {
-  //     require('trackpad-scroll-js');
-  //     // ScrollEmulator(".tse-scrollable");
-  //     scrollableBox.TrackpadScrollEmulator();
-  //   });
-  // }
   
   Main.trackpadScroll();
   
@@ -27,7 +21,7 @@ $(document).ready(function ($) {
     });
   }
   
-  if (Main.viewport.is('xs')) {
+  if (Main.viewport.isSize('xs')) {
     $(".map-wrapper").height($(window).height() - $("#page-header").height());
     $(".has-background").height($(window).height() - $("#page-header").height());
   }
@@ -60,7 +54,7 @@ $(document).ready(function ($) {
   if ($(".hero-section .form").find("select").length) {
     $(".search-form select").on("rendered.bs.select", function () {
       $(".search-form").addClass("show");
-      if (!Main.viewport.is('xs')) {
+      if (!Main.viewport.isSize('xs')) {
         $(".search-form.vertical").css("top", ($(".hero-section").height() / 2) - ($(".search-form .wrapper").height() / 2));
       }
       Main.trackpadScroll("initialize");
@@ -68,7 +62,7 @@ $(document).ready(function ($) {
   }
   else {
     $(".search-form").addClass("show");
-    if (!Main.viewport.is('xs')) {
+    if (!Main.viewport.isSize('xs')) {
       $(".search-form.vertical").css("top", ($(".hero-section").height() / 2) - ($(".search-form .wrapper").height() / 2));
     }
     Main.trackpadScroll("initialize");
@@ -76,13 +70,16 @@ $(document).ready(function ($) {
 
 //  iCheck -------------------------------------------------------------------------------------------------------------
   
-  if ($("input[type=checkbox]").length > 0) {
-    $("input").iCheck();
+  if ($("input[type=checkbox]").length > 0 || $("input[type=radio]").length > 0) {
+    require.ensure([],function (require) {
+      require('icheck');
+      $("input").iCheck();
+    });
   }
   
-  if ($("input[type=radio]").length > 0) {
-    $("input").iCheck();
-  }
+  // if ($("input[type=radio]").length > 0) {
+  //   $("input").iCheck();
+  // }
 
 //  Smooth Scroll ------------------------------------------------------------------------------------------------------
   
@@ -127,8 +124,7 @@ $(document).ready(function ($) {
 //  Multiple modal hack ------------------------------------------------------------------------------------------------
   
   $(document).on('show.bs.modal', '.modal', function () {
-    var zIndex = 1040 + (
-      10 * $('.modal:visible').length);
+    var zIndex = 1040 + (10 * $('.modal:visible').length);
     $(this).css('z-index', zIndex);
     setTimeout(function () {
       $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
@@ -155,23 +151,17 @@ $(document).ready(function ($) {
 
 //  Close "More" menu on click anywhere on page ------------------------------------------------------------------------
   
-  $(document).on("click", function (e) {
-    if (e.target.className == "controls-more") {
-      $(".controls-more.show").removeClass("show");
-      $(e.target).addClass("show");
-    }
-    else {
-      $(".controls-more.show").each(function () {
-        $(this).removeClass("show");
-      });
-    }
+  $$('.controls-more').on("click",function (e) {
+    e.preventDefault();
+    $$(this).toggleClass("show");
   });
 
 // Mobile navigation button --------------------------------------------------------------------------------------------
   
-  $(".nav-btn").on("click", function () {
-    $(this).toggleClass("active");
-    $(".primary-nav").toggleClass("show");
+  $$(".nav-btn").on("click", function (e) {
+    e.preventDefault();
+    $$(this).toggleClass("active");
+    $$(".primary-nav").toggleClass("show");
   });
 
 //  Duplicate desired element ------------------------------------------------------------------------------------------
@@ -343,12 +333,14 @@ $(document).ready(function ($) {
   Main.ratingPassive("body");
   Main.bgTransfer();
   Main.responsiveNavigation();
+  Main.initializeOwl();
+  Main.initializeFitVids();
+  Main.rating();
   
 });
 
 require('bootstrap-select');
 // require('./assets/js/jquery.validate.min');
-require('./assets/js/jquery.fitvids');
-require('./assets/js/icheck.min');
-require('owl.carousel');
+// require('./assets/js/jquery.fitvids');
+// require('owl.carousel');
 require('./assets/js/maps');

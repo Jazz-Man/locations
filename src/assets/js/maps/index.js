@@ -183,7 +183,7 @@ function heroMap(_latitude, _longitude, element, markerTarget, sidebarResultTarg
                 openInfobox(markerTargetID, this, i);
               }
               else if (markerTarget == "modal") {
-                openModal(markerTargetID, "modal_item.php");
+                openModal(markerTargetID, "modal_item.html");
               }
             }
           })(marker, i));
@@ -266,7 +266,7 @@ function heroMap(_latitude, _longitude, element, markerTarget, sidebarResultTarg
                   openInfobox(markerTargetID, _this, 0);
                 }
                 else if (markerTarget == "modal") {
-                  openModal(markerTargetID, "modal_item.php");
+                  openModal(markerTargetID, "modal_item.html");
                 }
               }
             })(marker, i));
@@ -474,7 +474,7 @@ function simpleMap(_latitude, _longitude, element, markerDrag, place) {
             position: mapCenter,
             map: map,
             draggable: markerDrag,
-            content: "<img src='assets/img/marker.png'>",
+            content: "<img src='"+require('assets/img/marker.png')+"'>",
             flat: true
         });
         google.maps.event.addListener(marker, "dragend", function () {
@@ -552,13 +552,21 @@ function autoComplete(map, marker) {
     }
 }
 
-var mapBox = $('#map-homepage');
+var mapHomepage = $('#map-homepage');
+var mapDetail = $('#map-detail');
 
-if (mapBox.length > 0) {
-    var _latitude = 40.7344458;
-    var _longitude = -73.86704922;
-    var element = "map-homepage";
+if (mapHomepage.length > 0) {
+    // var _latitude = 40.7344458;
+    // var _longitude = -73.86704922;
+    // var element = "map-homepage";
     var markerTarget = "infobox"; // use "sidebar", "infobox" or "modal" - defines the action after click on marker
     var sidebarResultTarget = "modal"; // use "sidebar", "modal" or "new_page" - defines the action after click on marker
-    heroMap(_latitude, _longitude, element, markerTarget, sidebarResultTarget);
+    heroMap(40.7344458, -73.86704922, "map-homepage", markerTarget, sidebarResultTarget);
+}
+
+if (mapDetail.length > 0){
+  // var _latitude = 40.7344458;
+  // var _longitude = -73.86704922;
+  // var element = "map-detail";
+  simpleMap(40.7344458, -73.86704922, "map-detail");
 }

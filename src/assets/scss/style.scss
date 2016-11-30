@@ -27,7 +27,7 @@ Headers:		'Lato', sans-serif;
 
 -------------------------------------------------------------------*/
 @import "vendor/vendor";
-@import "../../../node_modules/compass-mixins/lib/compass";
+@import "~compass-mixins/lib/compass";
 
 @import "helpers/mixin";
 @import "helpers/variables";
