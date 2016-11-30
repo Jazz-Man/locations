@@ -1,18 +1,3 @@
-"use strict";
-(function(root, factory) {
-  if(typeof exports === 'object') {
-    module.exports = factory();
-  }
-  else if(typeof define === 'function' && define.amd) {
-    define(['jquery', 'googlemaps!'], factory);
-  }
-  else {
-    root.GMaps = factory();
-  }
-  
-  
-}(this, function() {
-  
   /*!
    * GMaps.js v0.4.24
    * http://hpneo.github.com/gmaps/
@@ -2115,8 +2100,6 @@
   
   GMaps.prototype.addStyle = function(options) {
     var styledMapType = new google.maps.StyledMapType(options.styles, { name: options.styledMapName });
-    console.log(options);
-    
     this.map.mapTypes.set(options.mapTypeId, styledMapType);
   };
   
@@ -2406,5 +2389,4 @@
     }
   }
   
-  return GMaps;
-}));
+  module.exports = GMaps;

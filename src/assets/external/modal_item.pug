@@ -1,0 +1,36 @@
+.modal-item-detail.modal-dialog(role='document' data-latitude='' data-longitude='' data-address='')
+	.modal-content
+		.modal-header
+			button.close(type='button' data-dismiss='modal' aria-label='Close')
+				span(aria-hidden='true') ×
+			.section-title
+				h2
+				.label.label-default
+				.controls-more
+					ul
+						li
+							a(href='#') Add to favorites
+						li
+							a(href='#') Add to watchlist
+				// end controls-more
+			// end section-title
+		// end modal-header
+		.modal-body
+			.left
+				#map-modal.map
+				// end map
+				section
+					h3 Contact
+				section
+					h3 Social Share
+					.social-share
+			// end left
+			.right
+				section
+					h3 About
+					p
+					a.btn.btn-primary.btn-framed.btn-light-frame.btn-rounded.btn-xs(href='#') Show More
+				// end about
+			// end right
+		// end modal-body
+	// end modal-content

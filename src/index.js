@@ -13,6 +13,7 @@ $$(document).ready(function () {
   "use strict";
   
   Main.trackpadScroll();
+  Main.mapInit();
   
   if ($(".date-picker").length) {
     require.ensure([],function (require) {
@@ -77,9 +78,6 @@ $$(document).ready(function () {
     });
   }
   
-  // if ($("input[type=radio]").length > 0) {
-  //   $("input").iCheck();
-  // }
 
 //  Smooth Scroll ------------------------------------------------------------------------------------------------------
   
@@ -130,7 +128,7 @@ $$(document).ready(function () {
       $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
     }, 0);
   });
-
+  
 //  Map in Row listing -------------------------------------------------------------------------------------------------
   
   $(".item.item-row").each(function () {
@@ -343,4 +341,4 @@ require('bootstrap-select');
 // require('./assets/js/jquery.validate.min');
 // require('./assets/js/jquery.fitvids');
 // require('owl.carousel');
-require('./assets/js/maps');
+// require('./assets/js/maps/gmaps');

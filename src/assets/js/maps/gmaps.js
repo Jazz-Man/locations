@@ -1,4 +1,4 @@
-var Gmaps = require('gmaps');
+var Gmaps = require('../lib/gmaps');
 
 var mapStylesAdministrative = [
   {
@@ -68,7 +68,8 @@ var gmaps = new Gmaps({
   lng: -77.028333,
   mapTypeId  : "roadmap",
   height:'100%',
-  styles: mapStylesAdministrative
+  styles: mapStylesAdministrative,
+  idle:function (e) {
+    console.log(e);
+  }
 });
-// gmaps.addStyle({style: mapStylesAdministrative});
-gmaps.setCenter(-12.043333, -77.028333);

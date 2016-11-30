@@ -1,0 +1,45 @@
+.modal-dialog.width-400px(role='document')
+	.modal-content
+		.modal-header
+			button.close(type='button' data-dismiss='modal' aria-label='Close')
+				span(aria-hidden='true') ×
+			.section-title
+				h2 Register
+		.modal-body
+			form.form.inputs-underline
+				.row
+					.col-md-6.col-sm-6
+						.form-group
+							label(for='first_name') First Name
+							input#first_name.form-control(type='text' name='first_name' placeholder='First name')
+						// end form-group
+					// end col-md-6
+					.col-md-6.col-sm-6
+						.form-group
+							label(for='last_name') Last Name
+							input#last_name.form-control(type='text' name='last_name' placeholder='Last name')
+						// end form-group
+					// end col-md-6
+				// enr row
+				.form-group
+					label(for='email') Email
+					input#email.form-control(type='email' name='email' placeholder='Email')
+				// end form-group
+				.form-group
+					label(for='password') Password
+					input#password.form-control(type='password' name='password' placeholder='Password')
+				// end form-group
+				.form-group
+					label(for='confirm_password') Confirm Password
+					input#confirm_password.form-control(type='password' name='confirm_password' placeholder='Confirm Password')
+				// end form-group
+				.form-group.center
+					button.btn.btn-primary.width-100(type='submit') Register Now
+				// end form-group
+			hr
+			p.center.note
+				| By clicking on “Register Now” button you are accepting the
+				a.underline(href='terms-and-conditions.html') Terms & Conditions
+			// end form
+		// end modal-body
+	// end modal-content

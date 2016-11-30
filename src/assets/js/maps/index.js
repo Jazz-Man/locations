@@ -1,3 +1,4 @@
+var $$ = require('domtastic');
 var mapStylesAll = [{"featureType":"all","elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#333333"},{"lightness":40}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#ffffff"},{"lightness":16}]},{"featureType":"all","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#fefefe"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#fefefe"},{"lightness":17},{"weight":1.2}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"lightness":20},{"color":"#ececec"}]},{"featureType":"landscape.man_made","elementType":"all","stylers":[{"visibility":"on"},{"color":"#f0f0ef"}]},{"featureType":"landscape.man_made","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#f0f0ef"}]},{"featureType":"landscape.man_made","elementType":"geometry.stroke","stylers":[{"visibility":"on"},{"color":"#d4d4d4"}]},{"featureType":"landscape.natural","elementType":"all","stylers":[{"visibility":"on"},{"color":"#ececec"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"lightness":21},{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#d4d4d4"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"color":"#303030"}]},{"featureType":"poi","elementType":"labels.icon","stylers":[{"saturation":"-100"}]},{"featureType":"poi.attraction","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.government","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.medical","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.park","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#dedede"},{"lightness":21}]},{"featureType":"poi.place_of_worship","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.school","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.school","elementType":"geometry.stroke","stylers":[{"lightness":"-61"},{"gamma":"0.00"},{"visibility":"off"}]},{"featureType":"poi.sports_complex","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffffff"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#ffffff"},{"lightness":29},{"weight":0.2}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":16}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#f2f2f2"},{"lightness":19}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#dadada"},{"lightness":17}]}];
 
 //var mapStyles = [{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#d3d3d3"}]},{"featureType":"transit","stylers":[{"color":"#808080"},{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"visibility":"on"},{"color":"#b3b3b3"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#ffffff"},{"weight":1.8}]},{"featureType":"road.local","elementType":"geometry.stroke","stylers":[{"color":"#d7d7d7"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#ebebeb"}]},{"featureType":"administrative","elementType":"geometry","stylers":[{"color":"#a7a7a7"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"landscape","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#efefef"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#696969"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"visibility":"on"},{"color":"#737373"}]},{"featureType":"poi","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#d6d6d6"}]},{"featureType":"road","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#dadada"}]}];
@@ -105,6 +106,7 @@ function heroMap(_latitude, _longitude, element, markerTarget, sidebarResultTarg
   var i;
   var a;
   function placeMarkers(markers) {
+    console.log(markers);
     var markerSelector = $(".marker");
     var newMarkers = [];
     for (i = 0; i < markers.length; i++) {
@@ -115,7 +117,7 @@ function heroMap(_latitude, _longitude, element, markerTarget, sidebarResultTarg
         thumbnailImage = markers[i]["gallery"][0];
       }
       else {
-        thumbnailImage = "../img/default.png";
+        thumbnailImage = require("../../img/items/default.png");
       }
       if (markers[i]["featured"] == 1) {
         markerContent.innerHTML =
@@ -183,7 +185,7 @@ function heroMap(_latitude, _longitude, element, markerTarget, sidebarResultTarg
                 openInfobox(markerTargetID, this, i);
               }
               else if (markerTarget == "modal") {
-                openModal(markerTargetID, "modal_item.html");
+                Main.openModal(markerTargetID, "modal_item.html");
               }
             }
           })(marker, i));
@@ -266,7 +268,7 @@ function heroMap(_latitude, _longitude, element, markerTarget, sidebarResultTarg
                   openInfobox(markerTargetID, _this, 0);
                 }
                 else if (markerTarget == "modal") {
-                  openModal(markerTargetID, "modal_item.html");
+                  Main.openModal(markerTargetID, "modal_item.html");
                 }
               }
             })(marker, i));
@@ -291,7 +293,7 @@ function heroMap(_latitude, _longitude, element, markerTarget, sidebarResultTarg
           resultsWrapper.removeClass("loading");
           Main.initializeOwl();
           Main.ratingPassive(".sidebar-wrapper .sidebar-content");
-          Main.initializeFitVids();
+          // Main.initializeFitVids();
           Main.socialShare();
           sidebarContent.find('.gallery').on("refresh.owl.carousel", function () {
             $(this).addClass("show");
@@ -316,8 +318,8 @@ function heroMap(_latitude, _longitude, element, markerTarget, sidebarResultTarg
     }
     // Highlight result in sidebar on marker hover -------------------------------------------------------------
     markerSelector.on("mouseenter", function (e) {
-      // console.log(e);
       var _this = $(this);
+      console.log(_this);
       var id = _this.data("id");
       $(".results-wrapper .results-content .result-item[data-id=" + id + "] a").addClass("hover-state");
     }).on("mouseleave", function () {
@@ -559,8 +561,8 @@ if (mapHomepage.length > 0) {
     // var _latitude = 40.7344458;
     // var _longitude = -73.86704922;
     // var element = "map-homepage";
-    var markerTarget = "infobox"; // use "sidebar", "infobox" or "modal" - defines the action after click on marker
-    var sidebarResultTarget = "modal"; // use "sidebar", "modal" or "new_page" - defines the action after click on marker
+    var markerTarget = "sidebar"; // use "sidebar", "infobox" or "modal" - defines the action after click on marker
+    var sidebarResultTarget = "sidebar"; // use "sidebar", "modal" or "new_page" - defines the action after click on marker
     heroMap(40.7344458, -73.86704922, "map-homepage", markerTarget, sidebarResultTarget);
 }
 

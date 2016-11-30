@@ -307,3 +307,66 @@ mixin controlsMore
 				a(href='#') Add to watchlist
 			li
 				a.quick-detail(href='#') Quick detail
+
+mixin breadcrumb
+	ol.breadcrumb
+		li
+			a(href='#') Home
+		li
+			a(href='#') Pages
+		li.active Contact
+
+mixin recentItems
+	h2 Recent Items
+		- var i = 1;
+			while i <= 5
+				-var idItem = i++
+				.item(data-id=idItem)
+					a(href='detail.html')
+						.description
+							figure Average Price: $8 - $30
+							.label.label-default Restaurant
+							h3 Marky’s Restaurant
+							h4 63 Birch Street
+						// end description
+						.image.bg-transfer
+							img(src=require('assets/img/items/' + idItem + '.jpg') alt='')
+						// end image
+					+controlsMore
+
+mixin sidebarSearchFilter
+	h2 Search Filter
+		form.form.inputs-underline
+			.form-group
+				input.form-control(type='text' name='keyword' placeholder='Enter keyword')
+			// end form-group
+			.form-group
+				select.form-control.selectpicker(name='location')
+					option(value='') Location
+					option(value='1') New York
+					option(value='2') Washington
+					option(value='3') London
+					option(value='4') Paris
+			// end form-group
+			.form-group
+				select.form-control.selectpicker(name='category')
+					option(value='') Category
+					option(value='1') Restaurant
+					option(value='2') Event
+					option(value='3') Adrenaline
+					option(value='4') Sport
+					option(value='5') Wellness
+			// end form-group
+			.form-group
+				#price-slider.ui-slider(data-value-min='10' data-value-max='400' data-value-type='price' data-currency='$' data-currency-placement='before')
+					.values.clearfix
+						input.value-min(name='value-min[]' readonly='')
+						input.value-max(name='value-max[]' readonly='')
+					.element
+				// end price-slider
+			// end form-group
+			.form-group
+				button.btn.btn-primary.pull-right(type='submit')
+					| Search Now
+					i.fa.fa-search
+			// end form-group

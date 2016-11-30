@@ -1,7 +1,9 @@
 var path = require('path');
 var webpack = require('webpack');
+var faker = require('faker');
 var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var WriteFilePlugin = require('write-file-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var extractSCSS = new ExtractTextPlugin({
@@ -10,17 +12,7 @@ var extractSCSS = new ExtractTextPlugin({
   allChunks: true
 });
 
-var pages = [
-  'blog',
-  'calculator',
-  'localweather',
-  'pomodoro',
-  'randomquote',
-  'simon',
-  'tictactoe',
-  'twitchtv',
-  'wikiviewer',
-];
+var outputPath = '/home/jazzman/nginxstack/apps/upages/wp-content/themes/upages/assets/';
 
 function htmlPage(name) {
   return new HtmlWebpackPlugin({
@@ -31,13 +23,17 @@ function htmlPage(name) {
   })
 }
 
+var wpAjax = {
+  url:'http://localhost:8080/upages/wp-admin/admin-ajax.php'
+};
+
 function jadePage(name) {
   return new HtmlWebpackPlugin({
     filename    : name + '.html?[hash]',
     mobile      : true,
     title       : 'App',
     lang        : 'en',
-    // favicon : false,
+    favicon : false,
     template    : '!!pug!./src/' + name + '.pug',
     inject      : false,
     injectExtras: {
@@ -52,6 +48,11 @@ function jadePage(name) {
         }
       ],
       body: [
+        {
+          "tag": "script",
+          "innerHTML": "var wpAjax = {url:'http://localhost:8080/upages/wp-admin/admin-ajax.php'}",
+          "type": "text/javascript"
+        },
         {
           "tag": "script",
           "src": "http://maps.google.com/maps/api/js?key=AIzaSyBEDfNcQRmKQEyulDN8nGWjLYPm8s4YB58&libraries=places"
@@ -77,8 +78,8 @@ module.exports = {
   output : {
     filename     : 'js/[name].js',
     chunkFilename: "js/[id].js",
-    path         : path.join(__dirname, 'dist'),
-    publicPath   : "",
+    path         : outputPath,
+    publicPath   : "wp-content/themes/upages/assets/",
   },
   
   target: 'web',
@@ -203,6 +204,7 @@ module.exports = {
   
   plugins: [
     new webpack.NoErrorsPlugin(),
+    new WriteFilePlugin(),
     new webpack.ProvidePlugin({
       $              : "jquery",
       jQuery         : "jquery",
@@ -214,6 +216,10 @@ module.exports = {
     jadePage('index'),
     jadePage('map'),
     jadePage('detail'),
+    jadePage('contact'),
+    jadePage('404'),
+    jadePage('blog'),
+    jadePage('blog-detail'),
     
     // htmlPage('data'),
     htmlPage('email'),
@@ -228,7 +234,8 @@ module.exports = {
   ],
   
   devServer: {
-    contentBase: 'dist',
+    noInfo: true,
+    contentBase: outputPath,
     port       : 8081
   }
 };

@@ -1,0 +1,95 @@
+.sidebar-content(data-id='1')
+	.back
+	// end back-button
+	.controls-more
+		ul
+			li
+				a(href='#') Add to favorites
+			li
+				a(href='#') Add to watchlist
+	// end controls-more
+	.section-title
+		a.btn.btn-primary.btn-framed.btn-rounded.btn-xs.full-detail(href='detail.html') Full Detail
+		h2 Marky's Restaurant
+		h4 63 Birch Street
+		.label.label-default Restaurant
+		.rating-passive(data-rating='4')
+			span.stars
+			span.reviews 6
+	// end section-title
+	h5
+		i.fa.fa-phone
+		| 361-492-2356
+	h5
+		i.fa.fa-envelope
+		| hello@markys.com
+	h5
+		a(href='http://www.markys.com')
+			i.fa.fa-globe
+			| http://www.markys.com
+	.gallery-wrapper
+		.gallery.owl-carousel(data-owl-nav='0', data-owl-dots='1')
+			img(src=require('../img/items/1.jpg'), alt='')
+			img(src=require('../img/items/2.jpg'), alt='')
+			img(src=require('../img/items/12.jpg'), alt='')
+	// end gallery
+	section
+		h3 About
+		.read-more
+			p
+				| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis, arcu non hendrerit imperdiet, metus odio scelerisque elit, sed lacinia odio est ac felis. Nam ullamcorper hendrerit ullamcorper. Praesent quis arcu quis leo posuere ornare eu in purus. Nulla ornare rutrum condimentum. Praesent eu pulvinar velit. Quisque non finibus purus, eu auctor ipsum.
+	// end about
+	section
+		h3 Features
+		ul.tags
+			li Wi-Fi
+			li Parking
+			li TV
+			li Vegetarian
+	// end tags
+	section
+		h3 Opening Hours
+		dl
+			dt Monday
+			dd 08:00am - 11:00pm
+			dt Tuesday
+			dd 08:00am - 11:00pm
+			dt Wednesday
+			dd 12:00am - 11:00pm
+			dt Thursday
+			dd 08:00am - 11:00pm
+			dt Friday
+			dd 03:00pm - 02:00am
+			dt Saturday
+			dd 03:00pm - 02:00am
+			dt Sunday
+			dd Closed
+	// end opening-hours
+	section
+		h3 Latest reviews
+		.review
+			.image
+				.bg-transfer(style='background-image: url(assets/img/person-01.jpg)')
+			.description
+				figure
+					.rating-passive(data-rating='4')
+						span.stars
+					span.date 09.05.2016
+				p
+					| Morbi varius orci in rhoncus posuere. Sed cursus urna ut sem rhoncus lacinia. Praesentac velit dignissim, mollis purus quis, sollicitudin eros
+		// end review
+		.review
+			.image
+				.bg-transfer(style='background-image: url(assets/img/person-02.jpg)')
+			.description
+				figure
+					.rating-passive(data-rating='4')
+						span.stars
+					span.date 09.05.2016
+				p
+					| Donec nec tristique sapien. Aliquam ante felis, sagittis sodales diam sollicitudin, dapibus semper turpis
+		// end review
+	// end reviews
+	section
+		h3 Share This Listing
+		.social-share

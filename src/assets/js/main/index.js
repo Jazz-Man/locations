@@ -1,26 +1,8 @@
 var is = require('is_js');
 var $$ = require('domtastic');
+var reqwest = require('reqwest');
 
-var ArrayProto = Array.prototype,
-  ObjProto = Object.prototype,
-  FuncProto = Function.prototype,
-  slice = ArrayProto.slice,
-  unshift = ArrayProto.unshift,
-  toString = ObjProto.toString,
-  hasOwnProperty = ObjProto.hasOwnProperty,
-  nativeForEach = ArrayProto.forEach,
-  nativeMap = ArrayProto.map,
-  nativeReduce = ArrayProto.reduce,
-  nativeReduceRight = ArrayProto.reduceRight,
-  nativeFilter = ArrayProto.filter,
-  nativeEvery = ArrayProto.every,
-  nativeSome = ArrayProto.some,
-  nativeIndexOf = ArrayProto.indexOf,
-  nativeLastIndexOf = ArrayProto.lastIndexOf,
-  nativeIsArray = Array.isArray,
-  nativeKeys = Object.keys,
-  nativeBind = FuncProto.bind,
-  breaker = {};
+
 
 var Main = {
   viewport: {
@@ -46,119 +28,6 @@ var Main = {
       return this.viewPorts.indexOf(this.viewPortSize()) >= this.viewPorts.indexOf(size);
     },
   },
-  ajax: {
-    settings: {},
-    post: function (action, data) {
-      return this.ajax.send({
-        data: is.object(action) ? action : this.extend(data || {}, {
-          action: action
-        })
-      });
-    },
-    send: function (action, options) {
-      var promise, deferred;
-      if (is.object(action)) {
-        options = action;
-      }
-      else {
-        options = options || {};
-        options.data = this.extend(options.data || {}, {
-          action: action
-        });
-      }
-      
-      options = this.defaults(options || {}, {
-        type: 'POST',
-        url: this.ajax.settings.url,
-        context: this
-      });
-      
-      deferred = $.Deferred(function (deferred) {
-        // Transfer success/error callbacks.
-        if (options.success) {
-          deferred.done(options.success);
-        }
-        if (options.error) {
-          deferred.fail(options.error);
-        }
-        
-        delete options.success;
-        delete options.error;
-        
-        deferred.jqXHR = $.ajax(options)
-                          .done(function (response) {
-                            if (response === '1' || response === 1) {
-                              response = {
-                                success: true
-                              };
-                            }
-                            if (is.object(response) && !is.undefined(response.success)) {
-                              deferred[response.success ? 'resolveWith' : 'rejectWith'](this, [response.data]);
-                            }
-                            else {
-                              deferred.rejectWith(this, [response]);
-                            }
-                          })
-                          .fail(function () {
-                            deferred.rejectWith(this, arguments);
-                          });
-      });
-      
-      promise = deferred.promise();
-      promise.abort = function () {
-        deferred.jqXHR.abort();
-        return this;
-      };
-      
-      return promise;
-    }
-  },
-  extend: function (obj) {
-    this.each(slice.call(arguments, 1), function (source) {
-      for (var prop in source) {
-        obj[prop] = source[prop];
-      }
-    });
-    return obj;
-  },
-  each: function (obj, iterator, context) {
-    if (is.null(obj)) {
-      return;
-    }
-    if (nativeForEach && obj.forEach === nativeForEach) {
-      obj.forEach(iterator, context);
-    }
-    else if (obj.length === +obj.length) {
-      for (var i = 0, l = obj.length; i < l; i++) {
-        if (i in obj && iterator.call(context, obj[i], i, obj) === breaker) {
-          return;
-        }
-      }
-    }
-    else {
-      for (var key in obj) {
-        if (this.has(obj, key)) {
-          if (iterator.call(context, obj[key], key, obj) === breaker) {
-            return;
-          }
-        }
-      }
-    }
-  },
-  has: function (obj, key) {
-    return hasOwnProperty.call(obj, key);
-  },
-  defaults: function (obj) {
-    this.each(slice.call(arguments, 1), function (source) {
-      for (var prop in source) {
-        if (obj[prop] == null) {
-          obj[prop] = source[prop];
-        }
-      }
-    });
-    return obj;
-    
-  },
   openModal: function (target, modalPath) {
     var MAIN = this;
     var modalAtr = {
@@ -171,9 +40,6 @@ var Main = {
     var body = $$("body");
     var modalBox = body.append('<div id="' + target + '"></div>').find('#' + target + '');
     modalBox.attr(modalAtr).html('<i class="loading-icon fa fa-circle-o-notch fa-spin"></i>');
-    // console.log(modalBox);
-    // $("body").append('<div class="modal modal-external fade" id="' + target + '" tabindex="-1" role="dialog"
-    // aria-labelledby="' + target + '">' + '<i class="loading-icon fa fa-circle-o-notch fa-spin"></i>' + '</div>');
     
     $("#" + target + ".modal").on("show.bs.modal", function () {
       var _this = $(this);
@@ -375,7 +241,16 @@ var Main = {
   //     }
   //     this.responsiveNavigation()
   // },
-  
+  mapInit:function () {
+    var mapHomepage = $$('#map-homepage');
+    var mapDetail = $$('#map-detail');
+    
+    if (mapHomepage.length > 0 || mapDetail.length > 0){
+      require.ensure([],function (require) {
+        require('../maps/gmaps');
+      });
+    }
+  },
   responsiveNavigation: function () {
     if (this.viewport.isSize('xs')) {
       var hasChild = $$(".has-child");
