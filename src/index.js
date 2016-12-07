@@ -1,4 +1,3 @@
-// require('font-awesome');
 require('./assets/scss/style.scss');
 
 var $$ = require('domtastic');
@@ -14,6 +13,8 @@ $$(document).ready(function () {
   
   Main.trackpadScroll();
   Main.mapInit();
+  require('bootstrap-select');
+  // require('./assets/js/maps');
   
   if ($(".date-picker").length) {
     require.ensure([],function (require) {
@@ -336,9 +337,3 @@ $$(document).ready(function () {
   Main.rating();
   
 });
-
-require('bootstrap-select');
-// require('./assets/js/jquery.validate.min');
-// require('./assets/js/jquery.fitvids');
-// require('owl.carousel');
-// require('./assets/js/maps/gmaps');

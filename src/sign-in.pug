@@ -1,0 +1,25 @@
+extends common/layout
+
+block append content
+	.container
+		+breadcrumb
+		.row
+			.col-md-4.col-sm-4.col-md-offset-4.col-sm-offset-4
+				section.page-title
+					h1 Sign In
+				// end page-title
+				section
+					form.form.inputs-underline
+						.form-group
+							label(for='email') Email
+							input#email.form-control(type='email' name='email' placeholder='Your email')
+						// end form-group
+						.form-group
+							label(for='password') Password
+							input#password.form-control(type='password' name='password' placeholder='Your password')
+						.form-group.center
+							button.btn.btn-primary.width-100(type='submit') Sign In
+						// end form-group
+					hr
+					a(href='#' data-modal-external-file='modal_reset_password.html' data-target='modal-reset-password') I have
+					forgot my password

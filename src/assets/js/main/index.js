@@ -2,8 +2,6 @@ var is = require('is_js');
 var $$ = require('domtastic');
 var reqwest = require('reqwest');
 
-
-
 var Main = {
   viewport: {
     viewPorts: [
@@ -12,23 +10,24 @@ var Main = {
       'md',
       'lg'
     ],
-    viewPortSize: function () {
-      return window.getComputedStyle(document.body, ':before').content.replace(/"/g, '');
+    viewPortSize: function() {
+      return window.getComputedStyle(document.body, ':before')
+        .content.replace(/"/g, '');
     },
-    isSize: function (size) {
+    isSize: function(size) {
       if (this.viewPorts.indexOf(size) == -1) {
         throw "no valid viewport name given";
       }
       return this.viewPortSize() == size;
     },
-    isEqualOrGreaterThan: function (size) {
+    isEqualOrGreaterThan: function(size) {
       if (this.viewPorts.indexOf(size) == -1) {
         throw "no valid viewport name given";
       }
       return this.viewPorts.indexOf(this.viewPortSize()) >= this.viewPorts.indexOf(size);
     },
   },
-  openModal: function (target, modalPath) {
+  openModal: function(target, modalPath) {
     var MAIN = this;
     var modalAtr = {
       'id': target,
@@ -38,100 +37,114 @@ var Main = {
       'aria-labelledby': target
     };
     var body = $$("body");
-    var modalBox = body.append('<div id="' + target + '"></div>').find('#' + target + '');
-    modalBox.attr(modalAtr).html('<i class="loading-icon fa fa-circle-o-notch fa-spin"></i>');
-    
-    $("#" + target + ".modal").on("show.bs.modal", function () {
-      var _this = $(this);
-      lastModal = _this;
-      $.ajax({
-        url: "assets/external/" + modalPath,
-        // method: "POST",
-        //dataType: "html",
-        data: {
-          id: target
-        },
-        success: function (results) {
-          _this.append(results);
-          $(".selectpicker").selectpicker();
-          _this.find(".gallery").addClass("owl-carousel");
-          MAIN.ratingPassive(".modal");
-          var img = _this.find(".gallery img:first")[0];
-          if (img) {
-            $(img).load(function () {
+    var modalBox = body.append('<div id="' + target + '"></div>')
+      .find('#' + target + '');
+    modalBox.attr(modalAtr)
+      .html('<i class="loading-icon fa fa-circle-o-notch fa-spin"></i>');
+
+    $("#" + target + ".modal")
+      .on("show.bs.modal", function() {
+        var _this = $(this);
+        lastModal = _this;
+        $.ajax({
+          url: "assets/external/" + modalPath,
+          // method: "POST",
+          //dataType: "html",
+          data: {
+            id: target
+          },
+          success: function(results) {
+            _this.append(results);
+            $(".selectpicker")
+              .selectpicker();
+            _this.find(".gallery")
+              .addClass("owl-carousel");
+            MAIN.ratingPassive(".modal");
+            var img = _this.find(".gallery img:first")[0];
+            if (img) {
+              $(img)
+                .load(function() {
+                  MAIN.timeOutActions(_this);
+                });
+            } else {
               MAIN.timeOutActions(_this);
+            }
+            MAIN.socialShare();
+            _this.on("hidden.bs.modal", function() {
+              $(lastClickedMarker)
+                .removeClass("active");
+              $(".pac-container")
+                .remove();
+              _this.remove();
             });
+          },
+          error: function(e) {
+            console.log(e);
           }
-          else {
-            MAIN.timeOutActions(_this);
+        });
+
+      });
+
+    $("#" + target + ".modal")
+      .modal("show");
+
+  },
+  bgTransfer: function() {
+    $$(".bg-transfer")
+      .forEach(function(element) {
+        var _this = $$(element);
+        var backgroundImage = _this.attr("data-bg");
+        _this.css("background-image", "url(" + backgroundImage + ")");
+      });
+  },
+  ratingPassive: function(element) {
+    $(element)
+      .find(".rating-passive")
+      .each(function() {
+        var _this = $(this);
+        for (var i = 0; i < 5; i++) {
+          if (i < _this.attr("data-rating")) {
+            $(this)
+              .find(".stars")
+              .append("<figure class='active fa fa-star'></figure>")
+          } else {
+            _this.find(".stars")
+              .append("<figure class='fa fa-star'></figure>")
           }
-          MAIN.socialShare();
-          _this.on("hidden.bs.modal", function () {
-            $(lastClickedMarker).removeClass("active");
-            $(".pac-container").remove();
-            _this.remove();
-          });
-        },
-        error: function (e) {
-          console.log(e);
         }
       });
-      
-    });
-    
-    $("#" + target + ".modal").modal("show");
-    
   },
-  bgTransfer: function () {
-    $(".bg-transfer").each(function () {
-      var _this = $(this);
-      var backgroundImage = _this.find("img").attr("src");
-      _this.css("background-image", "url(" + backgroundImage + ")");
-    });
-  },
-  ratingPassive: function (element) {
-    $(element).find(".rating-passive").each(function () {
-      var _this = $(this);
-      for (var i = 0; i < 5; i++) {
-        if (i < _this.attr("data-rating")) {
-          $(this).find(".stars").append("<figure class='active fa fa-star'></figure>")
-        }
-        else {
-          _this.find(".stars").append("<figure class='fa fa-star'></figure>")
-        }
-      }
-    });
-  },
-  socialShare: function () {
+  socialShare: function() {
     var socialButtonsEnabled = 1;
     if (socialButtonsEnabled == 1) {
-      require.ensure([], function (require) {
+      require.ensure([], function(require) {
         require('jssocials');
-        $(".social-share").jsSocials({
-          shares: [
-            "twitter",
-            "facebook",
-            "googleplus",
-            "linkedin",
-            "pinterest"
-          ]
-        });
+        $(".social-share")
+          .jsSocials({
+            shares: [
+              "twitter",
+              "facebook",
+              "googleplus",
+              "linkedin",
+              "pinterest"
+            ]
+          });
       });
     }
   },
-  initializeFitVids: function () {
-   var videoBox = $$(".video");
+  initializeFitVids: function() {
+    var videoBox = $$(".video");
     if (videoBox.length > 0) {
-      require.ensure([],function (require) {
+      require.ensure([], function(require) {
         var fitvids = require('fitvids');
         fitvids(videoBox);
       });
     }
   },
-  initializeOwl: function () {
+  initializeOwl: function() {
     var owlCarousel = $$(".owl-carousel");
-    
-    owlCarousel.forEach(function (element) {
+
+    owlCarousel.forEach(function(element) {
       var _this = $$(element);
       var items = parseInt(_this.attr("data-owl-items"), 10);
       if (!items) {
@@ -139,41 +152,40 @@ var Main = {
       }
       var nav = parseInt(_this.attr("data-owl-nav"), 2);
       if (!nav) {
-        nav = 0;
+        nav = false;
       }
       var dots = parseInt(_this.attr("data-owl-dots"), 2);
       if (!dots) {
-        dots = 0;
+        dots = false;
       }
       var center = parseInt(_this.attr("data-owl-center"), 2);
       if (!center) {
-        center = 0;
+        center = false;
       }
       var loop = parseInt(_this.attr("data-owl-loop"), 2);
       if (!loop) {
-        loop = 0;
+        loop = false;
       }
       var margin = parseInt(_this.attr("data-owl-margin"), 2);
       if (!margin) {
-        margin = 0;
+        margin = false;
       }
       var autoWidth = parseInt(_this.attr("data-owl-auto-width"), 2);
       if (!autoWidth) {
-        autoWidth = 0;
+        autoWidth = false;
       }
       var navContainer = _this.attr("data-owl-nav-container");
       if (!navContainer) {
-        navContainer = 0;
+        navContainer = false;
       }
       var autoplay = _this.attr("data-owl-autoplay");
       if (!autoplay) {
-        autoplay = 0;
+        autoplay = false;
       }
       var fadeOut = _this.attr("data-owl-fadeout");
       if (!fadeOut) {
         fadeOut = 0;
-      }
-      else {
+      } else {
         fadeOut = "fadeOut";
       }
       var owlCarouselOption = {
@@ -192,28 +204,29 @@ var Main = {
         autoHeight: true,
         navText: []
       };
-      
-      Main.owlCarousel(owlCarousel,owlCarouselOption);
+
+      Main.owlCarousel(_this, owlCarouselOption);
     });
   },
-  owlCarousel: function (selector, option) {
-    
-    if (selector.length > 0){
-      require.ensure([],function (require) {
+  owlCarousel: function(selector, option) {
+
+    if (selector.length > 0) {
+      require.ensure([], function(require) {
         require('owl.carousel');
-        $(selector).owlCarousel(option);
+        $(selector)
+          .owlCarousel(option);
       });
     }
   },
-  trackpadScroll: function (method) {
-    require.ensure([], function (require) {
+  trackpadScroll: function(method) {
+    require.ensure([], function(require) {
       var scrollableBox = $(".tse-scrollable");
       var resultsWrapper = $(".results-wrapper");
       var resultsWrapperResults = resultsWrapper.find('.results');
       var resultsWrapperForm = resultsWrapper.find("form");
-      
+
       require('trackpad-scroll-js');
-      
+
       switch (method) {
         case "initialize":
           if (resultsWrapperForm.length) {
@@ -221,7 +234,7 @@ var Main = {
           }
           break;
         case "recalculate":
-          setTimeout(function () {
+          setTimeout(function() {
             if (scrollableBox.length) {
               scrollableBox.TrackpadScrollEmulator("recalculate");
             }
@@ -241,81 +254,470 @@ var Main = {
   //     }
   //     this.responsiveNavigation()
   // },
-  mapInit:function () {
-    var mapHomepage = $$('#map-homepage');
-    var mapDetail = $$('#map-detail');
-    
-    if (mapHomepage.length > 0 || mapDetail.length > 0){
-      require.ensure([],function (require) {
-        require('../maps/gmaps');
+  mapInit: function() {
+    var mapContainer = $$('[data-map-container]');
+    var mapContainerID;
+    var mapType;
+    var mapContainerExist = false;
+
+    if (mapContainer.length) {
+      mapType = mapContainer.attr('data-map-type');
+      mapContainerID = '#' + mapContainer.attr('id');
+      mapContainerExist = true;
+    }
+
+    if (mapContainerExist) {
+      require.ensure([], function(require) {
+        var GMaps = require('../lib/gmaps');
+
+        var mapStylesAdministrative = [{
+          "featureType": "administrative",
+          "elementType": "labels.text.fill",
+          "stylers": [{
+            "color": "#c6c6c6"
+          }]
+        }, {
+          "featureType": "landscape",
+          "elementType": "all",
+          "stylers": [{
+            "color": "#f2f2f2"
+          }]
+        }, {
+          "featureType": "poi",
+          "elementType": "all",
+          "stylers": [{
+            "visibility": "off"
+          }]
+        }, {
+          "featureType": "road",
+          "elementType": "all",
+          "stylers": [{
+            "saturation": -100
+          }, {
+            "lightness": 45
+          }]
+        }, {
+          "featureType": "road.highway",
+          "elementType": "all",
+          "stylers": [{
+            "visibility": "simplified"
+          }]
+        }, {
+          "featureType": "road.highway",
+          "elementType": "geometry.fill",
+          "stylers": [{
+            "color": "#ffffff"
+          }]
+        }, {
+          "featureType": "road.arterial",
+          "elementType": "labels.icon",
+          "stylers": [{
+            "visibility": "off"
+          }]
+        }, {
+          "featureType": "transit",
+          "elementType": "all",
+          "stylers": [{
+            "visibility": "off"
+          }]
+        }, {
+          "featureType": "water",
+          "elementType": "all",
+          "stylers": [{
+            "color": "#dde6e8"
+          }, {
+            "visibility": "on"
+          }]
+        }];
+        var mapStylesAll = [{
+          "featureType": "all",
+          "elementType": "labels.text.fill",
+          "stylers": [{
+            "saturation": 36
+          }, {
+            "color": "#333333"
+          }, {
+            "lightness": 40
+          }]
+        }, {
+          "featureType": "all",
+          "elementType": "labels.text.stroke",
+          "stylers": [{
+            "visibility": "on"
+          }, {
+            "color": "#ffffff"
+          }, {
+            "lightness": 16
+          }]
+        }, {
+          "featureType": "all",
+          "elementType": "labels.icon",
+          "stylers": [{
+            "visibility": "off"
+          }]
+        }, {
+          "featureType": "administrative",
+          "elementType": "all",
+          "stylers": [{
+            "visibility": "off"
+          }]
+        }, {
+          "featureType": "administrative",
+          "elementType": "geometry.fill",
+          "stylers": [{
+            "color": "#fefefe"
+          }, {
+            "lightness": 20
+          }]
+        }, {
+          "featureType": "administrative",
+          "elementType": "geometry.stroke",
+          "stylers": [{
+            "color": "#fefefe"
+          }, {
+            "lightness": 17
+          }, {
+            "weight": 1.2
+          }]
+        }, {
+          "featureType": "landscape",
+          "elementType": "geometry",
+          "stylers": [{
+            "lightness": 20
+          }, {
+            "color": "#ececec"
+          }]
+        }, {
+          "featureType": "landscape.man_made",
+          "elementType": "all",
+          "stylers": [{
+            "visibility": "on"
+          }, {
+            "color": "#f0f0ef"
+          }]
+        }, {
+          "featureType": "landscape.man_made",
+          "elementType": "geometry.fill",
+          "stylers": [{
+            "visibility": "on"
+          }, {
+            "color": "#f0f0ef"
+          }]
+        }, {
+          "featureType": "landscape.man_made",
+          "elementType": "geometry.stroke",
+          "stylers": [{
+            "visibility": "on"
+          }, {
+            "color": "#d4d4d4"
+          }]
+        }, {
+          "featureType": "landscape.natural",
+          "elementType": "all",
+          "stylers": [{
+            "visibility": "on"
+          }, {
+            "color": "#ececec"
+          }]
+        }, {
+          "featureType": "poi",
+          "elementType": "all",
+          "stylers": [{
+            "visibility": "on"
+          }]
+        }, {
+          "featureType": "poi",
+          "elementType": "geometry",
+          "stylers": [{
+            "lightness": 21
+          }, {
+            "visibility": "off"
+          }]
+        }, {
+          "featureType": "poi",
+          "elementType": "geometry.fill",
+          "stylers": [{
+            "visibility": "on"
+          }, {
+            "color": "#d4d4d4"
+          }]
+        }, {
+          "featureType": "poi",
+          "elementType": "labels.text.fill",
+          "stylers": [{
+            "color": "#303030"
+          }]
+        }, {
+          "featureType": "poi",
+          "elementType": "labels.icon",
+          "stylers": [{
+            "saturation": "-100"
+          }]
+        }, {
+          "featureType": "poi.attraction",
+          "elementType": "all",
+          "stylers": [{
+            "visibility": "on"
+          }]
+        }, {
+          "featureType": "poi.business",
+          "elementType": "all",
+          "stylers": [{
+            "visibility": "on"
+          }]
+        }, {
+          "featureType": "poi.government",
+          "elementType": "all",
+          "stylers": [{
+            "visibility": "on"
+          }]
+        }, {
+          "featureType": "poi.medical",
+          "elementType": "all",
+          "stylers": [{
+            "visibility": "on"
+          }]
+        }, {
+          "featureType": "poi.park",
+          "elementType": "all",
+          "stylers": [{
+            "visibility": "on"
+          }]
+        }, {
+          "featureType": "poi.park",
+          "elementType": "geometry",
+          "stylers": [{
+            "color": "#dedede"
+          }, {
+            "lightness": 21
+          }]
+        }, {
+          "featureType": "poi.place_of_worship",
+          "elementType": "all",
+          "stylers": [{
+            "visibility": "on"
+          }]
+        }, {
+          "featureType": "poi.school",
+          "elementType": "all",
+          "stylers": [{
+            "visibility": "on"
+          }]
+        }, {
+          "featureType": "poi.school",
+          "elementType": "geometry.stroke",
+          "stylers": [{
+            "lightness": "-61"
+          }, {
+            "gamma": "0.00"
+          }, {
+            "visibility": "off"
+          }]
+        }, {
+          "featureType": "poi.sports_complex",
+          "elementType": "all",
+          "stylers": [{
+            "visibility": "on"
+          }]
+        }, {
+          "featureType": "road.highway",
+          "elementType": "geometry.fill",
+          "stylers": [{
+            "color": "#ffffff"
+          }, {
+            "lightness": 17
+          }]
+        }, {
+          "featureType": "road.highway",
+          "elementType": "geometry.stroke",
+          "stylers": [{
+            "color": "#ffffff"
+          }, {
+            "lightness": 29
+          }, {
+            "weight": 0.2
+          }]
+        }, {
+          "featureType": "road.arterial",
+          "elementType": "geometry",
+          "stylers": [{
+            "color": "#ffffff"
+          }, {
+            "lightness": 18
+          }]
+        }, {
+          "featureType": "road.local",
+          "elementType": "geometry",
+          "stylers": [{
+            "color": "#ffffff"
+          }, {
+            "lightness": 16
+          }]
+        }, {
+          "featureType": "transit",
+          "elementType": "geometry",
+          "stylers": [{
+            "color": "#f2f2f2"
+          }, {
+            "lightness": 19
+          }]
+        }, {
+          "featureType": "water",
+          "elementType": "geometry",
+          "stylers": [{
+            "color": "#dadada"
+          }, {
+            "lightness": 17
+          }]
+        }];
+
+        var map = new GMaps({
+          div: mapContainerID,
+          zoom: 14,
+          zoomControl: false,
+          // scrollwheel: false,
+          mapTypeControl: false,
+          scaleControl: false,
+          streetViewControl: false,
+          lat: 40.7344458,
+          lng: -73.86704922,
+          mapType: "roadmap",
+          idle: function() {
+            reqwest({
+              url: 'http://localhost:3000/listings',
+              type: 'json',
+              error: function(err) {
+                console.log(err);
+              },
+              success: function(markers) {
+                loadResults(markers);
+              }
+            });
+          },
+          height: '100%',
+          styles: mapStylesAdministrative,
+        });
+
+        function loadResults(data) {
+          // var markers_data = [];
+
+          data.forEach(function(item) {
+
+            if (!item.latitude || !item.longitude) {
+              return;
+            }
+
+            var marker, thumbnailImage, markerContent;
+
+            if (item["gallery"] === undefined) {
+              thumbnailImage = require("../../img/items/default.png");
+            } else {
+              thumbnailImage = item["gallery"][0];
+            }
+
+            markerContent = '<div class="marker" data-marker-id="' + item.id + '">' +
+              '<div class="title">' + item.title + '</div>' +
+              '<div class="marker-wrapper">' +
+              (item['featured'] == 1 ? '<div class="tag"><i class="fa fa-check"></i></div>' : '') +
+              '<div class="pin">' + '<div class="image" style="background-image: url(' + thumbnailImage + ');"></div>' +
+              '</div>' +
+              '</div>' +
+              '</div>';
+            
+            map.drawOverlay({
+              mouseenter: function(e) {
+                console.log(e);
+              },
+              lat: item.latitude,
+              lng: item.longitude,
+              content: markerContent,
+              layer: 'overlayImage',
+              verticalAlign: 'bottom',
+              horizontalAlign: 'center'
+            });
+
+
+          });
+
+        }
+
       });
     }
+
   },
-  responsiveNavigation: function () {
+  responsiveNavigation: function() {
     if (this.viewport.isSize('xs')) {
       var hasChild = $$(".has-child");
-      
-      $$("body").addClass("nav-btn-only");
-      
-      hasChild.children("a").attr("data-toggle", "collapse");
-      hasChild.find(".nav-wrapper").addClass("collapse");
-      
-      $$(".mega-menu .heading").forEach(function (element, iter) {
-        var _this = $$(element);
-        var elHtml = _this[0].outerHTML;
-        var parent = $$(_this.parent());
-        var linkCollapseID = '#mega-menu-collapse-' + iter;
-        parent.prepend("<a href='" + linkCollapseID + "' class='has-child' aria-controls='" + linkCollapseID + "' data-toggle='collapse'>" + elHtml + "</a>");
-        _this.remove();
-        
-      });
-      $$(".mega-menu ul").forEach(function (element, iter) {
-        var _this = $$(element);
-        _this.attr("id", "mega-menu-collapse-" + iter);
-        _this.addClass("collapse");
-      })
+
+      $$("body")
+        .addClass("nav-btn-only");
+
+      hasChild.children("a")
+        .attr("data-toggle", "collapse");
+      hasChild.find(".nav-wrapper")
+        .addClass("collapse");
+
+      $$(".mega-menu .heading")
+        .forEach(function(element, iter) {
+          var _this = $$(element);
+          var elHtml = _this[0].outerHTML;
+          var parent = $$(_this.parent());
+          var linkCollapseID = '#mega-menu-collapse-' + iter;
+          parent.prepend("<a href='" + linkCollapseID + "' class='has-child' aria-controls='" + linkCollapseID + "' data-toggle='collapse'>" + elHtml + "</a>");
+          _this.remove();
+
+        });
+      $$(".mega-menu ul")
+        .forEach(function(element, iter) {
+          var _this = $$(element);
+          _this.attr("id", "mega-menu-collapse-" + iter);
+          _this.addClass("collapse");
+        })
     }
   },
-  
-  equalHeight: function (container) {
+
+  equalHeight: function(container) {
     var currentTallest = 0,
       currentRowStart = 0,
       rowDivs = [],
       $el,
       topPosition = 0;
-    
+
     if (!this.viewport.isSize('xs')) {
-      $(container).find('.equal-height').each(function () {
-        $el = $(this);
-        $($el).height('auto');
-        topPostion = $el.position().top;
-        if (currentRowStart != topPostion) {
+      $(container)
+        .find('.equal-height')
+        .each(function() {
+          $el = $(this);
+          $($el)
+            .height('auto');
+          topPostion = $el.position()
+            .top;
+          if (currentRowStart != topPostion) {
+            for (currentDiv = 0; currentDiv < rowDivs.length; currentDiv++) {
+              rowDivs[currentDiv].height(currentTallest);
+            }
+            rowDivs.length = 0; // empty the array
+            currentRowStart = topPostion;
+            currentTallest = $el.height();
+            rowDivs.push($el);
+          } else {
+            rowDivs.push($el);
+            currentTallest = (
+              currentTallest < $el.height()) ? (
+              $el.height()) : (
+              currentTallest);
+          }
           for (currentDiv = 0; currentDiv < rowDivs.length; currentDiv++) {
             rowDivs[currentDiv].height(currentTallest);
           }
-          rowDivs.length = 0; // empty the array
-          currentRowStart = topPostion;
-          currentTallest = $el.height();
-          rowDivs.push($el);
-        }
-        else {
-          rowDivs.push($el);
-          currentTallest = (
-                           currentTallest < $el.height()) ? (
-                             $el.height()) : (
-                             currentTallest);
-        }
-        for (currentDiv = 0; currentDiv < rowDivs.length; currentDiv++) {
-          rowDivs[currentDiv].height(currentTallest);
-        }
-      });
+        });
     }
   },
-  
-  rating: function () {
-    
+
+  rating: function() {
+
     var ratingBox = $$('.visitor-rating .star-rating');
-    
+
     var ratingElement =
       '<span class="stars">' +
       '<i class="fa fa-star s1" data-score="1"></i>' +
@@ -329,9 +731,9 @@ var Main = {
       '<i class="fa fa-star s9" data-score="9"></i>' +
       '<i class="fa fa-star s10" data-score="10"></i>' +
       '</span>';
-    
-    if (ratingBox.length > 0){
-      ratingBox.forEach(function (element) {
+
+    if (ratingBox.length > 0) {
+      ratingBox.forEach(function(element) {
         var _this = $$(element);
         _this.append(ratingElement);
         if (_this.hasClass('active')) {
@@ -342,46 +744,57 @@ var Main = {
         var rating = _this.attr('data-rating');
         for (var e = 0; e < rating; e++) {
           var rate = e + 1;
-          _this.children('.stars').children('.s' + rate).addClass('active');
+          _this.children('.stars')
+            .children('.s' + rate)
+            .addClass('active');
         }
       });
       var ratingActive = $$('.star-rating.active i');
-  
-      ratingActive.on('mouseover mouseout',function (e) {
-        e.preventDefault();
-        var _this = $$(this);
-        var dataScore = _this.attr('data-score');
-        for (var i = 0; i < dataScore; i++) {
-          var a = i + 1;
-          _this.parent().children('.s' + a).toggleClass('hover');
-        }
-      }).on('click',function (e) {
-        e.preventDefault();
-        var _this = $$(this);
-        var dataScore = _this.attr('data-score');
-        var input =  _this.closest('.star-rating').find("input").val(dataScore);
-        _this.parent().children('.fa').removeClass('active');
-        for (var i = 0; i < dataScore; i++) {
-          var a = i + 1;
-          _this.parent().children('.s' + a).addClass('active');
-        }
-        return false;
-      });
+
+      ratingActive.on('mouseover mouseout', function(e) {
+          e.preventDefault();
+          var _this = $$(this);
+          var dataScore = _this.attr('data-score');
+          for (var i = 0; i < dataScore; i++) {
+            var a = i + 1;
+            _this.parent()
+              .children('.s' + a)
+              .toggleClass('hover');
+          }
+        })
+        .on('click', function(e) {
+          e.preventDefault();
+          var _this = $$(this);
+          var dataScore = _this.attr('data-score');
+          var input = _this.closest('.star-rating')
+            .find("input")
+            .val(dataScore);
+          _this.parent()
+            .children('.fa')
+            .removeClass('active');
+          for (var i = 0; i < dataScore; i++) {
+            var a = i + 1;
+            _this.parent()
+              .children('.s' + a)
+              .addClass('active');
+          }
+          return false;
+        });
     }
   },
-  timeOutActions: function (_this) {
-    setTimeout(function () {
-      if (_this.find(".map").length) {
+  timeOutActions: function(_this) {
+    setTimeout(function() {
+      if (_this.find(".map")
+        .length) {
         var modalDialog = _this.find(".modal-dialog");
         var dataAddress = modalDialog.data("address");
         var dataMarkerDrag = modalDialog.data("marker-drag");
         var dataLatitude = modalDialog.data("latitude");
         var dataLongitude = modalDialog.data("longitude");
-        
+
         if (dataAddress) {
           simpleMap(0, 0, "map-modal", dataMarkerDrag, dataAddress);
-        }
-        else {
+        } else {
           simpleMap(dataLatitude, dataLongitude, "map-modal", dataMarkerDrag);
         }
       }

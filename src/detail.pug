@@ -27,8 +27,7 @@ block append content
 					while n <= 9
 						-var idCurrent = n++
 						.image
-							.bg-transfer
-								img(src=require('assets/img/items/' + idCurrent + '.jpg') alt='')
+							.bg-transfer(data-bg=require('assets/img/items/' + idCurrent + '.jpg'))
 	.container
 		.row
 			.col-md-7.col-sm-7
@@ -62,8 +61,8 @@ block append content
 					h2 Reviews
 					.review
 						.image
-							.bg-transfer
-								img(src=require('assets/img/person-02.jpg') alt='')
+							.bg-transfer(data-bg=require('assets/img/person-02.jpg'))
+								//img(src=require('assets/img/person-02.jpg') alt='')
 						.description
 							figure
 								.rating-passive(data-rating='4')
@@ -75,8 +74,8 @@ block append content
 					// end review
 					.review
 						.image
-							.bg-transfer
-								img(src=require('assets/img/person-01.jpg') alt='')
+							.bg-transfer(data-bg=require('assets/img/person-01.jpg'))
+								//img(src=require('assets/img/person-01.jpg') alt='')
 						.description
 							figure
 								.rating-passive(data-rating='5')
@@ -136,7 +135,8 @@ block append content
 			.col-md-5.col-sm-5
 				.detail-sidebar
 					section.shadow
-						#map-detail.map.height-250px
+						-var mapOption = {"very-long": "piece of' ","data": true}
+						#map-detail.map.height-250px(data-map-container data-map-type='simple' data-json=mapOption)
 						// end map
 						.content
 							.vertical-aligned-elements

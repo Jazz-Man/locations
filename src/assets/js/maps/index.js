@@ -63,8 +63,8 @@ var mapStylesAdministrative = [
   }]
 }];
 var Main = require('../main');
-var RichMarker = require('./richmarker-compiled');
-var InfoBox = require('./infobox');
+var RichMarker = require('./../lib/richmarker');
+var InfoBox = require('./../lib/infobox');
 var data = require('./map-data');
 var MarkerClusterer = require('./markerclusterer');
 
@@ -92,7 +92,6 @@ function heroMap(_latitude, _longitude, element, markerTarget, sidebarResultTarg
       // method  : "GET",
       success : function (markers) {
         placeMarkers(markers);
-        // Main.trackpadScroll("recalculate");
       },
       error   : function (e) {
         console.log(e);
@@ -106,7 +105,6 @@ function heroMap(_latitude, _longitude, element, markerTarget, sidebarResultTarg
   var i;
   var a;
   function placeMarkers(markers) {
-    console.log(markers);
     var markerSelector = $(".marker");
     var newMarkers = [];
     for (i = 0; i < markers.length; i++) {
@@ -211,7 +209,7 @@ function heroMap(_latitude, _longitude, element, markerTarget, sidebarResultTarg
         method  : "GET",
         success : function (results) {
           // console.log(JSON.parse(JSON.parse(results)[0]));
-          infoboxOptions = {
+        var  infoboxOptions = {
             content               : JSON.parse(JSON.parse(results)[0]),
             disableAutoPan        : false,
             pixelOffset           : new google.maps.Size(-135, -50),
@@ -278,6 +276,7 @@ function heroMap(_latitude, _longitude, element, markerTarget, sidebarResultTarg
         }
       }
     }
+    
     function openSidebarDetail(id) {
       $.ajax({
         url    : "assets/external/sidebar_detail.html",
@@ -493,8 +492,7 @@ function simpleMap(_latitude, _longitude, element, markerDrag, place) {
 //Autocomplete ---------------------------------------------------------------------------------------------------------
 
 function autoComplete(map, marker) {
-    if ($("#address-autocomplete")
-        .length) {
+    if ($("#address-autocomplete").length) {
         if (!map) {
             map = new google.maps.Map(document.getElementById("address-autocomplete"));
         }

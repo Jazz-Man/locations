@@ -284,8 +284,7 @@ mixin listingCard(itemClass)
 					.label.label-default Bar & Grill
 					h3 Bambi Planet Houseboat Bar& Grill
 					h4 3857 Losh Lane
-				.image.bg-transfer
-					img(src=require('assets/img/items/3.jpg') alt='')
+				.image.bg-transfer(data-bg=require('assets/img/items/3.jpg'))
 			.additional-info
 				figure.circle(title='Featured')
 					i.fa.fa-check
@@ -328,10 +327,7 @@ mixin recentItems
 							.label.label-default Restaurant
 							h3 Marky’s Restaurant
 							h4 63 Birch Street
-						// end description
-						.image.bg-transfer
-							img(src=require('assets/img/items/' + idItem + '.jpg') alt='')
-						// end image
+						.image.bg-transfer(data-bg=require('assets/img/items/' + idItem + '.jpg'))
 					+controlsMore
 
 mixin sidebarSearchFilter

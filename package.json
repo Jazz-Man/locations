@@ -2,10 +2,10 @@
   "name": "locations_dev",
   "version": "0.0.0",
   "description": "A resume website",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "dev": "webpack-dev-server --hot --inline --devtool eval",
-    "test": "rm -rf dist && webpack",
+    "dev": "webpack-dev-server",
+    "webpack": "webpack",
     "rest": "node rest-server.js"
   },
   "repository": {
@@ -19,6 +19,7 @@
   },
   "homepage": "https://bitbucket.org/tirastec/locations_dev#readme",
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "bootstrap-datepicker": "^1.6.4",
     "bootstrap-fileinput": "^4.3.4",
     "bootstrap-select": "^1.12.1",
@@ -26,7 +27,6 @@
     "countdown": "https://github.com/hilios/jQuery.countdown/archive/2.0.2.tar.gz",
     "domtastic": "^0.12.3",
     "fitvids": "^2.0.0",
-    "gmaps": "^0.4.24",
     "icheck": "^1.0.2",
     "is_js": "^0.9.0",
     "jquery-multifile": "git+https://github.com/fyneworks/multifile.git",
@@ -62,7 +62,6 @@
     "url-loader": "^0.5.7",
     "webpack": "^2.1.0-beta.27",
     "webpack-dev-server": "^2.1.0-beta.11",
-    "webpack-stats-plugin": "^0.1.4",
     "write-file-webpack-plugin": "^3.4.2"
   }
 }
