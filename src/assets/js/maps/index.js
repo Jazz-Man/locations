@@ -162,8 +162,6 @@ function heroMap(_latitude, _longitude, element, markerTarget, sidebarResultTarg
     // Create marker using RichMarker plugin -------------------------------------------------------------------
     function renderRichMarker(i, method) {
       if (method == "latitudeLongitude") {
-        //console.log( map.getBounds().contains( new google.maps.LatLng( markers[i]["latitude"],
-        // markers[i]["longitude"] ) ) );
         marker = new RichMarker({
           position : new google.maps.LatLng(markers[i]["latitude"], markers[i]["longitude"]),
           map      : map,
@@ -199,6 +197,7 @@ function heroMap(_latitude, _longitude, element, markerTarget, sidebarResultTarg
       }
     }
     var lastInfobox;
+    
     function openInfobox(id, _this, i) {
       $.ajax({
         url     : "http://localhost:3000/infobox",
