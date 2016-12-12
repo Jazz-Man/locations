@@ -27,6 +27,7 @@
     "countdown": "https://github.com/hilios/jQuery.countdown/archive/2.0.2.tar.gz",
     "domtastic": "^0.12.3",
     "fitvids": "^2.0.0",
+    "form-serialize": "^0.7.1",
     "icheck": "^1.0.2",
     "is_js": "^0.9.0",
     "jquery-multifile": "git+https://github.com/fyneworks/multifile.git",

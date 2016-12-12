@@ -1,6 +1,6 @@
 extends common/layout
 block append vars
-	- var bodyClass = 'homepage'
+	- var bodyClass = 'home'
 block append content
 
 	.hero-section.full-screen.has-map.has-sidebar
@@ -18,10 +18,22 @@ block append content
 							h2
 								| Search Results
 								span.results-number
-						.results-content
+						#results-content
+						button#wpas-load-btn.btn.btn-primary Load More Results
+						#wpas-load
 		.form.search-form.vertical
 			.container
-				form
+				- var formData = {
+				-			resultsWrap:'#wpas-results',
+				-			resultsPreloader:'#wpas-load',
+				-			buttonText:'Load More Results',
+				-			buttonLoad:'#wpas-load-btn',
+				-			callback:'ajax_callback',
+				-			loading:'http://localhost:8080/upages/wp-content/plugins/wpas/img/loading.gif',
+				-			showDefault:true,
+				-			urlHash:'results',
+				-	}
+				form(data-ajax-form data-ajax-form-option=formData)
 					.row
 						.col-md-4.col-sm-4
 							.wrapper.clearfix

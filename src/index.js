@@ -13,6 +13,7 @@ $$(document).ready(function () {
   
   Main.trackpadScroll();
   Main.mapInit();
+  Main.wpas();
   require('bootstrap-select');
   // require('./assets/js/maps');
   

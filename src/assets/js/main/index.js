@@ -1,6 +1,8 @@
-var is = require('is_js');
+// var is = require('is_js');
 var $$ = require('domtastic');
 var reqwest = require('reqwest');
+
+
 
 var Main = {
   viewport: {
@@ -36,10 +38,10 @@ var Main = {
       'role': 'dialog',
       'aria-labelledby': target
     };
-    var body = $$("body");
-    var modalBox = body.append('<div id="' + target + '"></div>')
-      .find('#' + target + '');
-    modalBox.attr(modalAtr)
+    var modalBox = $$("body")
+      .append('<div id="' + target + '"></div>')
+      .find('#' + target)
+      .attr(modalAtr)
       .html('<i class="loading-icon fa fa-circle-o-notch fa-spin"></i>');
 
     $("#" + target + ".modal")
@@ -55,15 +57,12 @@ var Main = {
           },
           success: function(results) {
             _this.append(results);
-            $(".selectpicker")
-              .selectpicker();
-            _this.find(".gallery")
-              .addClass("owl-carousel");
+            $(".selectpicker").selectpicker();
+            _this.find(".gallery").addClass("owl-carousel");
             MAIN.ratingPassive(".modal");
             var img = _this.find(".gallery img:first")[0];
             if (img) {
-              $(img)
-                .load(function() {
+              $(img).load(function() {
                   MAIN.timeOutActions(_this);
                 });
             } else {
@@ -71,10 +70,8 @@ var Main = {
             }
             MAIN.socialShare();
             _this.on("hidden.bs.modal", function() {
-              $(lastClickedMarker)
-                .removeClass("active");
-              $(".pac-container")
-                .remove();
+              // $(lastClickedMarker).removeClass("active");
+              $(".pac-container").remove();
               _this.remove();
             });
           },
@@ -85,22 +82,18 @@ var Main = {
 
       });
 
-    $("#" + target + ".modal")
-      .modal("show");
+    $("#" + target + ".modal").modal("show");
 
   },
   bgTransfer: function() {
-    $$(".bg-transfer")
-      .forEach(function(element) {
+    $$(".bg-transfer").forEach(function(element) {
         var _this = $$(element);
         var backgroundImage = _this.attr("data-bg");
         _this.css("background-image", "url(" + backgroundImage + ")");
       });
   },
   ratingPassive: function(element) {
-    $(element)
-      .find(".rating-passive")
-      .each(function() {
+    $(element).find(".rating-passive").each(function() {
         var _this = $(this);
         for (var i = 0; i < 5; i++) {
           if (i < _this.attr("data-rating")) {
@@ -119,8 +112,7 @@ var Main = {
     if (socialButtonsEnabled == 1) {
       require.ensure([], function(require) {
         require('jssocials');
-        $(".social-share")
-          .jsSocials({
+        $(".social-share").jsSocials({
             shares: [
               "twitter",
               "facebook",
@@ -254,89 +246,19 @@ var Main = {
   //     this.responsiveNavigation()
   // },
   
-  
+  wpas:function () {
+    
+    var ajaxForm = require('../components/ajax-form');
+    
+    var form = new ajaxForm({
+      elem: '[data-ajax-form]',
+      ajax_complete: function (e) {
+        console.log(e);
+      }
+    });
+  },
   mapInit: function() {
-    var mapContainer = $$('[data-map-container]');
-    var mapContainerID = '#' + mapContainer.attr('id');
-    var mapType = mapContainer.attr('data-map-type');
-
-    if (mapContainerID) {
-      require.ensure([], function(require) {
-        var GMaps = require('../lib/gmaps');
-        var mapStylesAdministrative = require('../lib/map-styles');
-        
-        var map = new GMaps({
-          div: mapContainerID,
-          zoom: 14,
-          zoomControl: false,
-          // scrollwheel: false,
-          mapTypeControl: false,
-          scaleControl: false,
-          streetViewControl: false,
-          lat: 40.7344458,
-          lng: -73.86704922,
-          mapType: "roadmap",
-          idle: function() {
-            reqwest({
-              url: 'http://localhost:3000/listings',
-              type: 'json',
-              error: function(err) {
-                console.log(err);
-              },
-              success: function(markers) {
-                loadResults(markers);
-              }
-            });
-          },
-          height: '100%',
-          styles: mapStylesAdministrative,
-        });
-
-        function loadResults(data) {
-
-          data.forEach(function(item) {
-
-            if (!item.latitude || !item.longitude) {
-              return;
-            }
-
-            var marker, thumbnailImage, markerContent;
-
-            if (item["gallery"] === undefined) {
-              thumbnailImage = require("../../img/items/default.png");
-            } else {
-              thumbnailImage = item["gallery"][0];
-            }
-
-            markerContent = '<div class="marker" data-marker-id="' + item.id + '">' +
-              '<div class="title">' + item.title + '</div>' +
-              '<div class="marker-wrapper">' +
-              (item.featured == 1 ? '<div class="tag"><i class="fa fa-check"></i></div>' : '') +
-              '<div class="pin">' + '<div class="image" style="background-image: url(' + thumbnailImage + ');"></div>' +
-              '</div>' +
-              '</div>' +
-              '</div>';
-            
-            map.drawOverlay({
-              mouseenter: function(e) {
-                console.log(e);
-              },
-              lat: item.latitude,
-              lng: item.longitude,
-              content: markerContent,
-              layer: 'overlayImage',
-              verticalAlign: 'bottom',
-              horizontalAlign: 'center'
-            });
-
-
-          });
-
-        }
-
-      });
-    }
-
+    require('../maps');
   },
   responsiveNavigation: function() {
     if (this.viewport.isSize('xs')) {
