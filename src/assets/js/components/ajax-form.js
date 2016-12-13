@@ -2,6 +2,8 @@ var $$ = require('domtastic');
 var serialize = require('form-serialize');
 var reqwest = require('reqwest');
 
+var autoComplete = require('./autoComplete');
+
 
 function AjaxForm(options) {
 
@@ -17,9 +19,9 @@ function AjaxForm(options) {
   this.storage = null;
   this.storege_key = "wpasInstance_" + this.elemID;
   this.show_default = this.getOption('showDefaultResults');
-  
+
   this.init();
-  
+
 }
 
 AjaxForm.prototype.showEl = function(el) {
@@ -117,16 +119,14 @@ AjaxForm.prototype.appendResContainer = function(res) {
   return this.results_container.append(res);
 };
 
-AjaxForm.prototype.urlHash = function () {
+AjaxForm.prototype.urlHash = function() {
   return this.getOption('urlHash');
 };
 
-AjaxForm.prototype.respData = function (resp) {
+AjaxForm.prototype.respData = function(resp) {
   this.resp_data = JSON.parse(resp.data);
   return this.resp_data
 };
-
-
 
 AjaxForm.prototype.sendRequest = function(data, page) {
 
@@ -134,7 +134,7 @@ AjaxForm.prototype.sendRequest = function(data, page) {
 
   this.hideEl(this.button_load);
   this.showEl(this.loadingImage);
-  
+
   reqwest({
     url: upages_params.ajaxurl,
     method: 'post',
@@ -146,12 +146,12 @@ AjaxForm.prototype.sendRequest = function(data, page) {
     },
     success: function(resp) {
       var res = _this.respData(resp);
-      
+
       _this.appendResContainer(res.results);
       _this.hideEl(_this.loadingImage);
       _this.current_page = res.current_page;
       var max_page = res.max_page;
-  
+
       if (max_page < 1 || this.current_page == max_page) {
         _this.hideEl(_this.button_load);
       } else {
@@ -162,7 +162,7 @@ AjaxForm.prototype.sendRequest = function(data, page) {
       _this.unlockForm();
     },
     complete: function(resp) {
-      if (_this.ajax_complete){
+      if (_this.ajax_complete) {
         var _resp = _this.respData(resp);
         _this.ajax_complete.apply(_resp, [_resp]);
       }
@@ -173,22 +173,55 @@ AjaxForm.prototype.sendRequest = function(data, page) {
   });
 };
 
-AjaxForm.prototype.init = function() {
+AjaxForm.prototype.autoComplete = function() {
+  var inputs = this.elem.find('input[type="text"]');
+  var _this = this;
+
+  inputs.forEach(function(e) {
+    var demo1 = new autoComplete({
+      selector: e,
+      minChars: 1,
+      source: function(term, suggest) {
+        term = term.toLowerCase();
+        var choices = JSON.parse($$(e).attr('data-auto-complete'));
+        var suggestions = [];
   
+        choices.forEach(function (e) {
+          if (~e.toLowerCase().indexOf(term)) {
+            suggestions.push(e);
+          }
+        });
+        suggest(suggestions);
+      },
+      onSelect: function(e, term, item){
+        e.preventDefault();
+        if (_this.formLocked()) {
+          return;
+        }
+        _this.lockForm();
+        _this.submitForm();
+        console.log(term);
+      }
+    });
+  });
+};
+
+AjaxForm.prototype.init = function() {
+
   var _this = this;
   this.preloaderInit();
   if (window.location.hash.slice(1) == this.urlHash()) {
     this.storage = JSON.parse(localStorage.getItem("wpasInstance_" + this.elemID));
   }
-
+  this.autoComplete();
   this.setPage(1);
   this.setRequest(this.getSerialize());
 
   if (this.results_container.length) {
     if (this.storage !== null) {
       this.results_container.html(this.storage.results.html);
-      
-      if (this.ajax_complete){
+
+      if (this.ajax_complete) {
         var _resp = this.storage.results.ajax;
         this.ajax_complete.apply(_resp, [_resp]);
       }
@@ -196,6 +229,7 @@ AjaxForm.prototype.init = function() {
       this.sendRequest(this.request_data, this.current_page);
     }
   }
+
 
   this.elem.on('submit', function(e) {
     e.preventDefault();

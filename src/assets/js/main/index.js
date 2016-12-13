@@ -247,18 +247,84 @@ var Main = {
   // },
   
   wpas:function () {
-    
+    var mapContainer = $$('[data-map-container]');
+    var mapContainerID = '#' + mapContainer.attr('id');
+    var mapType = mapContainer.attr('data-map-type');
+    var GMaps = require('../lib/gmaps');
+    var mapStylesAdministrative = require('../lib/map-styles');
     var ajaxForm = require('../components/ajax-form');
+    var map;
+    if (mapContainer.length){
+      map = new GMaps({
+        div: mapContainerID,
+        zoom: 5,
+        zoomControl: false,
+        // scrollwheel: false,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: false,
+        lat: 48.9257791,
+        lng: 24.692838,
+        mapType: "roadmap",
+        height: '100%',
+        styles: mapStylesAdministrative,
+      });
+    }
     
     var form = new ajaxForm({
       elem: '[data-ajax-form]',
-      ajax_complete: function (e) {
-        console.log(e);
+      
+      ajax_complete: function (data) {
+        if (mapContainer.length){
+          var marcers = data.marcers;
+  
+          marcers.forEach(function(item) {
+    
+            if (!item.latitude || !item.longitude) {
+              return;
+            }
+    
+            var markerContent = '<div class="marker" data-marker-id="' + item.id + '">' +
+                                '<div class="title">' + item.title + '</div>' +
+                                '<div class="marker-wrapper">' +
+                                (item.featured == 1 ? '<div class="tag"><i class="fa fa-check"></i></div>' : '') +
+                                '<div class="pin">' + '<div class="image" style="background-image: url(' + item.thumbnail + ');"></div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>';
+    
+            map.drawOverlay({
+              mouseenter: function(e) {
+                marcerMouseEvent(e);
+              },
+              mouseleave: function(e) {
+                marcerMouseEvent(e);
+              },
+              lat: item.latitude,
+              lng: item.longitude,
+              content: markerContent,
+              layer: 'overlayImage',
+              verticalAlign: 'bottom',
+              horizontalAlign: 'center'
+            });
+    
+    
+          });
+        }
       }
     });
+  
+    function marcerMouseEvent(e) {
+      var marker = $$(e.el).find('.marker');
+      var markerID = marker.attr('data-marker-id');
+      var resultsContent = $$('#results-content');
+      var itemResult = resultsContent.find("[data-listing-id='"+markerID+"'] > a");
+      
+      itemResult.toggleClass('hover-state');
+    }
   },
   mapInit: function() {
-    require('../maps');
+    // require('../maps');
   },
   responsiveNavigation: function() {
     if (this.viewport.isSize('xs')) {
