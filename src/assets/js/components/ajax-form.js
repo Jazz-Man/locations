@@ -8,19 +8,21 @@ var autoComplete = require('./autoComplete');
 function AjaxForm(options) {
 
   this.elem = $$(options.elem);
-  this.elemID = this.elem.attr('id');
-  this.ajax_complete = options.ajax_complete;
-  this.current_page = 1;
-
-  this.results_preloader = $$(this.getOption('resultsPreloader'));
-  this.results_container = $$(this.getOption('resultsContainer'));
-
-  this.button_load = $$(this.getOption('buttonLoad'));
-  this.storage = null;
-  this.storege_key = "wpasInstance_" + this.elemID;
-  this.show_default = this.getOption('showDefaultResults');
-
-  this.init();
+  if (this.elem.length){
+    this.elemID = this.elem.attr('id');
+    this.ajax_complete = options.ajax_complete;
+    this.current_page = 1;
+  
+    this.results_preloader = $$(this.getOption('resultsPreloader'));
+    this.results_container = $$(this.getOption('resultsContainer'));
+  
+    this.button_load = $$(this.getOption('buttonLoad'));
+    this.storage = null;
+    this.storege_key = "wpasInstance_" + this.elemID;
+    this.show_default = this.getOption('showDefaultResults');
+  
+    this.init();
+  }
 
 }
 

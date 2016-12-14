@@ -3,7 +3,6 @@ var $$ = require('domtastic');
 var reqwest = require('reqwest');
 
 
-
 var Main = {
   viewport: {
     viewPorts: [
@@ -89,7 +88,13 @@ var Main = {
     $$(".bg-transfer").forEach(function(element) {
         var _this = $$(element);
         var backgroundImage = _this.attr("data-bg");
+      if (backgroundImage){
         _this.css("background-image", "url(" + backgroundImage + ")");
+      }else {
+        var img = _this.find('img');
+        img.css('display','none');
+        _this.css("background-image", "url(" + img.attr("src") + ")");
+      }
       });
   },
   ratingPassive: function(element) {

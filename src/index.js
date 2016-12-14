@@ -10,9 +10,8 @@ var Main = require('./assets/js/main');
 
 $$(document).ready(function () {
   "use strict";
-  
   Main.trackpadScroll();
-  Main.mapInit();
+  // Main.mapInit();
   Main.wpas();
   require('bootstrap-select');
   // require('./assets/js/maps');

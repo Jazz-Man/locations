@@ -860,3 +860,31 @@ form {
       }
     }
   }
+
+.acf-fields {
+  &, .acf-postbox {
+    position: relative !important;
+    }
+  .acf-field{
+    margin: initial !important;
+    padding: initial !important;
+    clear: none !important;
+    border: {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        };
+
+    textarea{
+      padding: initial !important;
+      }
+    }
+  > .acf-field{
+
+    }
+  }
+
+//.acf-fields>.acf-field{
+//
+//  }

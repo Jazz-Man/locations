@@ -179,11 +179,11 @@ function getPlugins() {
 
 
 
-  if (isProd) {
-    // plugins.push(
-    //     new webpack.optimize.UglifyJsPlugin(uglifyOption)
-    // );
-  }
+  // if (isProd) {
+  //   plugins.push(
+  //       new webpack.optimize.UglifyJsPlugin(uglifyOption)
+  //   );
+  // }
 
   return plugins;
 }

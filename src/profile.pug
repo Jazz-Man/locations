@@ -9,117 +9,207 @@ block append content
 		// end page-title
 		section
 			.row
-				.col-md-6.col-sm-6.col-md-offset-3.col-sm-offset-3
-					form.form.inputs-underline
-						section
-							.user-details.box
-								.user-image
-									.image
-										.bg-transfer(data-bg=require('assets/img/person-01.jpg'))
-										.single-file-input
-											input#user_image(type='file' name='user_image')
-											div
-												| Upload a picture
-												i.fa.fa-upload
-									// end image
-								// end user-image
-								.description.clearfix
-									h3 Your current plan
-									h2 Gold Package
-									a.btn.btn-default.btn-rounded.btn-xs(href='#') Change
-									hr
-									figure
-										.pull-left
-											strong Next payment:
-										.pull-right 24/12/2015
-								// end description
-						// end user-details
-						section
-							h3 About You
-							.row
-								.col-md-6.col-sm-6
-									.form-group
-										label(for='first_name') First Name
-										input#first_name.form-control(type='text' name='first_name' value='Jane')
-									// end form-group
-								// end col-md-6
-								.col-md-6.col-sm-6
-									.form-group
-										label(for='last_name') Last Name
-										input#last_name.form-control(type='text' name='last_name' value='Green')
-									// end form-group
-								// end col-md-6
-								.col-md-6.col-sm-6
-									.form-group
-										label(for='email') Email
-										input#email.form-control(type='email' name='email' value='jane@example.com')
-									// end form-group
-								// end col-md-6
-								.col-md-6.col-sm-6
-									.form-group
-										label(for='phone') Phone
-										input#phone.form-control(type='text' name='phone' value='+1 260-478-7987')
-									// end form-group
-								// end col-md-6
-							// end row
-							.form-group
-								label(for='message') About You
-								textarea#message.form-control(rows='2' name='message' placeholder='Something about me')
-							// end form-group
-						section
-							h3 Your Social Networks
-							.row
-								.col-md-6.col-sm-6
-									.form-group
-										label(for='facebook') Facebook
-										input#facebook.form-control(type='text' name='facebook' placeholder='Facebook')
-									// end form-group
-								// end col-md-6
-								.col-md-6.col-sm-6
-									.form-group
-										label(for='twitter') Twitter
-										input#twitter.form-control(type='text' name='twitter' placeholder='Twitter')
-									// end form-group
-								// end col-md-6
-								.col-md-6.col-sm-6
-									.form-group
-										label(for='pinterest') Pinterest
-										input#pinterest.form-control(type='text' name='pinterest' placeholder='Pinterest')
-									// end form-group
-								// end col-md-6
-								.col-md-6.col-sm-6
-									.form-group
-										label(for='youtube') Youtube
-										input#youtube.form-control(type='text' name='youtube' placeholder='Youtube')
-									// end form-group
-								// end col-md-6
-							// end row
-						section.center
-							.form-group
-								button.btn.btn-primary.btn-rounded(type='submit') Save Changes
-							// end form-group
-					// end form
-					hr
-				// end col-md-6
-			// end row
-		section
-			section
-				.row
-					.col-md-4.col-sm-4.col-md-offset-4.col-sm-offset-4
-						h3.center Change Your Password
-						form.form.inputs-underline
-							.form-group
-								label(for='current_password') Current Password
-								input#current_password.form-control(type='password' name='current_password' value='******')
-							// end form-group
-							.form-group
-								label(for='new_password') New Password
-								input#new_password.form-control(type='password' name='new_password' placeholder='New Password')
-							// end form-group
-							.form-group
-								label(for='confirm_new_password') Confirm New Password
-								input#confirm_new_password.form-control(type='password' name='confirm_new_password' placeholder='Confirm New Password')
-							// end form-group
-							.form-group.center
-								button.btn.btn-primary.btn-framed.btn-rounded.btn-light-frame(type='submit') Change Password
-							// end form-group
+				.col-md-1.col-sm-1.col-md-offset-3.col-sm-offset-3.box.text-center
+					ul.nav.nav-pills.nav-stacked
+						li.active
+							a(href='#picture', data-toggle='tab')
+								i.fa.fa-picture-o.fa-2x(aria-hidden="true")
+						li
+							a(href='#a', data-toggle='tab')
+								i.fa.fa-user.fa-2x(aria-hidden="true")
+						li
+							a(href='#b', data-toggle='tab')
+								i.fa.fa-users.fa-2x(aria-hidden="true")
+						li
+							a(href='#c', data-toggle='tab')
+								i.fa.fa-lock.fa-2x(aria-hidden="true")
+						li
+							a(href='#d', data-toggle='tab')
+								i.fa.fa-envelope.fa-2x(aria-hidden="true")
+						li
+							a(href='#e', data-toggle='tab')
+								i.fa.fa-bell.fa-2x(aria-hidden="true")
+						li
+							a(href='#f', data-toggle='tab')
+								i.fa.fa-sign-in.fa-2x(aria-hidden="true")
+						li
+							a(href='#g', data-toggle='tab')
+								i.fa.fa-trash.fa-2x(aria-hidden="true")
+				.col-md-6.col-sm-6
+					.tab-content
+						#a.tab-pane.active.fade.in
+							section
+								h3.center About You
+								form.form.inputs-underline
+									.row
+										.col-md-6.col-sm-6
+											.form-group
+												label(for='first_name') First Name
+												input#first_name.form-control(type='text' name='first_name' value='Jane')
+											// end form-group
+										// end col-md-6
+										.col-md-6.col-sm-6
+											.form-group
+												label(for='last_name') Last Name
+												input#last_name.form-control(type='text' name='last_name' value='Green')
+											// end form-group
+										// end col-md-6
+										.col-md-6.col-sm-6
+											.form-group
+												label(for='email') Email
+												input#email.form-control(type='email' name='email' value='jane@example.com')
+											// end form-group
+										// end col-md-6
+										.col-md-6.col-sm-6
+											.form-group
+												label(for='phone') Phone
+												input#phone.form-control(type='text' name='phone' value='+1 260-478-7987')
+											// end form-group
+										// end col-md-6
+										.col-md-12.col-sm-12
+											.form-group
+												label(for='message') About You
+												textarea#message.form-control(rows='2' name='message' placeholder='Something about me')
+
+										.col-md-12.col-sm-12
+											.form-group.center
+												button.btn.btn-primary.btn-rounded(type='submit') Save Changes
+							hr
+						#b.tab-pane.fade
+							section
+								h3.center Your Social Networks
+								form.form.inputs-underline
+									.row
+										.col-md-6.col-sm-6
+											.form-group
+												label(for='facebook') Facebook
+												input#facebook.form-control(type='text' name='facebook' placeholder='Facebook')
+											// end form-group
+										// end col-md-6
+										.col-md-6.col-sm-6
+											.form-group
+												label(for='twitter') Twitter
+												input#twitter.form-control(type='text' name='twitter' placeholder='Twitter')
+											// end form-group
+										// end col-md-6
+										.col-md-6.col-sm-6
+											.form-group
+												label(for='pinterest') Pinterest
+												input#pinterest.form-control(type='text' name='pinterest' placeholder='Pinterest')
+											// end form-group
+										// end col-md-6
+										.col-md-6.col-sm-6
+											.form-group
+												label(for='youtube') Youtube
+												input#youtube.form-control(type='text' name='youtube' placeholder='Youtube')
+											// end form-group
+										// end col-md-6
+										.col-md-12.col-sm-12
+											.form-group.center
+												button.btn.btn-primary.btn-rounded(type='submit') Save Changes
+							hr
+						#c.tab-pane.fade
+							section
+								h3.center Change Your Password
+								form.form.inputs-underline
+									.row
+										.col-md-6.col-sm-6.col-md-offset-3.col-sm-offset-3
+												.form-group
+													label(for='current_password') Current Password
+													input#current_password.form-control(type='password' name='current_password' value='******')
+												// end form-group
+												.form-group
+													label(for='new_password') New Password
+													input#new_password.form-control(type='password' name='new_password' placeholder='New Password')
+												// end form-group
+												.form-group
+													label(for='confirm_new_password') Confirm New Password
+													input#confirm_new_password.form-control(type='password' name='confirm_new_password' placeholder='Confirm New Password')
+												// end form-group
+												.form-group.center
+													button.btn.btn-primary.btn-rounded(type='submit') Change Password
+												// end form-group
+						#d.tab-pane.fade
+							section
+								h3.center Notifications
+								form.form.inputs-underline
+									.row
+										.col-md-6.col-sm-6.col-md-offset-3.col-sm-offset-3
+											p.text-info Email me when:
+											ul.checkboxes
+												li
+													label#checkbox-fixed-navigation
+														input(type='checkbox' name='fixed_navigation')
+														| Someone sends me a private message
+											hr
+											.form-group.center
+												button.btn.btn-primary.btn-rounded(type='submit') Save Changes
+
+						#e.tab-pane.fade
+							section
+								h3.center Web notifications
+								form.form.inputs-underline
+									.row
+										.col-md-6.col-sm-6.col-md-offset-3.col-sm-offset-3
+											p.text-info Receiving Notifications:
+											ul.checkboxes
+												li
+													label
+														input(type='checkbox', name='um-notifyme[upgrade_role]')
+														| When my membership level is changed
+
+												li
+													label
+														input(type='checkbox', name='um-notifyme[comment_reply]')
+														| When a member replies to one of my comments
+												li
+													label
+														input(type='checkbox', name='um-notifyme[user_comment]')
+														| When a member comments on my posts
+												li
+													label
+														input(type='checkbox', name='um-notifyme[guest_comment]')
+														| When a guest comments on my posts
+												li
+													label
+														input(type='checkbox', name='um-notifyme[profile_view]')
+														| When a member views my profile
+												li
+													label
+														input(type='checkbox', name='um-notifyme[profile_view_guest]')
+														| When a guest views my profile
+												li
+													label
+														input(type='checkbox', name='um-notifyme[bbpress_user_reply]')
+														| When a member replies to one of my topics
+						#f.tab-pane.fade
+							section
+								h3.center Social Connect
+						#g.tab-pane.fade
+							section
+								h3.center Delete Account
+								.alert.alert-info
+									|	Are you sure you want to delete your account? This will erase all of your account
+									| data from the site. To delete your account enter your password below
+								form.form.inputs-underline
+									.row
+										.col-md-6.col-sm-6.col-md-offset-3.col-sm-offset-3
+											.form-group
+												label(for='delete_password') Password
+												input#delete_password.form-control(type='password' name='current_password' value='******')
+											.form-group.center
+												button.btn.btn-primary.btn-rounded(type='submit') Delete Account
+						#picture.tab-pane.fade
+							section
+								h3.center Delete Account
+								.alert.alert-info
+									|	Are you sure you want to delete your account? This will erase all of your account
+									| data from the site. To delete your account enter your password below
+								form.form.inputs-underline
+									.row
+										.col-md-6.col-sm-6.col-md-offset-3.col-sm-offset-3
+											.form-group
+												label(for='delete_password') Password
+												input#delete_password.form-control(type='password' name='current_password' value='******')
+											.form-group.center
+												button.btn.btn-primary.btn-rounded(type='submit') Delete Account

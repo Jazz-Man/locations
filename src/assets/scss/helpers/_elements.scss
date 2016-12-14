@@ -85,7 +85,8 @@ dl {
     }
   }
 
-.home {
+.home,.archive {
+
   h2 {
     @include opacity(.8);
     color: $color-default;
