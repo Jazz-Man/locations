@@ -1,0 +1,173 @@
+div.zabuto_calendar {
+  margin: 0;
+  padding: 0;
+
+  .table {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    th, td {
+      padding: 4px 2px;
+      text-align: center;
+    }
+
+    tr {
+      th, td {
+        background-color: #fff;
+      }
+
+      &.calendar-month-header th {
+        background-color: #fafafa;
+
+        span {
+          cursor: pointer;
+          display: inline-block;
+          padding-bottom: 10px;
+        }
+      }
+
+      &.calendar-dow-header th {
+        background-color: #f0f0f0;
+      }
+
+      &:last-child {
+        border-bottom: 1px solid #ddd;
+      }
+
+      &.calendar-month-header th {
+        padding-top: 12px;
+        padding-bottom: 4px;
+      }
+    }
+  }
+
+  .table-bordered tr.calendar-month-header th {
+    border-left: 0;
+    border-right: 0;
+
+    &:first-child {
+      border-left: 1px solid #ddd;
+    }
+  }
+
+  div.calendar-month-navigation {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    padding-top: 5px;
+  }
+
+  tr {
+    &.calendar-dow-header th, &.calendar-dow td {
+      width: 14%;
+    }
+  }
+
+  .table tr td {
+    div.day {
+      margin: 0;
+      padding-top: 7px;
+      padding-bottom: 7px;
+    }
+
+    &.event div.day {
+      background-color: #fff0c3;
+    }
+  }
+
+  ul.legend li.event {
+    background-color: #fff0c3;
+  }
+
+  .table tr td {
+    &.dow-clickable, &.event-clickable {
+      cursor: pointer;
+    }
+  }
+
+  .badge-today, div.legend span.badge-today {
+    background-color: #357ebd;
+    color: #fff;
+    text-shadow: none;
+  }
+
+  .badge-event, div.legend span.badge-event {
+    background-color: #ff9b08;
+    color: #fff;
+    text-shadow: none;
+  }
+
+  .badge-event {
+    font-size: .95em;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 4px;
+  }
+
+  div.legend {
+    margin-top: 5px;
+    text-align: right;
+
+    span {
+      color: #999;
+      font-size: 10px;
+      font-weight: normal;
+
+      &.legend-text:after, &.legend-block:after, &.legend-list:after {
+        content: ' ';
+      }
+
+      &.legend-spacer {
+        &:after {
+          content: ' ';
+        }
+
+        padding-left: 25px;
+      }
+    }
+  }
+
+  ul.legend {
+    > span {
+      padding-left: 2px;
+    }
+
+    display: inline-block;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: inline-block;
+      height: 11px;
+      width: 11px;
+      margin-left: 5px;
+    }
+
+    div.zabuto_calendar ul.legend li:first-child {
+      margin-left: 7px;
+    }
+
+    li:last-child {
+      margin-right: 5px;
+    }
+  }
+
+  div.legend span.badge {
+    font-size: .9em;
+    border-radius: 5px 5px 5px 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 3px;
+  }
+}
+
+@media (max-width: 979px) {
+  div.zabuto_calendar .table {
+    th, td {
+      padding: 2px 1px;
+    }
+  }
+}

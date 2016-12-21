@@ -1,4 +1,4 @@
-@import "variables";
+@import "../variables";
 body::before {
   display : none;
   content : "lg";
@@ -102,18 +102,6 @@ body::before {
     content : "xs";
     }
 
-  .page-wrapper {
-    display    : block;
-    overflow-x : hidden;
-    overflow   : visible;
-    }
-  .page-wrapper #page-header, .page-wrapper #page-content, .page-wrapper #page-footer {
-    display : block;
-    }
-  .page-wrapper #page-header, .page-wrapper #page-footer {
-    height : auto;
-    }
-
   .gallery.detail {
     .image {
       height : 200px;
@@ -184,17 +172,6 @@ body::before {
               }
             }
           }
-        }
-      }
-    }
-  #page-header {
-    .add-listing {
-      padding : 3px 7px;
-      span {
-        display : none;
-        }
-      i {
-        margin-right : 0;
         }
       }
     }
@@ -290,3 +267,16 @@ body::before {
   }
 
 
+.pac-container {
+  background-color: #FFF;
+  z-index: 20;
+  position: fixed;
+  display: inline-block;
+  float: left;
+  }
+.modal{
+  z-index: 20;
+  }
+.modal-backdrop{
+  z-index: 10;
+  }

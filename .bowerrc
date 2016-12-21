@@ -1,6 +1,5 @@
 {
 	"ignoredDependencies": [
-		"bootstrap",
 		"bootstrap-sass",
 		"jquery"
 	]

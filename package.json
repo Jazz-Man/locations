@@ -23,6 +23,7 @@
     "bootstrap-datepicker": "^1.6.4",
     "bootstrap-fileinput": "^4.3.4",
     "bootstrap-select": "^1.12.1",
+    "bootstrap.native": "^1.1.0",
     "compass-mixins": "^0.12.10",
     "countdown": "https://github.com/hilios/jQuery.countdown/archive/2.0.2.tar.gz",
     "domtastic": "^0.12.3",

@@ -18,6 +18,8 @@ var pages = [
   'map',
   'submit',
   'profile',
+  'user',
+  'faq',
   'sign-in',
   'register',
   'reset-password',
@@ -78,6 +80,7 @@ var uglifyOption = {
 };
 var extractSCSS = new ExtractTextPlugin({
   filename: 'css/[name].css',
+  disable: true,
   // disable: isProd,
   allChunks: true
 });
@@ -138,7 +141,8 @@ function jadePage(name) {
           src: "http://maps.google.com/maps/api/js?key=AIzaSyBEDfNcQRmKQEyulDN8nGWjLYPm8s4YB58&libraries=places"
         },
         "https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js",
-        "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js", {
+        // "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
+        {
           tag: "noscript",
           innerHTML: "JavaScript is disabled in your browser. <a href='http://www.enable-javascript.com/' target='_blank'>Here</a> is how to enable it."
         }

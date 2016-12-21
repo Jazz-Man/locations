@@ -1,0 +1,60 @@
+extends common/layout
+
+block append content
+	.container
+		+breadcrumb
+		section.page-title.center
+			h1 Your Profile
+
+		section
+			.row
+				#navigation.col-md-1.col-sm-1.box.text-center
+					.logo
+						a(hef='home.html')
+							img.hidden-xs.hidden-sm(src='http://jskrishna.com/work/merkury/images/logo.png', alt='merkery_logo')
+							img.visible-xs.visible-sm.circle-logo(src='http://jskrishna.com/work/merkury/images/circle-logo.png', alt='merkery_logo')
+					ul.nav.nav-pills.nav-stacked
+						li.active
+							a(href='#about', data-toggle='tab')
+								i.fa.fa-picture-o.fa-2x(aria-hidden="true")
+								span.hidden-xs.hidden-sm About
+						li
+							a(href='#a', data-toggle='tab')
+								i.fa.fa-user.fa-2x(aria-hidden="true")
+								span.hidden-xs.hidden-sm Workflow
+						li
+							a(href='#b', data-toggle='tab')
+								i.fa.fa-users.fa-2x(aria-hidden="true")
+								span.hidden-xs.hidden-sm Statistics
+						li
+							a(href='#c', data-toggle='tab' title='Calender')
+								i.fa.fa-lock.fa-2x(aria-hidden="true")
+								span.hidden-xs.hidden-sm Calender
+						li
+							a(href='#d', data-toggle='tab')
+								i.fa.fa-envelope.fa-2x(aria-hidden="true")
+								span.hidden-xs.hidden-sm Users
+						li
+							a(href='#e', data-toggle='tab')
+								i.fa.fa-bell.fa-2x(aria-hidden="true")
+								span.hidden-xs.hidden-sm Setting
+				.col-md-10.col-sm-11.display-table-cell.v-align
+					.tab-content
+						#about.tab-pane.active.fade.in
+							section
+								h3.center About
+						#a.tab-pane.fade
+							section
+								h3.center Workflow
+						#b.tab-pane.fade
+							section
+								h3.center Statistics
+						#c.tab-pane.fade
+							section
+								h3.center Calender
+						#d.tab-pane.fade
+							section
+								h3.center Users
+						#e.tab-pane.fade
+							section
+								h3.center Setting

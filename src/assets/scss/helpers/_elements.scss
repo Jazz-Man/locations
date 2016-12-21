@@ -1,6 +1,7 @@
-@import "variables";
+@import "../variables";
 body {
   color: $color-grey-dark;
+  background: $light-gray;
   font-size: 14px;
   font-family: 'Lato', sans-serif;
   position: relative;
@@ -23,11 +24,11 @@ a {
   @include transition(.2s ease-in-out);
   @include transform(translateZ(0));
   @include transform-style(preserve-3d);
-  color: $color-default;
+  color: $blue;
   text-decoration: none;
   position: relative;
   &:hover, &:active, &:focus {
-    color: darken($color-default, 15%);
+    color: darken($blue, 15%);
     outline: none !important;
     text-decoration: none;
     }
@@ -36,7 +37,7 @@ a {
     font-weight: bold;
     text-transform: uppercase;
     &:hover, &:active, &:focus {
-      color: darken($color-default, 5%);
+      color: darken($blue, 5%);
       &.icon {
         i {
           color: $color-grey-dark;

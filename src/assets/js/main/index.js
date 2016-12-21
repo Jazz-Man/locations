@@ -1,6 +1,10 @@
 // var is = require('is_js');
+var GMaps = require('../lib/gmaps');
+var mapStylesAdministrative = require('../lib/map-styles');
+var bsn = require("../lib/bootstrap.native");
 var $$ = require('domtastic');
 var reqwest = require('reqwest');
+var autoComplete = require('../components/autoComplete');
 
 
 var Main = {
@@ -28,6 +32,127 @@ var Main = {
       return this.viewPorts.indexOf(this.viewPortSize()) >= this.viewPorts.indexOf(size);
     },
   },
+  
+  addListingNavInit:function () {
+    var _this = this;
+    var addListingBtn = $$('#nav-add-listing');
+    
+    var modalFrame = document.getElementById('modalFrame');
+    
+    addListingBtn.on('click',function (e) {
+      
+      reqwest({
+        url: upages_params.ajaxurl,
+        data: {
+          action: 'add_listing_modal'
+        },
+        success: function(resp) {
+          var modal = new bsn.Modal(modalFrame,{
+            content: JSON.parse(resp.data)
+          });
+  
+          modal.open();
+          _this.inputAutoComplete();
+          
+          var mapContainer = $$(modalFrame).find('#map-modal');
+          //
+          var mapContainerID = '#' + mapContainer.attr('id');
+          //
+          var input = document.getElementById('listing_address');
+          var searchBox = new google.maps.places.SearchBox(input);
+          //
+          var map = new GMaps({
+            div: mapContainerID,
+            zoom: 5,
+            zoomControl: false,
+            // scrollwheel: false,
+            mapTypeControl: false,
+            scaleControl: false,
+            streetViewControl: false,
+            lat: 48.9257791,
+            lng: 24.692838,
+            mapType: "roadmap",
+            height: '400px',
+            width: '100%',
+            styles: mapStylesAdministrative,
+            bounds_changed:function (e) {
+              searchBox.setBounds(map.map.getBounds());
+            }
+          });
+          
+          searchBox.addListener('places_changed', function() {
+            var places = searchBox.getPlaces();
+    
+            if (places.length == 0) {
+              return;
+            }
+            
+            var bounds = new google.maps.LatLngBounds();
+            places.forEach(function(place) {
+              var markerContent = '<div class="marker">' +
+                                  '<div class="title">' + place.name + ', '+place.vicinity+'</div>' +
+                                  '<div class="marker-wrapper">' +
+                                  '<div class="tag"><i class="fa fa-check"></i></div>' +
+                                  '<div class="pin">' +
+                                  '<div class="image"></div>' +
+                                  '</div>' +
+                                  '</div>' +
+                                  '</div>';
+              
+              
+              map.drawOverlay({
+                lat: place.geometry.location.lat(),
+                lng: place.geometry.location.lng(),
+                content: markerContent,
+                layer: 'overlayImage',
+                verticalAlign: 'bottom',
+                horizontalAlign: 'center'
+              });
+      
+              if (place.geometry.viewport) {
+                bounds.union(place.geometry.viewport);
+              } else {
+                bounds.extend(place.geometry.location);
+              }
+            });
+            map.map.fitBounds(bounds);
+          });
+          
+        },
+        error: function(err) {
+          console.log(err);
+        }
+      });
+    });
+  },
+  
+  inputAutoComplete:function () {
+    var inputs = $$('input[type="text"]');
+    if (inputs.length){
+      inputs.forEach(function(e) {
+        var _this = $$(e);
+        var dataSource = _this.attr('data-auto-complete');
+        if (dataSource){
+          new autoComplete({
+            selector: e,
+            minChars: 1,
+            source: function(term, suggest) {
+              term = term.toLowerCase();
+              var choices = JSON.parse(dataSource);
+              var suggestions = [];
+
+              choices.forEach(function (e) {
+                if (~e.toLowerCase().indexOf(term)) {
+                  suggestions.push(e);
+                }
+              });
+              suggest(suggestions);
+            }
+          });
+        }
+      });
+    }
+  },
   openModal: function(target, modalPath) {
     var MAIN = this;
     var modalAtr = {
@@ -37,51 +162,50 @@ var Main = {
       'role': 'dialog',
       'aria-labelledby': target
     };
-    var modalBox = $$("body")
-      .append('<div id="' + target + '"></div>')
-      .find('#' + target)
-      .attr(modalAtr)
-      .html('<i class="loading-icon fa fa-circle-o-notch fa-spin"></i>');
+    // var modalBox = $$("body")
+    //   .append('<div id="' + target + '"></div>')
+    //   .find('#' + target)
+    //   .attr(modalAtr)
+    //   .html('<i class="loading-icon fa fa-circle-o-notch fa-spin"></i>');
 
-    $("#" + target + ".modal")
-      .on("show.bs.modal", function() {
-        var _this = $(this);
-        lastModal = _this;
-        $.ajax({
-          url: "assets/external/" + modalPath,
-          // method: "POST",
-          //dataType: "html",
-          data: {
-            id: target
-          },
-          success: function(results) {
-            _this.append(results);
-            $(".selectpicker").selectpicker();
-            _this.find(".gallery").addClass("owl-carousel");
-            MAIN.ratingPassive(".modal");
-            var img = _this.find(".gallery img:first")[0];
-            if (img) {
-              $(img).load(function() {
-                  MAIN.timeOutActions(_this);
-                });
-            } else {
-              MAIN.timeOutActions(_this);
-            }
-            MAIN.socialShare();
-            _this.on("hidden.bs.modal", function() {
-              // $(lastClickedMarker).removeClass("active");
-              $(".pac-container").remove();
-              _this.remove();
-            });
-          },
-          error: function(e) {
-            console.log(e);
-          }
-        });
-
-      });
-
-    $("#" + target + ".modal").modal("show");
+    // $("#" + target + ".modal").on("show.bs.modal", function() {
+    //     var _this = $(this);
+    //     lastModal = _this;
+    //     $.ajax({
+    //       url: "assets/external/" + modalPath,
+    //       // method: "POST",
+    //       //dataType: "html",
+    //       data: {
+    //         id: target
+    //       },
+    //       success: function(results) {
+    //         _this.append(results);
+    //         $(".selectpicker").selectpicker();
+    //         _this.find(".gallery").addClass("owl-carousel");
+    //         MAIN.ratingPassive(".modal");
+    //         var img = _this.find(".gallery img:first")[0];
+    //         if (img) {
+    //           $(img).load(function() {
+    //               MAIN.timeOutActions(_this);
+    //             });
+    //         } else {
+    //           MAIN.timeOutActions(_this);
+    //         }
+    //         MAIN.socialShare();
+    //         _this.on("hidden.bs.modal", function() {
+    //           // $(lastClickedMarker).removeClass("active");
+    //           $(".pac-container").remove();
+    //           _this.remove();
+    //         });
+    //       },
+    //       error: function(e) {
+    //         console.log(e);
+    //       }
+    //     });
+    //
+    //   });
+    //
+    // $("#" + target + ".modal").modal("show");
 
   },
   bgTransfer: function() {
@@ -115,27 +239,23 @@ var Main = {
   socialShare: function() {
     var socialButtonsEnabled = 1;
     if (socialButtonsEnabled == 1) {
-      require.ensure([], function(require) {
-        require('jssocials');
-        $(".social-share").jsSocials({
-            shares: [
-              "twitter",
-              "facebook",
-              "googleplus",
-              "linkedin",
-              "pinterest"
-            ]
-          });
+      require('jssocials');
+      $(".social-share").jsSocials({
+        shares: [
+          "twitter",
+          "facebook",
+          "googleplus",
+          "linkedin",
+          "pinterest"
+        ]
       });
     }
   },
   initializeFitVids: function() {
     var videoBox = $$(".video");
     if (videoBox.length > 0) {
-      require.ensure([], function(require) {
-        var fitvids = require('fitvids');
-        fitvids(videoBox);
-      });
+      var fitvids = require('fitvids');
+      fitvids(videoBox);
     }
   },
   initializeOwl: function() {
@@ -207,41 +327,37 @@ var Main = {
   owlCarousel: function(selector, option) {
 
     if (selector.length > 0) {
-      require.ensure([], function(require) {
-        require('owl.carousel');
-        $(selector).owlCarousel(option);
-      });
+      require('owl.carousel');
+      $(selector).owlCarousel(option);
     }
   },
   
   trackpadScroll: function(method) {
-    require.ensure([], function(require) {
-      var scrollableBox = $(".tse-scrollable");
-      var resultsWrapper = $(".results-wrapper");
-      var resultsWrapperResults = resultsWrapper.find('.results');
-      var resultsWrapperForm = resultsWrapper.find("form");
-
-      require('trackpad-scroll-js');
-
-      switch (method) {
-        case "initialize":
-          if (resultsWrapperForm.length) {
-            resultsWrapperResults.height(resultsWrapper.height() - resultsWrapper.find('.form')[0].clientHeight);
+    var scrollableBox = $(".tse-scrollable");
+    var resultsWrapper = $(".results-wrapper");
+    var resultsWrapperResults = resultsWrapper.find('.results');
+    var resultsWrapperForm = resultsWrapper.find("form");
+  
+    require('trackpad-scroll-js');
+  
+    switch (method) {
+      case "initialize":
+        if (resultsWrapperForm.length) {
+          resultsWrapperResults.height(resultsWrapper.height() - resultsWrapper.find('.form')[0].clientHeight);
+        }
+        break;
+      case "recalculate":
+        setTimeout(function() {
+          if (scrollableBox.length) {
+            scrollableBox.TrackpadScrollEmulator("recalculate");
           }
-          break;
-        case "recalculate":
-          setTimeout(function() {
-            if (scrollableBox.length) {
-              scrollableBox.TrackpadScrollEmulator("recalculate");
-            }
-          }, 1000);
-          break;
-        default:
-          if (scrollableBox.length > 0) {
-            scrollableBox.TrackpadScrollEmulator();
-          }
-      }
-    });
+        }, 1000);
+        break;
+      default:
+        if (scrollableBox.length > 0) {
+          scrollableBox.TrackpadScrollEmulator();
+        }
+    }
   },
   // doneResizing: function () {
   //     var $equalHeight = $('.container');
@@ -255,8 +371,6 @@ var Main = {
     var mapContainer = $$('[data-map-container]');
     var mapContainerID = '#' + mapContainer.attr('id');
     var mapType = mapContainer.attr('data-map-type');
-    var GMaps = require('../lib/gmaps');
-    var mapStylesAdministrative = require('../lib/map-styles');
     var ajaxForm = require('../components/ajax-form');
     var map;
     if (mapContainer.length){
@@ -280,6 +394,7 @@ var Main = {
       elem: '[data-ajax-form]',
       
       ajax_complete: function (data) {
+        
         if (mapContainer.length){
           var marcers = data.marcers;
   
