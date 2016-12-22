@@ -28,13 +28,10 @@ Headers:		'Lato', sans-serif;
 -------------------------------------------------------------------*/
 @import "mixin";
 @import "variables";
-@import "compass";
 @import "vendor/vendor";
-@import "vendor/bourbon";
 @import "core/base";
-@import "layout/layout";
 @import "helpers/header";
-@import 'helpers/auto-complete';
+@import "helpers/auto-complete";
 @import "helpers/elements";
 @import "helpers/universal-classes";
 @import "helpers/classes";

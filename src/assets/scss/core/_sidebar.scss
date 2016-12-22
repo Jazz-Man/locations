@@ -1,0 +1,204 @@
+.sidebar-detail {
+  @include transition(.7s ease);
+  @include transform(translateX(100%));
+  @include transform-style(preserve-3d);
+  background-color: #ffffff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  padding: 10px 0;
+  section {
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(#000, .08);
+    margin-bottom: 15px;
+    margin-top: 15px;
+    &:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      }
+    }
+  h3 {
+    font-size: 18px;
+    font-weight: normal;
+    color: inherit;
+    margin-bottom: 20px;
+    }
+  .gallery-wrapper {
+    height: 100%;
+    position: relative;
+    .price {
+      font-size: 14px !important;
+      padding: 5px 10px !important;
+      }
+    }
+  .gallery {
+    height: 100%;
+    .owl-stage-outer {
+      height: 100%;
+      }
+    }
+  }
+
+.sidebar-detail, .modal {
+  .sidebar-wrapper {
+    padding: 0 20px;
+    }
+  .section-title {
+    margin-bottom: 15px;
+    position: relative;
+    margin-top: 10px;
+    h2 {
+      margin-left: 0;
+      margin-top: 0;;
+      margin-bottom: 0;
+      }
+    h4 {
+      @include opacity(.6);
+      font-size: 14px;
+      margin-bottom: 5px;
+      margin-top: 5px;
+      }
+    }
+  h5 {
+    font-size: 14px;
+    i {
+      color: rgba(#000, .2);
+      margin-right: 10px;
+      }
+    a {
+      color: inherit;
+      }
+    }
+  .label {
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 5px;
+    margin-right: 15px;
+    margin-top: 5px;
+    }
+  .rating-passive {
+    display: inline-block;
+    }
+  .owl-dots {
+    text-align: left;
+    }
+  .back {
+    @include border-radius(100%);
+    @include transit;
+    cursor: pointer;
+    border: 2px solid rgba(#000, .1);
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+    position: relative;
+    &:after {
+      @include elegant-font;
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: "\#";
+      width: 20px;
+      height: 20px;
+      width: 100%;
+      line-height: 36px;
+      font-size: 22px;
+      text-align: center;
+      color: $color-default;
+      }
+    &:hover {
+      border: 2px solid rgba(#000, .3);
+      }
+    }
+  .gallery {
+    @include opacity(0);
+    @include transit;
+    margin: 20px 0;
+    &.show {
+      @include opacity(1);
+      }
+    img {
+      display: block;
+      position: relative;
+      &:after {
+        @include opacity(.7);
+        @include gradient-black;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        content: "";
+        }
+      }
+    }
+  .ribbon {
+    top: inherit;
+    bottom: 0;
+    }
+  .controls-more {
+    margin: inherit;
+    bottom: inherit;
+    top: 5px;
+    z-index: 5;
+    ul {
+      bottom: inherit;
+      top: 35px;
+      li {
+        &:first-child {
+          a {
+            &:after {
+              @include transit;
+              width: 0;
+              height: 0;
+              border-style: solid;
+              border-width: 0 0 11px 11px;
+              border-color: transparent transparent #ffffff transparent;
+              content: "";
+              position: absolute;
+              right: 0px;
+              top: -10px;
+              bottom: inherit;
+              height: 11px;
+              width: 11px;
+              }
+            &:before {
+              width: 0;
+              height: 0;
+              border-style: solid;
+              border-width: 0 0 15px 14px;
+              border-color: transparent transparent rgba(#000, .05) transparent;
+              content: "";
+              position: absolute;
+              right: -2px;
+              top: -15px;
+              bottom: inherit;
+              height: 11px;
+              width: 11px;
+              }
+            &:hover {
+              &:after {
+                border-color: transparent transparent #e8e8e8 transparent;
+                }
+              }
+            }
+          }
+        &:last-child {
+          a {
+            &:before, &:after {
+              display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  .jssocials-share {
+    padding: 1px 3px 2px 3px;
+    .jssocials-share-logo {
+      font-size: 1em;
+      }
+    }
+  }

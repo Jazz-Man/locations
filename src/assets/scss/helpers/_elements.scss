@@ -1,4 +1,5 @@
 @import "../variables";
+
 body {
   color: $color-grey-dark;
   background: $light-gray;
@@ -27,6 +28,7 @@ a {
   color: $blue;
   text-decoration: none;
   position: relative;
+
   &:hover, &:active, &:focus {
     color: darken($blue, 15%);
     outline: none !important;
@@ -86,7 +88,8 @@ dl {
     }
   }
 
-.home,.archive {
+.home,
+.archive {
 
   h2 {
     @include opacity(.8);

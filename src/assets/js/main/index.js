@@ -333,25 +333,18 @@ var Main = {
   },
   
   trackpadScroll: function(method) {
-    var scrollableBox = $(".tse-scrollable");
-    var resultsWrapper = $(".results-wrapper");
-    var resultsWrapperResults = resultsWrapper.find('.results');
-    var resultsWrapperForm = resultsWrapper.find("form");
-  
     require('trackpad-scroll-js');
-  
+    var scrollableBox = $(".tse-scrollable");
     switch (method) {
-      case "initialize":
-        if (resultsWrapperForm.length) {
-          resultsWrapperResults.height(resultsWrapper.height() - resultsWrapper.find('.form')[0].clientHeight);
+      case "recalculate":
+        if (scrollableBox.length > 0) {
+          scrollableBox.TrackpadScrollEmulator(method);
         }
         break;
-      case "recalculate":
-        setTimeout(function() {
-          if (scrollableBox.length) {
-            scrollableBox.TrackpadScrollEmulator("recalculate");
-          }
-        }, 1000);
+      case "destroy":
+        if (scrollableBox.length > 0) {
+          scrollableBox.TrackpadScrollEmulator(method);
+        }
         break;
       default:
         if (scrollableBox.length > 0) {
@@ -359,26 +352,19 @@ var Main = {
         }
     }
   },
-  // doneResizing: function () {
-  //     var $equalHeight = $('.container');
-  //     for (var i = 0; i < $equalHeight.length; i++) {
-  //         this.equalHeight($equalHeight);
-  //     }
-  //     this.responsiveNavigation()
-  // },
   
   wpas:function () {
+    var ajaxForm = require('../components/ajax-form');
     var mapContainer = $$('[data-map-container]');
     var mapContainerID = '#' + mapContainer.attr('id');
-    var mapType = mapContainer.attr('data-map-type');
-    var ajaxForm = require('../components/ajax-form');
+    var _this = this;
     var map;
+    
     if (mapContainer.length){
       map = new GMaps({
         div: mapContainerID,
         zoom: 5,
         zoomControl: false,
-        // scrollwheel: false,
         mapTypeControl: false,
         scaleControl: false,
         streetViewControl: false,
@@ -387,53 +373,66 @@ var Main = {
         mapType: "roadmap",
         height: '100%',
         styles: mapStylesAdministrative,
+        idle:function (e) {
+          var form = new ajaxForm({
+            elem: '[data-ajax-form]',
+    
+            ajax_complete: function (data) {
+      
+              if (mapContainer.length){
+                var marcers = data.marcers;
+        
+                marcers.forEach(function(item) {
+          
+                  if (!item.latitude || !item.longitude) {
+                    return;
+                  }
+          
+                  var markerContent = '<div class="marker" data-marker-id="' + item.id + '">' +
+                                      '<div class="title">' + item.title + '</div>' +
+                                      '<div class="marker-wrapper">' +
+                                      (item.featured == 1 ? '<div class="tag"><i class="fa fa-check"></i></div>' : '') +
+                                      '<div class="pin">' + '<div class="image" style="background-image: url(' + item.thumbnail + ');"></div>' +
+                                      '</div>' +
+                                      '</div>' +
+                                      '</div>';
+          
+                  map.drawOverlay({
+                    mouseenter: function(e) {
+                      marcerMouseEvent(e);
+                    },
+                    mouseleave: function(e) {
+                      marcerMouseEvent(e);
+                    },
+                    lat: item.latitude,
+                    lng: item.longitude,
+                    content: markerContent,
+                    layer: 'overlayImage',
+                    verticalAlign: 'bottom',
+                    horizontalAlign: 'center'
+                  });
+          
+          
+                });
+              }
+            }
+          });
+          var formBox = form.elem.closest('.form.search-form.vertical');
+  
+          formBox.removeClass('hide').addClass('show');
+          if (!_this.viewport.isSize('xs')) {
+            var heroSectionHeigh = $$(".hero-section")[0].clientHeight;
+            var formWrapperHeight = formBox.find('.wrapper')[0].clientHeight;
+            formBox.css({
+              'position': 'absolute',
+              'top': ((heroSectionHeigh / 2) -(formWrapperHeight / 2) )+'px'
+            });
+          }
+          _this.trackpadScroll("destroy");
+        }
       });
     }
     
-    var form = new ajaxForm({
-      elem: '[data-ajax-form]',
-      
-      ajax_complete: function (data) {
-        
-        if (mapContainer.length){
-          var marcers = data.marcers;
-  
-          marcers.forEach(function(item) {
-    
-            if (!item.latitude || !item.longitude) {
-              return;
-            }
-    
-            var markerContent = '<div class="marker" data-marker-id="' + item.id + '">' +
-                                '<div class="title">' + item.title + '</div>' +
-                                '<div class="marker-wrapper">' +
-                                (item.featured == 1 ? '<div class="tag"><i class="fa fa-check"></i></div>' : '') +
-                                '<div class="pin">' + '<div class="image" style="background-image: url(' + item.thumbnail + ');"></div>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>';
-    
-            map.drawOverlay({
-              mouseenter: function(e) {
-                marcerMouseEvent(e);
-              },
-              mouseleave: function(e) {
-                marcerMouseEvent(e);
-              },
-              lat: item.latitude,
-              lng: item.longitude,
-              content: markerContent,
-              layer: 'overlayImage',
-              verticalAlign: 'bottom',
-              horizontalAlign: 'center'
-            });
-    
-    
-          });
-        }
-      }
-    });
-  
     function marcerMouseEvent(e) {
       var marker = $$(e.el).find('.marker');
       var markerID = marker.attr('data-marker-id');

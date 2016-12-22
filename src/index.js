@@ -51,22 +51,22 @@ $$(document).ready(function () {
 
 // Render hero search form ---------------------------------------------------------------------------------------------
   
-  if ($(".hero-section .form").find("select").length) {
-    $(".search-form select").on("rendered.bs.select", function () {
-      $(".search-form").addClass("show");
-      if (!Main.viewport.isSize('xs')) {
-        $(".search-form.vertical").css("top", ($(".hero-section").height() / 2) - ($(".search-form .wrapper").height() / 2));
-      }
-      Main.trackpadScroll("initialize");
-    });
-  }
-  else {
-    $(".search-form").addClass("show");
-    if (!Main.viewport.isSize('xs')) {
-      $(".search-form.vertical").css("top", ($(".hero-section").height() / 2) - ($(".search-form .wrapper").height() / 2));
-    }
-    Main.trackpadScroll("initialize");
-  }
+  // if ($(".hero-section .form").find("select").length) {
+  //   $(".search-form select").on("rendered.bs.select", function () {
+  //     $(".search-form").addClass("show");
+  //     if (!Main.viewport.isSize('xs')) {
+  //       $(".search-form.vertical").css("top", ($(".hero-section").height() / 2) - ($(".search-form .wrapper").height() / 2));
+  //     }
+  //     Main.trackpadScroll("initialize");
+  //   });
+  // }
+  // else {
+  //   $(".search-form").addClass("show");
+  //   if (!Main.viewport.isSize('xs')) {
+  //     $(".search-form.vertical").css("top", ($(".hero-section").height() / 2) - ($(".search-form .wrapper").height() / 2));
+  //   }
+  //   Main.trackpadScroll("initialize");
+  // }
 
 //  iCheck -------------------------------------------------------------------------------------------------------------
   

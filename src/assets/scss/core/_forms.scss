@@ -2,11 +2,11 @@
 @import "../mixin";
 
 #{$all-text-inputs} {
-  @include box-shadow(0px 0px 0px 2px rgba(#000, .1), inset 1px 0 5px rgba(#000, .03));
+  @include box-shadow(0px 0px 0px 2px rgba($black, .1), inset 1px 0 5px rgba($black, .03));
   @include border-radius(0);
   @include transition(.3s);
   @include transform-style(preserve-3d);
-  background-color: #ffffff;
+  background-color: $color-white;
   border: none;
   font-size: 14px;
   font-weight: 400;
@@ -18,14 +18,14 @@
   @include transform-style(preserve-3d);
   &:active,
   &:focus {
-    @include box-shadow(0px 0px 0px 2px rgba(#000, .2), inset 1px 0 5px rgba(#000, .0));
+    @include box-shadow(0px 0px 0px 2px rgba($black, .2), inset 1px 0 5px rgba($black, .0));
     }
   &:hover {
-    @include box-shadow(0px 0px 0px 2px rgba(#000, .2), inset 1px 0 5px rgba(#000, .0));
+    @include box-shadow(0px 0px 0px 2px rgba($black, .2), inset 1px 0 5px rgba($black, .0));
     }
   &.input-dark {
-    background-color: rgba(#000, .3);
-    color: #ffffff;
+    background-color: rgba($black, .3);
+    color: $color-white;
     }
   }
 
@@ -51,7 +51,7 @@ input[type="date"]::-webkit-input-placeholder {
 
 .icheckbox, .iradio {
   @include box-shadow(inset 0px 0px 0px 2px #e8e8e8);
-  background-color: #ffffff;
+  background-color: $color-white;
   cursor: pointer;
   display: inline-block;
   display: inline-block;
@@ -84,111 +84,46 @@ input[type="date"]::-webkit-input-placeholder {
   .form {
     &.vertical {
       ::-webkit-input-placeholder {
-        color: rgba(#fff, 1);
+        color: rgba($color-white, 1);
         }
       :-moz-placeholder {
-        color: rgba(#fff, 1);
+        color: rgba($color-white, 1);
         }
       ::-moz-placeholder {
-        color: rgba(#fff, 1);
+        color: rgba($color-white, 1);
         }
       :-ms-input-placeholder {
-        color: rgba(#fff, 1);
+        color: rgba($color-white, 1);
         }
       .btn[type=submit] {
         margin-top: 15px;
         width: inherit;
         }
       &.search-form {
-        .row, .container {
+        .row,
+        .container {
           height: 0;
           }
         }
       }
     }
-  select.form-control, select {
-    @include shadow;
-    @include transit;
-    @include border-radius(0);
-    background-color: $color-default;
-    border: none;
-    border-bottom: 1px solid rgba(#fff, .2);
-    color: #ffffff;
-    &:active, &:focus {
-      @include box-shadow(none);
-      border-bottom: 1px solid rgba(#fff, .2);
-      }
-    &:hover {
-      background-color: darken($color-default, 5%);
-      }
-    option {
-      background-color: #ffffff;
-      color: $color-grey-dark;
-      padding: 8px;
-      }
-    }
-  input[type="text"], input[type="url"], input[type="email"], input[type="date"], input[type="time"], input[type="search"], input[type="password"], input[type="number"], input[type="tel"], textarea.form-control {
+
+  #{$all-text-inputs} {
     @include border-radius(0);
     @include box-shadow(none);
-    @include box-shadow(inset 0px 0px 6px 3px rgba(#000, .05));
+    @include box-shadow(inset 0px 0px 6px 3px rgba($black, .05));
     @include transit;
     background-color: $color-default;
     border: none;
-    border-bottom: 1px solid rgba(#fff, .2);
-    color: #ffffff;
+    border-bottom: 1px solid rgba($color-white, .2);
+    color: $color-white;
     -webkit-appearance: none;
     &:active, &:focus, &:hover {
       background-color: darken($color-default, 5%);
-      border-bottom: 1px solid rgba(#fff, .2);
+      border-bottom: 1px solid rgba($color-white, .2);
       }
     }
 
-  .bootstrap-select {
-    &.open {
-      .dropdown-menu {
-        pointer-events: auto;
-        @include opacity(1);
-        visibility: visible;
-        @include transform(scale(1));
-        }
-      }
-    .btn {
-      @include border-radius(0);
-      @include transit;
-      @include box-shadow(none);
-      @include shadow;
-      background-color: $color-default;
-      border: none;
-      border-bottom: 1px solid rgba(#fff, .2);
-      color: #ffffff;
-      font-size: 14px;
-      outline: none !important;
-      padding: 12px;
-      text-transform: none;
-      &:active, &:focus, &:hover {
-        background-color: darken($color-default, 5%);
-        color: #ffffff;
-        top: 0;
-        }
-      }
-    .dropdown-menu {
-      @include border-radius(0);
-      background-clip: none;
-      border: none;
-      @include opacity(0);
-      @include transit;
-      @include transform(scale(.98));
-      display: block !important;
-      margin: 0;
-      margin-top: -1px;
-      padding: 0;
-      pointer-events: none;
-      visibility: hidden;
-      }
-    .dropdown-menu > li > a {
-      padding: 5px 12px;
-      }
-    }
   .form-control {
     height: auto;
     }
@@ -269,6 +204,16 @@ input[type="date"]::-webkit-input-placeholder {
           padding-bottom: 3px;
           }
         }
+
+      &.vertical {
+
+        .row > div[class*='col-'] {
+          @include border-radius(5px);
+          background-color: rgba($color-default, .8);
+          padding-top: 15px;
+          padding-bottom: 15px;
+          }
+        }
       }
     }
   }
@@ -284,6 +229,7 @@ input[type="date"]::-webkit-input-placeholder {
 
 .form {
   position: relative;
+
   &.vertical {
     .form-group {
       margin-bottom: 0;
@@ -294,19 +240,18 @@ input[type="date"]::-webkit-input-placeholder {
       @include shadow-big;
       background-color: $color-default;
       display: table;
-      height: 100%;
-      width: 100%;
+      @include size(100%);
       ::-webkit-input-placeholder {
-        color: rgba(#000, .5);
+        color: rgba($black, .5);
         }
       :-moz-placeholder {
-        color: rgba(#000, .5);
+        color: rgba($black, .5);
         }
       ::-moz-placeholder {
-        color: rgba(#000, .5);
+        color: rgba($black, .5);
         }
       :-ms-input-placeholder {
-        color: rgba(#000, .5);
+        color: rgba($black, .5);
         }
       }
     .row {
@@ -318,10 +263,10 @@ input[type="date"]::-webkit-input-placeholder {
     .row, .container {
       height: inherit;
       }
-    input[type="text"], input[type="email"], input[type="date"], input[type="time"], input[type="search"], input[type="password"], input[type="number"], input[type="tel"], input[type="url"], textarea.form-control {
+    #{$all-text-inputs} {
       @include border-radius(0);
       @include box-shadow(none);
-      background-color: #ffffff;
+      background-color: $color-white;
       border-bottom: none;
       color: inherit;
       &:active, &:focus, &:hover {
@@ -329,32 +274,7 @@ input[type="date"]::-webkit-input-placeholder {
         border-bottom: none;
         }
       }
-    select.form-control, select {
-      @include shadow;
-      @include transit;
-      @include border-radius(0);
-      background-color: #ffffff;
-      border-bottom: none;
-      color: inherit;
-      &:active, &:focus {
-        @include box-shadow(none);
-        border-bottom: none;
-        }
-      &:hover {
-        background-color: $color-grey-light;
-        }
-      }
-    .bootstrap-select {
-      .btn {
-        background-color: #ffffff;
-        border-bottom: none;
-        color: inherit;
-        &:active, &:focus, &:hover {
-          background-color: $color-grey-light;
-          color: inherit;
-          }
-        }
-      }
+
     .btn[type=submit] {
       margin-top: 0;
       text-align: center;
@@ -417,87 +337,38 @@ input[type="date"]::-webkit-input-placeholder {
   &.inputs-dark {
     form {
       ::-webkit-input-placeholder {
-        color: rgba(#fff, .8);
+        color: rgba($color-white, .8);
         }
       :-moz-placeholder {
-        color: rgba(#fff, .8);
+        color: rgba($color-white, .8);
         }
       ::-moz-placeholder {
-        color: rgba(#fff, .8);
+        color: rgba($color-white, .8);
         }
       :-ms-input-placeholder {
-        color: rgba(#fff, .8);
+        color: rgba($color-white, .8);
         }
       }
-    input[type="text"], input[type="email"], input[type="date"], input[type="time"], input[type="search"], input[type="password"], input[type="number"], input[type="tel"], input[type="url"], textarea.form-control {
+    #{$all-text-inputs} {
       background-color: darken($color-default, 8%);
-      color: #ffffff;
+      color: $color-white;
       &:active, &:focus, &:hover {
         background-color: darken($color-default, 12%);
         border-bottom: none;
         }
       }
-    select.form-control, select {
-      background-color: darken($color-default, 8%);
-      border-bottom: none;
-      color: #ffffff;
-      &:active, &:focus {
-        @include box-shadow(none);
-        border-bottom: none;
-        }
-      &:hover {
-        background-color: darken($color-default, 12%);
-        }
-      }
-    .bootstrap-select {
-      @include shadow;
-      .btn {
-        background-color: darken($color-default, 8%);
-        border-bottom: none;
-        color: #ffffff;
-        &:active, &:focus, &:hover {
-          background-color: darken($color-default, 8%);
-          color: #ffffff;
-          }
-        }
-      }
+
     .btn[type=submit] {
       background-color: darken($color-default, 15%);
       }
     .checkboxes {
-      color: #ffffff;
+      color: $color-white;
       }
     .icheckbox, .iradio {
       @include box-shadow(inset 0px 0px 0px 2px darken($color-default, 8%));
       background-color: darken($color-default, 8%);
       &:after {
-        color: #ffffff;
-        }
-      }
-    .ui-slider {
-      .noUi-base {
-        background-color: lighten($color-default, 20%);
-        .noUi-connect {
-          background-color: #ffffff;
-          }
-        .noUi-background {
-          background-color: lighten($color-default, 20%);
-          }
-        .noUi-handle {
-          background-color: $color-default;
-          border: 2px solid #ffffff;
-          &:hover, &.noUi-active {
-            @include box-shadow(0px 0px 0px 8px rgba(#fff, .07));
-            }
-          }
-        }
-      .values {
-        color: #ffffff;
-        input {
-          background-color: transparent;
-          border: none;
-          width: 49%;
-          }
+        color: $color-white;
         }
       }
     }
@@ -525,14 +396,14 @@ form {
     top: -20px;
     .status-icon {
       @include border-radius(50%);
+      @include size(40px);
       @include transit;
       @include shadow-big;
-      background-color: grey;
-      color: #ffffff;
-      height: 40px;
+      background-color: #808080;
+      color: $color-white;
       line-height: 40px;
       text-align: center;
-      width: 40px;
+
       &.valid {
         background-color: #50aa8d;
         }
@@ -540,13 +411,15 @@ form {
         background-color: #e45544;
         }
       }
+
     i {
       font-size: 18px;
       }
     }
   }
 
-.form, .input-group {
+.form,
+.input-group {
   &.inputs-underline {
     label:not(.no-margin) {
       @include opacity(.7);
@@ -557,61 +430,48 @@ form {
       position: relative;
       text-transform: uppercase;
       }
+
     #{$all-text-inputs} {
       @include box-shadow(none);
-      background-color: transparent;
-      border: none;
-      border-bottom: 2px solid rgba(#000, .08);
-      padding-left: 0;
       -webkit-appearance: none;
+      background-color: transparent;
+      border: 0;
+      border-bottom: 2px solid rgba($black, .08);
+      padding-left: 0;
       &:active, &:focus {
         @include box-shadow(none);
-        border-bottom: 2px solid rgba(#000, .15);
+        border-bottom: 2px solid rgba($black, .15);
         padding-left: 12px;
         }
       &:hover {
         @include box-shadow(none);
-        border-bottom: 2px solid rgba(#000, .1);
+        border-bottom: 2px solid rgba($black, .1);
         }
       }
     .input-group {
       .btn {
+        @include padding(8px 12px 9px 12px);
         background-color: transparent;
-        border-bottom: 2px solid rgba(#000, .08);
-        padding: 8px 12px 9px 12px;
+        border-bottom: 2px solid rgba($black, .08);
         }
       }
     .input-group-btn {
       .btn {
         @include box-shadow(none);
-        padding: 14px 12px 13px 12px;
-        }
-      }
-    .bootstrap-select {
-      @include box-shadow(none);
-      .btn {
-        @include box-shadow(none);
-        background-color: transparent;
-        border: none;
-        border-bottom: 2px solid rgba(#000, .08);
-        color: inherit;
-        padding-left: 0;
-        &:active, &:focus, &:hover {
-          @include box-shadow(none);
-          }
+        @include padding(14px 12px 13px 12px);
         }
       }
     ::-webkit-input-placeholder {
-      color: rgba(#000, .3);
+      color: rgba($black, .3);
       }
     :-moz-placeholder {
-      color: rgba(#000, .3);
+      color: rgba($black, .3);
       }
     ::-moz-placeholder {
-      color: rgba(#000, .3);
+      color: rgba($black, .3);
       }
     :-ms-input-placeholder {
-      color: rgba(#000, .3);
+      color: rgba($black, .3);
       }
     }
   }
@@ -645,63 +505,3 @@ form {
       }
     }
   }
-
-//.ui-slider {
-//  @include border-radius(0px);
-//  @include box-shadow(none);
-//  background-color: transparent;
-//  border: none;
-//  margin-top: -2px;
-//  .noUi-base {
-//    @include border-radius(0px);
-//    @include box-shadow(none);
-//    background-color: #e4e4e2;
-//    border: none;
-//    height: 2px;
-//    margin-top: 6px;
-//    .noUi-connect {
-//      @include box-shadow(none);
-//      background-color: $color-default;
-//      }
-//    .noUi-background {
-//      @include box-shadow(none);
-//      background-color: #e4e4e2;
-//      }
-//    .noUi-handle {
-//      @include transition(.2s);
-//      @include border-radius(50%);
-//      @include box-shadow(none);
-//      background-color: $color-default;
-//      border: 2px solid $color-default;
-//      cursor: pointer;
-//      height: 10px;
-//      left: 0px;
-//      top: -4px;
-//      width: 10px;
-//      &:before, &:after {
-//        display: none;
-//        }
-//      &:hover, &.noUi-active {
-//        @include box-shadow(0px 0px 0px 8px rgba(0, 0, 0, .07));
-//        }
-//      &.noUi-handle-upper {
-//        left: -8px;
-//        }
-//      }
-//    }
-//  .values {
-//    font-size: 10px;
-//    input {
-//      background-color: transparent;
-//      border: none;
-//      width: 49%;
-//      }
-//    input:first-child {
-//      float: left;
-//      }
-//    input:last-child {
-//      float: right;
-//      text-align: right;
-//      }
-//    }
-//  }

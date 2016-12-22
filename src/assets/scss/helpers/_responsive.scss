@@ -1,41 +1,42 @@
 @import "../variables";
+
 body::before {
-  display : none;
-  content : "lg";
+  content: "lg";
+  display: none;
   }
 
 .hero-section {
   &.has-sidebar {
     .map-wrapper {
-      width : 75%;
+      width: 75%;
       }
     .results-wrapper {
-      width : 25%;
+      width: 25%;
       }
     }
   .map-wrapper {
-    width : 100%;
+    width: 100%;
     }
   }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 992px - 1199px
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media (min-width : 992px) and (max-width : 1199px) {
+@media (min-width: 992px) and (max-width: 1199px) {
   body::before {
-    content : "md";
+    content: "md";
     }
   .hero-section {
     &.has-sidebar {
       .map-wrapper {
-        width : 65%;
+        width: 65%;
         }
       .results-wrapper {
-        width : 35%;
+        width: 35%;
         }
       }
     .map-wrapper {
-      width : 100%;
+      width: 100%;
       }
     }
   }
@@ -43,22 +44,22 @@ body::before {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 768px - 991px
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media (min-width : 768px) and (max-width : 991px) {
+@media (min-width: 768px) and (max-width: 991px) {
   body::before {
-    content : "sm";
+    content: "sm";
     }
   .categories-list {
     .list-item {
       .title {
         h3 {
-          display : block;
+          display: block;
           }
         .icon {
-          display : block;
+          display: block;
           }
         }
       ul {
-        padding-left : 0;
+        padding-left: 0;
         }
       }
     }
@@ -66,30 +67,30 @@ body::before {
     > a {
       .description {
         h3 {
-          font-size : 16px;
+          font-size: 16px;
           }
         }
       }
     }
   .pricing {
     h2 {
-      font-size : 20px;
+      font-size: 20px;
       }
     figure {
-      top : -35px;
+      top: -35px;
       }
     }
   .hero-section {
     &.has-sidebar {
       .map-wrapper {
-        width : 65%;
+        width: 65%;
         }
       .results-wrapper {
-        width : 35%;
+        width: 35%;
         }
       }
     .map-wrapper {
-      width : 100%;
+      width: 100%;
       }
     }
   }
@@ -97,77 +98,77 @@ body::before {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // max to 767px
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media (max-width : 767px) {
+@media (max-width: 767px) {
   body::before {
-    content : "xs";
+    content: "xs";
     }
 
   .gallery.detail {
     .image {
-      height : 200px;
+      height: 200px;
       }
     }
   .item.item-row {
-    overflow : hidden;
+    overflow: hidden;
     > a {
-      display      : block;
-      padding-left : 0;
-      height       : auto;
+      display: block;
+      padding-left: 0;
+      height: auto;
       .image {
-        width    : 100%;
-        height   : 220px;
-        position : relative;
+        width: 100%;
+        height: 220px;
+        position: relative;
         }
       .description {
-        display     : block;
-        padding-top : 15px;
+        display: block;
+        padding-top: 15px;
         }
       .map {
-        display : block;
-        height  : 100px;
-        width   : 100%;
+        display: block;
+        height: 100px;
+        width: 100%;
         }
       }
     .additional-info {
-      width      : 100%;
-      display    : block;
-      text-align : left;
-      padding    : 20px;
+      width: 100%;
+      display: block;
+      text-align: left;
+      padding: 20px;
       }
     .controls-more {
-      top    : inherit;
-      bottom : 20px;
+      top: inherit;
+      bottom: 20px;
       }
     }
   .form {
     .checkboxes {
-      margin-top : 10px;
+      margin-top: 10px;
       li {
-        width        : 49%;
-        margin-right : 0px;
+        width: 49%;
+        margin-right: 0px;
         }
       }
     }
 
   .modal {
-    padding-left  : 10px;
-    padding-right : 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     .modal-dialog {
-      width      : auto;
-      margin-top : 40px;
+      width: auto;
+      margin-top: 40px;
       }
     .modal-item-detail {
       &.modal-dialog {
-        width : auto;
+        width: auto;
         .modal-content {
           .modal-body {
             > .left {
-              float       : none;
-              width       : 100%;
-              display     : block;
-              margin-left : 0;
+              float: none;
+              width: 100%;
+              display: block;
+              margin-left: 0;
               section {
-                padding-left : 0;
+                padding-left: 0;
                 }
               }
             }
@@ -178,59 +179,59 @@ body::before {
   .hero-section {
     &.has-map, &.has-map.has-sidebar {
       .map-wrapper {
-        width : 100%;
+        width: 100%;
         }
       .results-wrapper {
-        width         : 100%;
-        height        : 500px;
-        z-index       : 1;
-        margin-bottom : 20px;
+        width: 100%;
+        height: 500px;
+        z-index: 1;
+        margin-bottom: 20px;
         .results {
-          min-height : 500px;
+          min-height: 500px;
           }
         }
       }
     .coupon {
-      width : 100%;
+      width: 100%;
       h1 {
-        font-size : 24px;
+        font-size: 24px;
         }
       .image {
-        position : absolute;
-        left     : 0;
+        position: absolute;
+        left: 0;
         .circle {
-          width            : 90px;
-          height           : 90px;
-          color            : #ffffff;
-          font-weight      : bold;
-          left             : 0;
-          top              : 0;
-          background-color : $color-default;
-          font-size        : 24px;
-          text-align       : center;
-          line-height      : 86px;
+          width: 90px;
+          height: 90px;
+          color: #ffffff;
+          font-weight: bold;
+          left: 0;
+          top: 0;
+          background-color: $color-default;
+          font-size: 24px;
+          text-align: center;
+          line-height: 86px;
           }
         .bg-transfer {
-          width  : 300px;
-          height : 300px;
+          width: 300px;
+          height: 300px;
           }
         }
       .description {
-        padding-left : 330px;
-        padding-top  : 10px;
+        padding-left: 330px;
+        padding-top: 10px;
         hr {
-          margin-bottom : 20px;
-          margin-top    : 20px;
+          margin-bottom: 20px;
+          margin-top: 20px;
           }
         figure {
-          display      : inline-block;
-          margin-right : 20px;
+          display: inline-block;
+          margin-right: 20px;
           }
         .count-down {
-          margin-bottom : 20px;
+          margin-bottom: 20px;
           .countdown-row {
             .countdown-amount {
-              font-size : 18px;
+              font-size: 18px;
               }
             }
           }
@@ -239,11 +240,11 @@ body::before {
     }
   .hero-section {
     &.has-map {
-      height : auto !important;
+      height: auto !important;
       .search-form {
-        z-index  : 0;
-        position : relative;
-        height   : auto;
+        z-index: 0;
+        position: relative;
+        height: auto;
         form {
           @include box-shadow(none);
           }
@@ -251,13 +252,13 @@ body::before {
       .form {
         &.horizontal {
           form {
-            padding : 25px;
+            padding: 25px;
             }
           &.position-bottom {
             form {
               @include transform(translateY(0%));
-              bottom     : 0px;
-              margin-top : 10px;
+              bottom: 0px;
+              margin-top: 10px;
               }
             }
           }
@@ -266,17 +267,18 @@ body::before {
     }
   }
 
-
 .pac-container {
-  background-color: #FFF;
-  z-index: 20;
-  position: fixed;
+  background-color: #ffffff;
   display: inline-block;
   float: left;
-  }
-.modal{
+  position: fixed;
   z-index: 20;
   }
-.modal-backdrop{
+
+.modal {
+  z-index: 20;
+  }
+
+.modal-backdrop {
   z-index: 10;
   }
