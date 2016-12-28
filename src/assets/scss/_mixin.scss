@@ -89,3 +89,25 @@
   animation-fill-mode: forwards; /* this prevents the animation from restarting! */
   animation-iteration-count: infinite;
   }
+
+
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, $color-white,  50%)) {
+  // For Google Chrome
+  ::-webkit-scrollbar {
+    @include size($size);
+    }
+
+  ::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+    }
+
+  ::-webkit-scrollbar-track {
+    background: $background-color;
+    }
+
+  // For Internet Explorer
+  body {
+    scrollbar-face-color: $foreground-color;
+    scrollbar-track-color: $background-color;
+    }
+  }

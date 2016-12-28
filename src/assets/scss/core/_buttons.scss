@@ -1,15 +1,20 @@
+@import "../mixin";
+
 .btn {
-  @include border-radius(0px);
+  //@include border-radius(0px);
   @include shadow;
   @include transform(translateY(0px));
   @include transform-style(preserve-3d);
-  border-style: solid;
+  //border-style: solid;
   border-width: 2px;
   font-size: 12px;
   font-weight: bold;
   position: relative;
   text-transform: uppercase;
-  &:active, &:active:hover, &:focus {
+ 
+  &:active, 
+  &:active:hover, 
+  &:focus {
     @include box-shadow(none);
     outline: none !important;
     }
@@ -22,7 +27,7 @@
   &.btn-primary {
     background-color: $color-black;
     border-color: $color-black;
-    color: #ffffff;
+    color: $color-white;
     &:hover, &:active, &:active:hover, &:focus {
       background-color: darken($color-black, 8%);
       border-color: darken($color-black, 8%);
@@ -36,35 +41,35 @@
         border-color: darken($color-default, 8%);
         }
       &.btn-light-frame {
-        border-color: rgba(#000, .2);
+        border-color: rgba($black, .2);
         &:hover, &:active, &:active:hover, &:focus {
           background-color: transparent;
-          border-color: rgba(#000, .3);
+          border-color: rgba($black, .3);
           }
         }
       }
     }
   &.btn-default {
-    background-color: #ffffff;
-    border-color: #ffffff;
-    color: #000000;
+    background-color: $color-white;
+    border-color: $color-white;
+    color: $black;
     &:hover, &:active, &:active:hover, &:focus {
-      background-color: #ffffff;
-      border-color: #ffffff;
+      background-color: $color-white;
+      border-color: $color-white;
       }
     &.btn-framed {
       @include box-shadow(none);
       background-color: transparent;
-      border-color: #ffffff;
-      color: #ffffff;
+      border-color: $color-white;
+      color: $color-white;
       &:hover, &:active, &:active:hover, &:focus {
-        background-color: rgba(#fff, .1);
+        background-color: rgba($color-white, .1);
         }
       &.btn-light-frame {
-        border-color: rgba(#fff, .4);
+        border-color: rgba($color-white, .4);
         &:hover, &:active, &:active:hover, &:focus {
           background-color: transparent;
-          border-color: rgba(#fff, .6);
+          border-color: rgba($color-white, .6);
           }
         }
       }

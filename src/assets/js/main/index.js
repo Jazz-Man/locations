@@ -1,11 +1,9 @@
-// var is = require('is_js');
 var GMaps = require('../lib/gmaps');
 var mapStylesAdministrative = require('../lib/map-styles');
 var bsn = require("../lib/bootstrap.native");
 var $$ = require('domtastic');
 var reqwest = require('reqwest');
 var autoComplete = require('../components/autoComplete');
-
 
 var Main = {
   viewport: {
@@ -15,17 +13,17 @@ var Main = {
       'md',
       'lg'
     ],
-    viewPortSize: function() {
+    viewPortSize: function () {
       return window.getComputedStyle(document.body, ':before')
-        .content.replace(/"/g, '');
+                   .content.replace(/"/g, '');
     },
-    isSize: function(size) {
+    isSize: function (size) {
       if (this.viewPorts.indexOf(size) == -1) {
         throw "no valid viewport name given";
       }
       return this.viewPortSize() == size;
     },
-    isEqualOrGreaterThan: function(size) {
+    isEqualOrGreaterThan: function (size) {
       if (this.viewPorts.indexOf(size) == -1) {
         throw "no valid viewport name given";
       }
@@ -33,114 +31,92 @@ var Main = {
     },
   },
   
-  addListingNavInit:function () {
-    var _this = this;
-    var addListingBtn = $$('#nav-add-listing');
+  addListingFormInit: function () {
     
-    var modalFrame = document.getElementById('modalFrame');
-    
-    addListingBtn.on('click',function (e) {
-      
-      reqwest({
-        url: upages_params.ajaxurl,
-        data: {
-          action: 'add_listing_modal'
-        },
-        success: function(resp) {
-          var modal = new bsn.Modal(modalFrame,{
-            content: JSON.parse(resp.data)
-          });
-  
-          modal.open();
-          _this.inputAutoComplete();
-          
-          var mapContainer = $$(modalFrame).find('#map-modal');
-          //
-          var mapContainerID = '#' + mapContainer.attr('id');
-          //
-          var input = document.getElementById('listing_address');
-          var searchBox = new google.maps.places.SearchBox(input);
-          //
-          var map = new GMaps({
-            div: mapContainerID,
-            zoom: 5,
-            zoomControl: false,
-            // scrollwheel: false,
-            mapTypeControl: false,
-            scaleControl: false,
-            streetViewControl: false,
-            lat: 48.9257791,
-            lng: 24.692838,
-            mapType: "roadmap",
-            height: '400px',
-            width: '100%',
-            styles: mapStylesAdministrative,
-            bounds_changed:function (e) {
-              searchBox.setBounds(map.map.getBounds());
-            }
-          });
-          
-          searchBox.addListener('places_changed', function() {
-            var places = searchBox.getPlaces();
-    
-            if (places.length == 0) {
-              return;
-            }
-            
-            var bounds = new google.maps.LatLngBounds();
-            places.forEach(function(place) {
-              var markerContent = '<div class="marker">' +
-                                  '<div class="title">' + place.name + ', '+place.vicinity+'</div>' +
-                                  '<div class="marker-wrapper">' +
-                                  '<div class="tag"><i class="fa fa-check"></i></div>' +
-                                  '<div class="pin">' +
-                                  '<div class="image"></div>' +
-                                  '</div>' +
-                                  '</div>' +
-                                  '</div>';
-              
-              
-              map.drawOverlay({
-                lat: place.geometry.location.lat(),
-                lng: place.geometry.location.lng(),
-                content: markerContent,
-                layer: 'overlayImage',
-                verticalAlign: 'bottom',
-                horizontalAlign: 'center'
-              });
-      
-              if (place.geometry.viewport) {
-                bounds.union(place.geometry.viewport);
-              } else {
-                bounds.extend(place.geometry.location);
-              }
-            });
-            map.map.fitBounds(bounds);
-          });
-          
-        },
-        error: function(err) {
-          console.log(err);
+    if ($$(document.body).hasClass('add-listing')) {
+      var input_adress = $$('.input-address');
+      var input_lat = $$('.input-lat');
+      var input_lng = $$('.input-lng');
+      var input = document.getElementById('listing_address');
+      var searchBox = new google.maps.places.SearchBox(input);
+      var map = new GMaps({
+        div: '#map',
+        zoom: 5,
+        zoomControl: false,
+        // scrollwheel: false,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: false,
+        lat: 48.9257791,
+        lng: 24.692838,
+        mapType: "roadmap",
+        height: '400px',
+        width: '100%',
+        styles: mapStylesAdministrative,
+        bounds_changed: function (e) {
+          searchBox.setBounds(map.map.getBounds());
         }
       });
-    });
+      searchBox.addListener('places_changed', function () {
+        var places = searchBox.getPlaces();
+        
+        if (places.length == 0) {
+          return;
+        }
+        
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function (place) {
+          
+          input_adress.val(place.formatted_address);
+          input_lat.val(place.geometry.location.lat());
+          input_lng.val(place.geometry.location.lng());
+          
+          var markerContent = '<div class="marker">' +
+                              '<div class="title">' + place.name + ', ' + place.vicinity + '</div>' +
+                              '<div class="marker-wrapper">' +
+                              '<div class="tag"><i class="fa fa-check"></i></div>' +
+                              '<div class="pin">' +
+                              '<div class="image"></div>' +
+                              '</div>' +
+                              '</div>' +
+                              '</div>';
+          
+          map.drawOverlay({
+            lat: place.geometry.location.lat(),
+            lng: place.geometry.location.lng(),
+            content: markerContent,
+            layer: 'overlayImage',
+            verticalAlign: 'bottom',
+            horizontalAlign: 'center'
+          });
+          
+          if (place.geometry.viewport) {
+            bounds.union(place.geometry.viewport);
+          }
+          else {
+            bounds.extend(place.geometry.location);
+          }
+        });
+        map.map.fitBounds(bounds);
+      });
+    }
   },
   
-  inputAutoComplete:function () {
+  inputAutoComplete: function () {
     var inputs = $$('input[type="text"]');
-    if (inputs.length){
-      inputs.forEach(function(e) {
+    if (inputs.length) {
+      inputs.forEach(function (e) {
         var _this = $$(e);
         var dataSource = _this.attr('data-auto-complete');
-        if (dataSource){
+        if (dataSource) {
           new autoComplete({
             selector: e,
             minChars: 1,
-            source: function(term, suggest) {
+            source: function (term, suggest) {
               term = term.toLowerCase();
               var choices = JSON.parse(dataSource);
               var suggestions = [];
-
+              
               choices.forEach(function (e) {
                 if (~e.toLowerCase().indexOf(term)) {
                   suggestions.push(e);
@@ -153,7 +129,7 @@ var Main = {
       });
     }
   },
-  openModal: function(target, modalPath) {
+  openModal: function (target, modalPath) {
     var MAIN = this;
     var modalAtr = {
       'id': target,
@@ -167,7 +143,7 @@ var Main = {
     //   .find('#' + target)
     //   .attr(modalAtr)
     //   .html('<i class="loading-icon fa fa-circle-o-notch fa-spin"></i>');
-
+    
     // $("#" + target + ".modal").on("show.bs.modal", function() {
     //     var _this = $(this);
     //     lastModal = _this;
@@ -206,37 +182,39 @@ var Main = {
     //   });
     //
     // $("#" + target + ".modal").modal("show");
-
+    
   },
-  bgTransfer: function() {
-    $$(".bg-transfer").forEach(function(element) {
-        var _this = $$(element);
-        var backgroundImage = _this.attr("data-bg");
-      if (backgroundImage){
+  bgTransfer: function () {
+    $$(".bg-transfer").forEach(function (element) {
+      var _this = $$(element);
+      var backgroundImage = _this.attr("data-bg");
+      if (backgroundImage) {
         _this.css("background-image", "url(" + backgroundImage + ")");
-      }else {
+      }
+      else {
         var img = _this.find('img');
-        img.css('display','none');
+        img.css('display', 'none');
         _this.css("background-image", "url(" + img.attr("src") + ")");
       }
-      });
+    });
   },
-  ratingPassive: function(element) {
-    $(element).find(".rating-passive").each(function() {
-        var _this = $(this);
-        for (var i = 0; i < 5; i++) {
-          if (i < _this.attr("data-rating")) {
-            $(this)
-              .find(".stars")
-              .append("<figure class='active fa fa-star'></figure>")
-          } else {
-            _this.find(".stars")
-              .append("<figure class='fa fa-star'></figure>")
-          }
+  ratingPassive: function (element) {
+    $(element).find(".rating-passive").each(function () {
+      var _this = $(this);
+      for (var i = 0; i < 5; i++) {
+        if (i < _this.attr("data-rating")) {
+          $(this)
+            .find(".stars")
+            .append("<figure class='active fa fa-star'></figure>")
         }
-      });
+        else {
+          _this.find(".stars")
+               .append("<figure class='fa fa-star'></figure>")
+        }
+      }
+    });
   },
-  socialShare: function() {
+  socialShare: function () {
     var socialButtonsEnabled = 1;
     if (socialButtonsEnabled == 1) {
       require('jssocials');
@@ -251,16 +229,16 @@ var Main = {
       });
     }
   },
-  initializeFitVids: function() {
+  initializeFitVids: function () {
     var videoBox = $$(".video");
     if (videoBox.length > 0) {
       var fitvids = require('fitvids');
       fitvids(videoBox);
     }
   },
-  initializeOwl: function() {
-  
-    $$(".owl-carousel").forEach(function(element) {
+  initializeOwl: function () {
+    
+    $$(".owl-carousel").forEach(function (element) {
       var _this = $$(element);
       var items = parseInt(_this.attr("data-owl-items"), 10);
       if (!items) {
@@ -301,7 +279,8 @@ var Main = {
       var fadeOut = _this.attr("data-owl-fadeout");
       if (!fadeOut) {
         fadeOut = 0;
-      } else {
+      }
+      else {
         fadeOut = "fadeOut";
       }
       var owlCarouselOption = {
@@ -320,167 +299,151 @@ var Main = {
         autoHeight: true,
         navText: []
       };
-
+      
       Main.owlCarousel(_this, owlCarouselOption);
     });
   },
-  owlCarousel: function(selector, option) {
-
+  owlCarousel: function (selector, option) {
+    
     if (selector.length > 0) {
       require('owl.carousel');
       $(selector).owlCarousel(option);
     }
   },
   
-  trackpadScroll: function(method) {
-    require('trackpad-scroll-js');
-    var scrollableBox = $(".tse-scrollable");
-    switch (method) {
-      case "recalculate":
-        if (scrollableBox.length > 0) {
-          scrollableBox.TrackpadScrollEmulator(method);
-        }
-        break;
-      case "destroy":
-        if (scrollableBox.length > 0) {
-          scrollableBox.TrackpadScrollEmulator(method);
-        }
-        break;
-      default:
-        if (scrollableBox.length > 0) {
-          scrollableBox.TrackpadScrollEmulator();
-        }
-    }
-  },
-  
-  wpas:function () {
-    var ajaxForm = require('../components/ajax-form');
-    var mapContainer = $$('[data-map-container]');
-    var mapContainerID = '#' + mapContainer.attr('id');
-    var _this = this;
-    var map;
-    
-    if (mapContainer.length){
-      map = new GMaps({
-        div: mapContainerID,
-        zoom: 5,
-        zoomControl: false,
-        mapTypeControl: false,
-        scaleControl: false,
-        streetViewControl: false,
-        lat: 48.9257791,
-        lng: 24.692838,
-        mapType: "roadmap",
-        height: '100%',
-        styles: mapStylesAdministrative,
-        idle:function (e) {
-          var form = new ajaxForm({
-            elem: '[data-ajax-form]',
-    
-            ajax_complete: function (data) {
+  wpas: function () {
+    var heroSection = $$('.hero-section');
+    if (heroSection.length && heroSection.hasClass('has-map')) {
+      var ajaxForm = require('../components/ajax-form');
+      var mapContainer = $$('[data-map-container]');
+      var mapContainerID = '#' + mapContainer.attr('id');
+      var _this = this;
+      var map;
       
-              if (mapContainer.length){
-                var marcers = data.marcers;
-        
-                marcers.forEach(function(item) {
-          
-                  if (!item.latitude || !item.longitude) {
-                    return;
-                  }
-          
-                  var markerContent = '<div class="marker" data-marker-id="' + item.id + '">' +
-                                      '<div class="title">' + item.title + '</div>' +
-                                      '<div class="marker-wrapper">' +
-                                      (item.featured == 1 ? '<div class="tag"><i class="fa fa-check"></i></div>' : '') +
-                                      '<div class="pin">' + '<div class="image" style="background-image: url(' + item.thumbnail + ');"></div>' +
-                                      '</div>' +
-                                      '</div>' +
-                                      '</div>';
-          
-                  map.drawOverlay({
-                    mouseenter: function(e) {
-                      marcerMouseEvent(e);
-                    },
-                    mouseleave: function(e) {
-                      marcerMouseEvent(e);
-                    },
-                    lat: item.latitude,
-                    lng: item.longitude,
-                    content: markerContent,
-                    layer: 'overlayImage',
-                    verticalAlign: 'bottom',
-                    horizontalAlign: 'center'
+      if (mapContainer.length) {
+        map = new GMaps({
+          div: mapContainerID,
+          zoom: 5,
+          zoomControl: false,
+          mapTypeControl: false,
+          scaleControl: false,
+          streetViewControl: false,
+          lat: 48.9257791,
+          lng: 24.692838,
+          mapType: "roadmap",
+          height: '100%',
+          styles: mapStylesAdministrative,
+          idle: function (e) {
+            var form = new ajaxForm({
+              elem: '[data-ajax-form]',
+              
+              ajax_complete: function (data) {
+                
+                if (mapContainer.length) {
+                  var marcers = data.marcers;
+                  
+                  marcers.forEach(function (item) {
+                    
+                    if (!item.latitude || !item.longitude) {
+                      return;
+                    }
+                    
+                    var markerContent = '<div class="marker" data-marker-id="' + item.id + '">' +
+                                        '<div class="title">' + item.title + '</div>' +
+                                        '<div class="marker-wrapper">' +
+                                        (
+                                          item.featured == 1 ? '<div class="tag"><i class="fa fa-check"></i></div>' : '') +
+                                        '<div class="pin">' + '<div class="image" style="background-image: url(' + item.thumbnail + ');"></div>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>';
+                    
+                    map.drawOverlay({
+                      mouseenter: function (e) {
+                        marcerMouseEvent(e);
+                      },
+                      mouseleave: function (e) {
+                        marcerMouseEvent(e);
+                      },
+                      lat: item.latitude,
+                      lng: item.longitude,
+                      content: markerContent,
+                      layer: 'overlayImage',
+                      verticalAlign: 'bottom',
+                      horizontalAlign: 'center'
+                    });
+                    
                   });
-          
-          
-                });
+                }
               }
-            }
-          });
-          var formBox = form.elem.closest('.form.search-form.vertical');
-  
-          formBox.removeClass('hide').addClass('show');
-          if (!_this.viewport.isSize('xs')) {
-            var heroSectionHeigh = $$(".hero-section")[0].clientHeight;
-            var formWrapperHeight = formBox.find('.wrapper')[0].clientHeight;
-            formBox.css({
-              'position': 'absolute',
-              'top': ((heroSectionHeigh / 2) -(formWrapperHeight / 2) )+'px'
             });
+            var formBox = form.elem.closest('.form.search-form.vertical');
+            
+            formBox.removeClass('hide').addClass('show');
+            if (!_this.viewport.isSize('xs')) {
+              var heroSectionHeigh = heroSection[0].clientHeight;
+              var formWrapperHeight = formBox.find('.wrapper')[0].clientHeight;
+              formBox.css({
+                'position': 'absolute',
+                'top': (
+                       (
+                       heroSectionHeigh / 2) - (
+                       formWrapperHeight / 2) ) + 'px'
+              });
+            }
           }
-          _this.trackpadScroll("destroy");
-        }
-      });
-    }
-    
-    function marcerMouseEvent(e) {
-      var marker = $$(e.el).find('.marker');
-      var markerID = marker.attr('data-marker-id');
-      var resultsContent = $$('#results-content');
-      var itemResult = resultsContent.find("[data-listing-id='"+markerID+"'] > a");
+        });
+      }
       
-      itemResult.toggleClass('hover-state');
+      function marcerMouseEvent(e) {
+        var marker = $$(e.el).find('.marker');
+        var markerID = marker.attr('data-marker-id');
+        var resultsContent = $$('#results-content');
+        var itemResult = resultsContent.find("[data-listing-id='" + markerID + "'] > a");
+        
+        itemResult.toggleClass('hover-state');
+      }
     }
   },
-  mapInit: function() {
+  mapInit: function () {
     // require('../maps');
   },
-  responsiveNavigation: function() {
+  responsiveNavigation: function () {
     if (this.viewport.isSize('xs')) {
       var hasChild = $$(".has-child");
-
+      
       $$("body").addClass("nav-btn-only");
       hasChild.children("a").attr("data-toggle", "collapse");
       hasChild.find(".nav-wrapper").addClass("collapse");
-
-      $$(".mega-menu .heading").forEach(function(element, iter) {
-          var _this = $$(element);
-          var elHtml = _this[0].outerHTML;
-          var parent = $$(_this.parent());
-          var linkCollapseID = '#mega-menu-collapse-' + iter;
-          parent.prepend("<a href='" + linkCollapseID + "' class='has-child' aria-controls='" + linkCollapseID + "' data-toggle='collapse'>" + elHtml + "</a>");
-          _this.remove();
-
-        });
-      $$(".mega-menu ul").forEach(function(element, iter) {
-          var _this = $$(element);
-          _this.attr("id", "mega-menu-collapse-" + iter);
-          _this.addClass("collapse");
-        })
+      
+      $$(".mega-menu .heading").forEach(function (element, iter) {
+        var _this = $$(element);
+        var elHtml = _this[0].outerHTML;
+        var parent = $$(_this.parent());
+        var linkCollapseID = '#mega-menu-collapse-' + iter;
+        parent.prepend("<a href='" + linkCollapseID + "' class='has-child' aria-controls='" + linkCollapseID + "' data-toggle='collapse'>" + elHtml + "</a>");
+        _this.remove();
+        
+      });
+      $$(".mega-menu ul").forEach(function (element, iter) {
+        var _this = $$(element);
+        _this.attr("id", "mega-menu-collapse-" + iter);
+        _this.addClass("collapse");
+      })
     }
   },
-
-  equalHeight: function(container) {
+  
+  equalHeight: function (container) {
     var currentTallest = 0,
       currentRowStart = 0,
       rowDivs = [],
       $el,
       topPosition = 0;
-
+    
     if (!this.viewport.isSize('xs')) {
       $(container)
         .find('.equal-height')
-        .each(function() {
+        .each(function () {
           $el = $(this);
           $($el)
             .height('auto');
@@ -494,12 +457,13 @@ var Main = {
             currentRowStart = topPostion;
             currentTallest = $el.height();
             rowDivs.push($el);
-          } else {
+          }
+          else {
             rowDivs.push($el);
             currentTallest = (
-              currentTallest < $el.height()) ? (
-              $el.height()) : (
-              currentTallest);
+                             currentTallest < $el.height()) ? (
+                               $el.height()) : (
+                               currentTallest);
           }
           for (currentDiv = 0; currentDiv < rowDivs.length; currentDiv++) {
             rowDivs[currentDiv].height(currentTallest);
@@ -507,11 +471,11 @@ var Main = {
         });
     }
   },
-
-  rating: function() {
-
+  
+  rating: function () {
+    
     var ratingBox = $$('.visitor-rating .star-rating');
-
+    
     var ratingElement =
       '<span class="stars">' +
       '<i class="fa fa-star s1" data-score="1"></i>' +
@@ -525,9 +489,9 @@ var Main = {
       '<i class="fa fa-star s9" data-score="9"></i>' +
       '<i class="fa fa-star s10" data-score="10"></i>' +
       '</span>';
-
+    
     if (ratingBox.length > 0) {
-      ratingBox.forEach(function(element) {
+      ratingBox.forEach(function (element) {
         var _this = $$(element);
         _this.append(ratingElement);
         if (_this.hasClass('active')) {
@@ -539,56 +503,57 @@ var Main = {
         for (var e = 0; e < rating; e++) {
           var rate = e + 1;
           _this.children('.stars')
-            .children('.s' + rate)
-            .addClass('active');
+               .children('.s' + rate)
+               .addClass('active');
         }
       });
       var ratingActive = $$('.star-rating.active i');
-
-      ratingActive.on('mouseover mouseout', function(e) {
-          e.preventDefault();
-          var _this = $$(this);
-          var dataScore = _this.attr('data-score');
-          for (var i = 0; i < dataScore; i++) {
-            var a = i + 1;
-            _this.parent()
-              .children('.s' + a)
-              .toggleClass('hover');
-          }
-        })
-        .on('click', function(e) {
-          e.preventDefault();
-          var _this = $$(this);
-          var dataScore = _this.attr('data-score');
-          var input = _this.closest('.star-rating')
-            .find("input")
-            .val(dataScore);
+      
+      ratingActive.on('mouseover mouseout', function (e) {
+        e.preventDefault();
+        var _this = $$(this);
+        var dataScore = _this.attr('data-score');
+        for (var i = 0; i < dataScore; i++) {
+          var a = i + 1;
           _this.parent()
-            .children('.fa')
-            .removeClass('active');
-          for (var i = 0; i < dataScore; i++) {
-            var a = i + 1;
-            _this.parent()
-              .children('.s' + a)
-              .addClass('active');
-          }
-          return false;
-        });
+               .children('.s' + a)
+               .toggleClass('hover');
+        }
+      })
+                  .on('click', function (e) {
+                    e.preventDefault();
+                    var _this = $$(this);
+                    var dataScore = _this.attr('data-score');
+                    var input = _this.closest('.star-rating')
+                                     .find("input")
+                                     .val(dataScore);
+                    _this.parent()
+                         .children('.fa')
+                         .removeClass('active');
+                    for (var i = 0; i < dataScore; i++) {
+                      var a = i + 1;
+                      _this.parent()
+                           .children('.s' + a)
+                           .addClass('active');
+                    }
+                    return false;
+                  });
     }
   },
-  timeOutActions: function(_this) {
-    setTimeout(function() {
+  timeOutActions: function (_this) {
+    setTimeout(function () {
       if (_this.find(".map")
-        .length) {
+          .length) {
         var modalDialog = _this.find(".modal-dialog");
         var dataAddress = modalDialog.data("address");
         var dataMarkerDrag = modalDialog.data("marker-drag");
         var dataLatitude = modalDialog.data("latitude");
         var dataLongitude = modalDialog.data("longitude");
-
+        
         if (dataAddress) {
           simpleMap(0, 0, "map-modal", dataMarkerDrag, dataAddress);
-        } else {
+        }
+        else {
           simpleMap(dataLatitude, dataLongitude, "map-modal", dataMarkerDrag);
         }
       }

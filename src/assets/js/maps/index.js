@@ -126,7 +126,6 @@ if (mapContainerID) {
           var _thisID = $(this).data("id");
           $(".map .marker[data-id=" + _thisID + "]").removeClass("hover-state");
         });
-        Main.trackpadScroll("recalculate");
         // Show detailed information in sidebar
         resultItem.children("a").on("click", function (e) {
           var lastMapMarker;

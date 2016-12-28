@@ -64,7 +64,6 @@ body {
 
   nav {
     @include shadow;
-    background-color: $color-default;
     display: table;
     padding: 6px 7px;
     position: relative;
@@ -748,20 +747,17 @@ body:not(.nav-btn-only) {
 
 #page-footer {
   .footer-wrapper {
-    border-top: 1px solid rgba($black, .05);
-    margin-top: 30px;
-
-    @at-root .home & {
-      border-top: none;
-      margin-top: 0;
-      }
+    border: 0;
+    margin-top: 0;
 
     }
+
   p {
     @include opacity(1);
     color: #898989;
     margin-bottom: 0;
     }
+
   .footer-navigation {
     background-color: $color-grey-dark;
     color: $color-white,;

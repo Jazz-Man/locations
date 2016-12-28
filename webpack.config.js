@@ -79,8 +79,8 @@ var uglifyOption = {
   }
 };
 var extractSCSS = new ExtractTextPlugin({
-  filename: 'css/[name].css',
-  disable: true,
+  filename: 'css/[name].css?[hash]',
+  disable: false,
   // disable: isProd,
   allChunks: true
 });
@@ -89,14 +89,15 @@ function getOutput() {
   var output;
   if (isProd) {
     output = {
-      filename: 'js/[name].js',
+      filename: 'js/[name].js?[hash]',
       chunkFilename: "js/[id].js",
       path: outputPath,
-      publicPath: "http://localhost:8080/upages/wp-content/themes/upages/assets/",
+      publicPath: "http://upages.com.ua/wp-content/themes/upages/assets/",
+      libraryTarget: 'var'
     }
   } else {
     output = {
-      filename: 'js/[name].js',
+      filename: 'js/[name].js?[hash]',
       chunkFilename: "js/[id].js",
       path: outputPath
     }
@@ -165,11 +166,10 @@ function getPlugins() {
       jQuery: "jquery",
       "window.jQuery": "jquery"
     }),
-    extractSCSS,
-    new WriteFilePlugin({
-      log: false,
-      useHashIndex: false
-    })
+    extractSCSS
+    // new WriteFilePlugin({
+    //   log: false,
+    // })
   );
 
   _.forEach(pages, function(e) {
@@ -182,11 +182,11 @@ function getPlugins() {
 
 
 
-  // if (isProd) {
-  //   plugins.push(
-  //       new webpack.optimize.UglifyJsPlugin(uglifyOption)
-  //   );
-  // }
+  if (isProd) {
+    plugins.push(
+        new webpack.optimize.UglifyJsPlugin(uglifyOption)
+    );
+  }
 
   return plugins;
 }
@@ -195,7 +195,7 @@ module.exports = {
   context: path.join(__dirname, 'src'),
   entry: {
     index: [
-      './index'
+      './index.js'
     ],
   },
   output: getOutput(),
@@ -253,12 +253,12 @@ module.exports = {
     ]
   },
   module: {
-    loaders: [{
-      test: /\.coffee$/,
-      exclude: /node_modules/,
-      loader: 'coffee',
-      query: {}
-    }, {
+    loaders: [
+      {
+        test:/acf-input.js$/,
+        loader:'exports?acf'
+      },
+     {
       test: /\.pug$/,
       exclude: /node_modules/,
       loader: 'pug',
@@ -296,16 +296,19 @@ module.exports = {
       loader: 'file',
       query: {
         publicPath: '',
-        name: 'font/[name].[ext]'
+        name: 'font/[name].[ext]?[hash]'
       }
     }, {
       test: /\.(png|gif|jpg|jpeg)$/,
       loader: 'file',
       query: {
         publicPath: '',
-        name: 'img/[name].[ext]'
+        name: 'img/[name].[ext]?[hash]'
       }
     }, ],
+    noParse: [
+      /reqwest\/reqwest.js/,
+    ],
   },
 
   plugins: getPlugins(),

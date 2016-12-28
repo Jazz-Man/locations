@@ -8,6 +8,7 @@
   @include transform-style(preserve-3d);
   background-color: $color-white;
   border: none;
+  color: $black;
   font-size: 14px;
   font-weight: 400;
   height: inherit;
@@ -27,6 +28,19 @@
     background-color: rgba($black, .3);
     color: $color-white;
     }
+  }
+
+::-webkit-input-placeholder {
+  color: rgba($black, .5);
+  }
+:-moz-placeholder {
+  color: rgba($black, .5);
+  }
+::-moz-placeholder {
+  color: rgba($black, .5);
+  }
+:-ms-input-placeholder {
+  color: rgba($black, .5);
   }
 
 input::-webkit-calendar-picker-indicator {
@@ -83,18 +97,6 @@ input[type="date"]::-webkit-input-placeholder {
 .hero-section {
   .form {
     &.vertical {
-      ::-webkit-input-placeholder {
-        color: rgba($color-white, 1);
-        }
-      :-moz-placeholder {
-        color: rgba($color-white, 1);
-        }
-      ::-moz-placeholder {
-        color: rgba($color-white, 1);
-        }
-      :-ms-input-placeholder {
-        color: rgba($color-white, 1);
-        }
       .btn[type=submit] {
         margin-top: 15px;
         width: inherit;
@@ -109,14 +111,14 @@ input[type="date"]::-webkit-input-placeholder {
     }
 
   #{$all-text-inputs} {
-    @include border-radius(0);
-    @include box-shadow(none);
+    //@include border-radius(0);
+    //@include box-shadow(none);
     @include box-shadow(inset 0px 0px 6px 3px rgba($black, .05));
     @include transit;
     background-color: $color-default;
     border: none;
     border-bottom: 1px solid rgba($color-white, .2);
-    color: $color-white;
+    //color: $color-white;
     -webkit-appearance: none;
     &:active, &:focus, &:hover {
       background-color: darken($color-default, 5%);
@@ -137,7 +139,7 @@ input[type="date"]::-webkit-input-placeholder {
   &.has-map {
     .btn[type=submit] {
       @include shadow;
-      background-color: darken($color-default, 10%);
+      //background-color: darken($color-default, 10%);
       border: none;
       border-bottom: none;
       font-size: 14px;
@@ -150,7 +152,7 @@ input[type="date"]::-webkit-input-placeholder {
         top: 0;
         }
       &:before {
-        border-color: transparent transparent darken($color-default, 10%) transparent;
+        border-color: transparent transparent darken($black, 10%) transparent;
         border-style: solid;
         border-width: 0 0 9px 9px;
         content: "";
@@ -230,29 +232,38 @@ input[type="date"]::-webkit-input-placeholder {
 .form {
   position: relative;
 
-  &.vertical {
-    .form-group {
-      margin-bottom: 0;
+  &.horizontal,
+  &.vertical{
+
+    form{
+
+      #{$all-text-inputs} {
+        //@include border-radius(0);
+        //@include box-shadow(none);
+        background-color: $color-white;
+        border-bottom: none;
+        //color: inherit;
+        &:active, &:focus, &:hover {
+          background-color: $color-grey-light;
+          border-bottom: none;
+          }
+        }
       }
+
+
     }
+
+  //&.vertical {
+  //  .form-group {
+  //    margin-bottom: 0;
+  //    }
+  //  }
   &.horizontal {
     form {
       @include shadow-big;
       background-color: $color-default;
       display: table;
       @include size(100%);
-      ::-webkit-input-placeholder {
-        color: rgba($black, .5);
-        }
-      :-moz-placeholder {
-        color: rgba($black, .5);
-        }
-      ::-moz-placeholder {
-        color: rgba($black, .5);
-        }
-      :-ms-input-placeholder {
-        color: rgba($black, .5);
-        }
       }
     .row {
       > [class^="col-"], > [class*=" col-"] {
@@ -262,17 +273,6 @@ input[type="date"]::-webkit-input-placeholder {
       }
     .row, .container {
       height: inherit;
-      }
-    #{$all-text-inputs} {
-      @include border-radius(0);
-      @include box-shadow(none);
-      background-color: $color-white;
-      border-bottom: none;
-      color: inherit;
-      &:active, &:focus, &:hover {
-        background-color: $color-grey-light;
-        border-bottom: none;
-        }
       }
 
     .btn[type=submit] {

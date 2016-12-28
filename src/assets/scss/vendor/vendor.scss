@@ -1,17 +1,12 @@
 @import "bootstrap/bootstrap";
 @import "elegant-fonts";
-@import "~bootstrap-datepicker/dist/css/bootstrap-datepicker";
-
-@import "~bootstrap-select/sass/bootstrap-select";
 
 @import "~bootstrap-fileinput/css/fileinput";
-
-//@import "~nouislider/src/jquery.nouislider.css";
-
 @import "~owl.carousel/dist/assets/owl.carousel.css";
 @import "owl.transitions";
-@import "~trackpad-scroll-css";
-
 @import "bourbon";
 @import "compass-mixins/compass";
 @import "compass-mixins/compass/layout";
+@import "auto-complete";
+@import "acf/acf-input";
+@import "select2/select2";

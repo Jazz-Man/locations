@@ -3,14 +3,16 @@
   @include size(100%);
   }
 
+.hero-section {
+
+  .map-wrapper {
+    display: inline-block;
+    width: 100%;
+    }
+  }
+
 .map {
-  //&.show-marker-labels {
-  //  .marker {
-  //    .title {
-  //      @include opacity(1);
-  //      }
-  //    }
-  //  }
+
   .cluster {
     &:hover {
       > div {
@@ -58,12 +60,13 @@
     }
 
   a[href^="http://maps.google.com/maps"] {
-    display: none !important
+    display: none !important;
     }
 
   a[href^="https://maps.google.com/maps"] {
-    display: none !important
+    display: none !important;
     }
+
   .gmnoprint a,
   .gmnoprint span,
   .gm-style-cc {
