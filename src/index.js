@@ -1,8 +1,18 @@
 require('./assets/scss/style.scss');
-var $$ = require('domtastic');
 
+var bsn = require('./assets/js/lib/bootstrap.native');
 var acf = require('./assets/js/lib/acf-input');
-window.acf = acf;
+var spop = require('./assets/js/lib/spop');
+
+spop({
+  template: 'Position top left',
+  position  : 'top-left',
+  style: 'success'
+});
+
+acf.do_action('prepare');
+
+var $$ = require('domtastic');
 
 var Main = require('./assets/js/main');
 
@@ -13,6 +23,7 @@ $$(document).ready(init);
 function init(e) {
   
   var pageHeader = $$("#page-header");
+  var pageFooter = $$("#page-footer");
   var mapWrapper = $$(".map-wrapper");
   var hasBackground = $$(".has-background");
   
@@ -29,7 +40,7 @@ function init(e) {
   else {
     
     $$(".hero-section.full-screen").css({
-      'height': (window.innerHeight - pageHeader[0].offsetHeight)+'px'
+      'height': (window.innerHeight - pageHeader[0].offsetHeight - pageFooter[0].offsetHeight)+'px'
     });
   }
   
@@ -44,20 +55,7 @@ function init(e) {
     require('icheck');
     $("input").iCheck();
   }
-
-
-//  Smooth Scroll ------------------------------------------------------------------------------------------------------
   
-  // $('.main-nav a[href^="#"], a[href^="#"].scroll').on('click', function (e) {
-  //   e.preventDefault();
-  //   var target = this.hash,
-  //     $target = $(target);
-  //   $('html, body').stop().animate({
-  //     'scrollTop': $target.offset().top
-  //   }, 2000, 'swing', function () {
-  //     window.location.hash = target;
-  //   });
-  // });
   
   $$('.controls-more').on("click",function (e) {
     e.preventDefault();
@@ -70,17 +68,10 @@ function init(e) {
     $$(".primary-nav").toggleClass("show");
   });
   
-  if ($("input[type=file].with-preview").length) {
-    require('jquery-multifile');
-    $("input.file-upload-input").MultiFile({
-      list: ".file-upload-previews"
-    });
-  }
   
   Main.addListingFormInit();
   Main.inputAutoComplete();
   Main.wpas();
-  Main.equalHeight(".container");
   Main.ratingPassive("body");
   Main.bgTransfer();
   Main.responsiveNavigation();

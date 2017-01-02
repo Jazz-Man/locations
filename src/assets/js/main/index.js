@@ -1,9 +1,9 @@
 var GMaps = require('../lib/gmaps');
 var mapStylesAdministrative = require('../lib/map-styles');
-var bsn = require("../lib/bootstrap.native");
 var $$ = require('domtastic');
 var reqwest = require('reqwest');
 var autoComplete = require('../components/autoComplete');
+require('../components/profile');
 
 var Main = {
   viewport: {
@@ -28,7 +28,7 @@ var Main = {
         throw "no valid viewport name given";
       }
       return this.viewPorts.indexOf(this.viewPortSize()) >= this.viewPorts.indexOf(size);
-    },
+    }
   },
   
   addListingFormInit: function () {
@@ -43,7 +43,6 @@ var Main = {
         div: '#map',
         zoom: 5,
         zoomControl: false,
-        // scrollwheel: false,
         mapTypeControl: false,
         scaleControl: false,
         streetViewControl: false,
@@ -129,61 +128,7 @@ var Main = {
       });
     }
   },
-  openModal: function (target, modalPath) {
-    var MAIN = this;
-    var modalAtr = {
-      'id': target,
-      'class': 'modal modal-external fade',
-      'tabindex': '-1',
-      'role': 'dialog',
-      'aria-labelledby': target
-    };
-    // var modalBox = $$("body")
-    //   .append('<div id="' + target + '"></div>')
-    //   .find('#' + target)
-    //   .attr(modalAtr)
-    //   .html('<i class="loading-icon fa fa-circle-o-notch fa-spin"></i>');
-    
-    // $("#" + target + ".modal").on("show.bs.modal", function() {
-    //     var _this = $(this);
-    //     lastModal = _this;
-    //     $.ajax({
-    //       url: "assets/external/" + modalPath,
-    //       // method: "POST",
-    //       //dataType: "html",
-    //       data: {
-    //         id: target
-    //       },
-    //       success: function(results) {
-    //         _this.append(results);
-    //         $(".selectpicker").selectpicker();
-    //         _this.find(".gallery").addClass("owl-carousel");
-    //         MAIN.ratingPassive(".modal");
-    //         var img = _this.find(".gallery img:first")[0];
-    //         if (img) {
-    //           $(img).load(function() {
-    //               MAIN.timeOutActions(_this);
-    //             });
-    //         } else {
-    //           MAIN.timeOutActions(_this);
-    //         }
-    //         MAIN.socialShare();
-    //         _this.on("hidden.bs.modal", function() {
-    //           // $(lastClickedMarker).removeClass("active");
-    //           $(".pac-container").remove();
-    //           _this.remove();
-    //         });
-    //       },
-    //       error: function(e) {
-    //         console.log(e);
-    //       }
-    //     });
-    //
-    //   });
-    //
-    // $("#" + target + ".modal").modal("show");
-    
-  },
+  
   bgTransfer: function () {
     $$(".bg-transfer").forEach(function (element) {
       var _this = $$(element);
@@ -198,6 +143,7 @@ var Main = {
       }
     });
   },
+  
   ratingPassive: function (element) {
     $(element).find(".rating-passive").each(function () {
       var _this = $(this);
@@ -214,6 +160,7 @@ var Main = {
       }
     });
   },
+  
   socialShare: function () {
     var socialButtonsEnabled = 1;
     if (socialButtonsEnabled == 1) {
@@ -229,6 +176,7 @@ var Main = {
       });
     }
   },
+  
   initializeFitVids: function () {
     var videoBox = $$(".video");
     if (videoBox.length > 0) {
@@ -405,9 +353,7 @@ var Main = {
       }
     }
   },
-  mapInit: function () {
-    // require('../maps');
-  },
+  
   responsiveNavigation: function () {
     if (this.viewport.isSize('xs')) {
       var hasChild = $$(".has-child");
@@ -430,45 +376,6 @@ var Main = {
         _this.attr("id", "mega-menu-collapse-" + iter);
         _this.addClass("collapse");
       })
-    }
-  },
-  
-  equalHeight: function (container) {
-    var currentTallest = 0,
-      currentRowStart = 0,
-      rowDivs = [],
-      $el,
-      topPosition = 0;
-    
-    if (!this.viewport.isSize('xs')) {
-      $(container)
-        .find('.equal-height')
-        .each(function () {
-          $el = $(this);
-          $($el)
-            .height('auto');
-          topPostion = $el.position()
-            .top;
-          if (currentRowStart != topPostion) {
-            for (currentDiv = 0; currentDiv < rowDivs.length; currentDiv++) {
-              rowDivs[currentDiv].height(currentTallest);
-            }
-            rowDivs.length = 0; // empty the array
-            currentRowStart = topPostion;
-            currentTallest = $el.height();
-            rowDivs.push($el);
-          }
-          else {
-            rowDivs.push($el);
-            currentTallest = (
-                             currentTallest < $el.height()) ? (
-                               $el.height()) : (
-                               currentTallest);
-          }
-          for (currentDiv = 0; currentDiv < rowDivs.length; currentDiv++) {
-            rowDivs[currentDiv].height(currentTallest);
-          }
-        });
     }
   },
   
@@ -498,7 +405,6 @@ var Main = {
           var dataName = _this.attr('data-name');
           _this.append('<input readonly hidden="" name="score_' + dataName + '" id="score_' + dataName + '">');
         }
-        // If rating exists
         var rating = _this.attr('data-rating');
         for (var e = 0; e < rating; e++) {
           var rate = e + 1;
@@ -539,29 +445,7 @@ var Main = {
                     return false;
                   });
     }
-  },
-  timeOutActions: function (_this) {
-    setTimeout(function () {
-      if (_this.find(".map")
-          .length) {
-        var modalDialog = _this.find(".modal-dialog");
-        var dataAddress = modalDialog.data("address");
-        var dataMarkerDrag = modalDialog.data("marker-drag");
-        var dataLatitude = modalDialog.data("latitude");
-        var dataLongitude = modalDialog.data("longitude");
-        
-        if (dataAddress) {
-          simpleMap(0, 0, "map-modal", dataMarkerDrag, dataAddress);
-        }
-        else {
-          simpleMap(dataLatitude, dataLongitude, "map-modal", dataMarkerDrag);
-        }
-      }
-      Main.initializeOwl();
-      Main.initializeFitVids();
-      _this.addClass("show");
-    }, 200);
-  },
+  }
 };
 
 module.exports = Main;

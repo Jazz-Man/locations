@@ -712,7 +712,7 @@ var Dropdown = function( element) {
 
 // DROPDOWN DATA API
 // =================
-var Dropdowns = document.querySelectorAll('[data-toggle=dropdown]');
+var Dropdowns = document.querySelectorAll('[data-toggle="dropdown"]');
 for (var d=0, ddl = Dropdowns.length; d<ddl; d++) {
   new Dropdown(Dropdowns[d]);
 }

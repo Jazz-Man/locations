@@ -89,32 +89,51 @@
 
 .background-is-dark {
   color: $color-white;
+
   a {
     color: $color-white;
-    &:hover, &:active, &:focus {
+
+    &:hover,
+    &:active,
+    &:focus {
       color: $color-white;
       }
+
     &.btn-default {
       color: $black;
       }
     }
 
-  h1, h2, h3, h4, h5 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
     color: $color-white;
     }
 
   .btn {
+
     &.btn-primary {
       background-color: darken($color-default, 5%);
-      color: $color-white;
       border-color: darken($color-default, 5%);
-      &:hover, &:active, &:active:hover, &:focus {
+      color: $color-white;
+
+      &:hover,
+      &:active,
+      &:active:hover,
+      &:focus {
         background-color: darken($color-default, 12%);
         border-color: darken($color-default, 12%);
         }
+
       &.btn-framed {
         color: darken($color-default, 5%);
-        &:hover, &:active, &:active:hover, &:focus {
+
+        &:hover,
+        &:active,
+        &:active:hover,
+        &:focus {
           border-color: darken($color-default, 12%);
           }
         }
@@ -128,29 +147,17 @@
         }
       }
     }
-
-  .ui-slider {
-    .values {
-      color: $color-white;
-      input {
-        background-color: transparent;
-        border: none;
-        width: 49%;
-        }
-      }
-    }
-
   }
 
 .bg-transfer {
   background-size: cover;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
   position: absolute;
   top: 0;
-  left: 0;
-  height: 100%;
-  overflow: hidden;
-  z-index: -1;
   width: 100%;
+  z-index: -1;
   }
 
 .box {
@@ -206,7 +213,7 @@
   }
 
 .no-bottom-margin {
-  margin-bottom: 0 !important;
+  margin-bottom: 0;
   }
 
 .no-top-margin {
@@ -476,6 +483,10 @@
 
 .width-100 {
   width: 100% !important;
+  }
+
+.width-auto {
+  width: auto;
   }
 
 .width-100px {

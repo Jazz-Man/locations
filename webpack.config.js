@@ -43,14 +43,15 @@ var externalPage = [
   'sidebar_results'
 ];
 
-var isProd = (process.env.NODE_ENV === 'production');
+var isProd = (
+process.env.NODE_ENV === 'production');
 
 var outputPath;
 
 if (isProd) {
   outputPath = '/home/jazzman/nginxstack/apps/upages/wp-content/themes/upages/assets';
-  // outputPath = path.relative(__dirname, '/home/jazzman/nginxstack/apps/upages/wp-content/themes/upages/assets');
-} else {
+}
+else {
   outputPath = path.join(__dirname, 'dist');
 }
 
@@ -85,26 +86,6 @@ var extractSCSS = new ExtractTextPlugin({
   allChunks: true
 });
 
-function getOutput() {
-  var output;
-  if (isProd) {
-    output = {
-      filename: 'js/[name].js?[hash]',
-      chunkFilename: "js/[id].js",
-      path: outputPath,
-      publicPath: "http://upages.com.ua/wp-content/themes/upages/assets/",
-      libraryTarget: 'var'
-    }
-  } else {
-    output = {
-      filename: 'js/[name].js?[hash]',
-      chunkFilename: "js/[id].js",
-      path: outputPath
-    }
-  }
-  return output;
-}
-
 function htmlPage(name) {
   return new HtmlWebpackPlugin({
     filename: 'assets/external/' + name + '.html',
@@ -125,18 +106,21 @@ function jadePage(name) {
     inject: false,
     injectExtras: {
       head: [
-        "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", {
+        "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
+        {
           tag: 'link',
           href: 'https://fonts.googleapis.com/css?family=Lato:400,300,700,900,400italic',
           rel: "stylesheet",
           type: "text/css"
         }
       ],
-      body: [{
+      body: [
+        {
           tag: "script",
           innerHTML: "var upages_params = {url:'http://localhost:8080/upages/wp-admin/admin-ajax.php'}",
           type: "text/javascript"
-        }, {
+        },
+        {
           tag: "script",
           src: "http://maps.google.com/maps/api/js?key=AIzaSyBEDfNcQRmKQEyulDN8nGWjLYPm8s4YB58&libraries=places"
         },
@@ -166,28 +150,26 @@ function getPlugins() {
       jQuery: "jquery",
       "window.jQuery": "jquery"
     }),
-    extractSCSS
-    // new WriteFilePlugin({
-    //   log: false,
-    // })
+    extractSCSS,
+    new WriteFilePlugin({
+      log: false,
+    })
   );
-
-  _.forEach(pages, function(e) {
+  
+  _.forEach(pages, function (e) {
     plugins.push(jadePage(e))
   });
-
-  _.forEach(externalPage, function(e) {
+  
+  _.forEach(externalPage, function (e) {
     plugins.push(htmlPage(e))
   });
-
-
-
-  if (isProd) {
-    plugins.push(
-        new webpack.optimize.UglifyJsPlugin(uglifyOption)
-    );
-  }
-
+  
+  // if (isProd) {
+  //   plugins.push(
+  //       new webpack.optimize.UglifyJsPlugin(uglifyOption)
+  //   );
+  // }
+  
   return plugins;
 }
 
@@ -198,16 +180,21 @@ module.exports = {
       './index.js'
     ],
   },
-  output: getOutput(),
-
+  output: {
+    filename: 'js/[name].js?[hash]',
+    chunkFilename: "js/[id].js",
+    path: outputPath,
+    libraryTarget: 'var'
+  },
+  
   target: 'web',
-
+  
   externals: {
     $: "jQuery",
     jquery: 'jQuery',
     google: 'google'
   },
-
+  
   resolve: {
     modules: [
       path.resolve(__dirname, 'src'),
@@ -226,10 +213,6 @@ module.exports = {
       '.gif'
     ],
     alias: {
-      'trackpad-scroll-js': 'trackpad-scroll-emulator/jquery.trackpad-scroll-emulator.js',
-      'trackpad-scroll-css': 'trackpad-scroll-emulator/css/trackpad-scroll-emulator.css',
-      'nouislider_js': 'nouislider/distribute/jquery.nouislider.all.js',
-      'countdown': 'countdown/dist/jquery.countdown.js',
       'zabuto_calendar_js': 'zabuto_calendar/zabuto_calendar.js',
       'zabuto_calendar_css': 'zabuto_calendar/zabuto_calendar.css'
     }
@@ -255,64 +238,82 @@ module.exports = {
   module: {
     loaders: [
       {
-        test:/acf-input.js$/,
-        loader:'exports?acf'
+        test: /acf-input.js$/,
+        loader: 'expose?acf'
       },
-     {
-      test: /\.pug$/,
-      exclude: /node_modules/,
-      loader: 'pug',
-      query: {
-        pretty: true
+      {
+        test: /\.pug$/,
+        exclude: /node_modules/,
+        loader: 'pug',
+        query: {
+          pretty: true
+        }
+      },
+      {
+        test: /\.scss$/,
+        include: path.join(__dirname, 'src'),
+        
+        loader: extractSCSS.extract({
+          publicPath: '../',
+          fallbackLoader: 'style',
+          loader: [
+            {
+              loader: 'css',
+              query: {
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'autoprefixer',
+              query: {
+                browsers: [
+                  "android >= 4.4",
+                  "chrome >= 20",
+                  "ff >= 20",
+                  "ie > 8",
+                  "ie_mob >= 10",
+                  "safari > 6",
+                  "ios > 6"
+                ],
+                add: true,
+                remove: true,
+                flexbox: true,
+                grid: true
+              }
+            },
+            {
+              loader: 'resolve-url',
+              query: {
+                root: '../',
+                keepQuery: true
+              }
+            },
+            {
+              loader: 'sass',
+              query: {
+                sourceMap: true,
+                includePaths: path.resolve(__dirname, "src")
+              }
+            }
+          ]
+        })
+      },
+      {
+        test: /\.(ttf|eot|svg|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'url'
+      },
+      {
+        test: /\.(png|gif|jpg|jpeg)$/,
+        loader: 'url'
       }
-    }, {
-      test: /\.scss$/,
-      include: path.join(__dirname, 'src'),
-
-      loader: extractSCSS.extract({
-        publicPath: '../',
-        fallbackLoader: 'style',
-        loader: [{
-          loader: 'css',
-          query: {
-            sourceMap: true
-          }
-        }, {
-          loader: 'resolve-url',
-          query: {
-            root: '../',
-            keepQuery: true
-          }
-        }, {
-          loader: 'sass',
-          query: {
-            sourceMap: true,
-            includePaths: path.resolve(__dirname, "src")
-          }
-        }, ]
-      })
-    }, {
-      test: /\.(ttf|eot|svg|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'file',
-      query: {
-        publicPath: '',
-        name: 'font/[name].[ext]?[hash]'
-      }
-    }, {
-      test: /\.(png|gif|jpg|jpeg)$/,
-      loader: 'file',
-      query: {
-        publicPath: '',
-        name: 'img/[name].[ext]?[hash]'
-      }
-    }, ],
+    ],
     noParse: [
       /reqwest\/reqwest.js/,
     ],
   },
-
+  
   plugins: getPlugins(),
-
+  
   devServer: {
     // noInfo: true,
     contentBase: outputPath,
