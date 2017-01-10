@@ -1,6 +1,6 @@
 var $$ = require('domtastic');
 var reqwest = require('reqwest');
-var bsn = require("../lib/bootstrap.native");
+var bsn = require("bootstrap.native.js");
 
 var isLoad = false;
 var started = false;

@@ -1026,7 +1026,6 @@ GMaps.prototype.drawOverlay = function(options) {
     el.style.zIndex = 100;
     el.innerHTML = options.content;
 
-
     overlay.el = el;
     if (!options.layer) {
       options.layer = 'overlayLayer';
@@ -1083,7 +1082,7 @@ GMaps.prototype.drawOverlay = function(options) {
       content = el.children[0],
       content_height = content.clientHeight,
       content_width = content.clientWidth;
-
+    
     switch (options.verticalAlign) {
       case 'top':
         el.style.top = (

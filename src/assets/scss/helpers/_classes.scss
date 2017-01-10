@@ -502,17 +502,10 @@
   .owl-next {
     right: 0;
 
-    &:after {
-      content: "5";
-      }
     }
 
   .owl-prev {
     right: 40px;
-
-    &:after {
-      content: "4";
-      }
     }
   }
 
@@ -837,9 +830,9 @@
     }
   }
 
-.video {
-  iframe {
-    height: 100%;
-    width: 100%;
-    }
-  }
+//.video {
+//  iframe {
+//    height: 100%;
+//    width: 100%;
+//    }
+//  }

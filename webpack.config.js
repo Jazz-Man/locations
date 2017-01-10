@@ -29,6 +29,14 @@ var pages = [
   'terms-and-conditions',
   'how-it-works',
   'pricing',
+  'listing-grid-3-items',
+  'listing-grid-4-items',
+  'listing-grid-different-widths',
+  'listing-grid-full-width',
+  'listing-grid-left-sidebar',
+  'listing-grid-right-sidebar',
+  'listing-row-left-sidebar',
+  'listing-row-right-sidebar',
 ];
 
 var externalPage = [
@@ -43,8 +51,7 @@ var externalPage = [
   'sidebar_results'
 ];
 
-var isProd = (
-process.env.NODE_ENV === 'production');
+var isProd = (process.env.NODE_ENV === 'production');
 
 var outputPath;
 
@@ -177,14 +184,13 @@ module.exports = {
   context: path.join(__dirname, 'src'),
   entry: {
     index: [
-      './index.js'
+      './assets/js'
     ],
   },
   output: {
     filename: 'js/[name].js?[hash]',
     chunkFilename: "js/[id].js",
     path: outputPath,
-    libraryTarget: 'var'
   },
   
   target: 'web',

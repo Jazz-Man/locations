@@ -148,7 +148,6 @@ AjaxForm.prototype.sendRequest = function(data, page) {
     },
     success: function(resp) {
       var res = _this.respData(resp);
-
       _this.appendResContainer(res.results);
       _this.hideEl(_this.loadingImage);
       _this.current_page = res.current_page;
@@ -240,6 +239,11 @@ AjaxForm.prototype.init = function() {
     }
     _this.lockForm();
     _this.submitForm();
+  });
+  
+  this.button_load.on('click',function () {
+    _this.setPage(parseInt(_this.current_page) + 1);
+    _this.sendRequest(_this.request_data, _this.current_page);
   })
 };
 

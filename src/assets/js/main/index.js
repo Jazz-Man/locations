@@ -1,9 +1,9 @@
-var GMaps = require('../lib/gmaps');
-var mapStylesAdministrative = require('../lib/map-styles');
+var GMaps = require('../module/gmaps');
+var mapStylesAdministrative = require('../module/map-styles');
 var $$ = require('domtastic');
 var reqwest = require('reqwest');
-var autoComplete = require('../components/autoComplete');
-require('../components/profile');
+var autoComplete = require('../module/autoComplete');
+// require('../components/profile');
 
 var Main = {
   viewport: {
@@ -100,49 +100,7 @@ var Main = {
       });
     }
   },
-  
-  inputAutoComplete: function () {
-    var inputs = $$('input[type="text"]');
-    if (inputs.length) {
-      inputs.forEach(function (e) {
-        var _this = $$(e);
-        var dataSource = _this.attr('data-auto-complete');
-        if (dataSource) {
-          new autoComplete({
-            selector: e,
-            minChars: 1,
-            source: function (term, suggest) {
-              term = term.toLowerCase();
-              var choices = JSON.parse(dataSource);
-              var suggestions = [];
-              
-              choices.forEach(function (e) {
-                if (~e.toLowerCase().indexOf(term)) {
-                  suggestions.push(e);
-                }
-              });
-              suggest(suggestions);
-            }
-          });
-        }
-      });
-    }
-  },
-  
-  bgTransfer: function () {
-    $$(".bg-transfer").forEach(function (element) {
-      var _this = $$(element);
-      var backgroundImage = _this.attr("data-bg");
-      if (backgroundImage) {
-        _this.css("background-image", "url(" + backgroundImage + ")");
-      }
-      else {
-        var img = _this.find('img');
-        img.css('display', 'none');
-        _this.css("background-image", "url(" + img.attr("src") + ")");
-      }
-    });
-  },
+   
   
   ratingPassive: function (element) {
     $(element).find(".rating-passive").each(function () {
@@ -164,26 +122,17 @@ var Main = {
   socialShare: function () {
     var socialButtonsEnabled = 1;
     if (socialButtonsEnabled == 1) {
-      require('jssocials');
+      require('../module/jssocials');
       $(".social-share").jsSocials({
-        shares: [
-          "twitter",
-          "facebook",
-          "googleplus",
-          "linkedin",
-          "pinterest"
-        ]
+        url: "http://www.google.com",
+        text: "Google Search Page",
+        showLabel: false,
+        showCount: "inside",
+        shares: ["twitter", "facebook", "googleplus", "linkedin", "pinterest"]
       });
     }
   },
   
-  initializeFitVids: function () {
-    var videoBox = $$(".video");
-    if (videoBox.length > 0) {
-      var fitvids = require('fitvids');
-      fitvids(videoBox);
-    }
-  },
   initializeOwl: function () {
     
     $$(".owl-carousel").forEach(function (element) {
@@ -245,7 +194,10 @@ var Main = {
         nav: nav,
         dots: dots,
         autoHeight: true,
-        navText: []
+        navText: [
+          "<i class='fa fa-2x fa-chevron-circle-left'></i>",
+          "<i class='fa fa-2x fa-chevron-circle-right'></i>"
+        ]
       };
       
       Main.owlCarousel(_this, owlCarouselOption);
@@ -256,126 +208,6 @@ var Main = {
     if (selector.length > 0) {
       require('owl.carousel');
       $(selector).owlCarousel(option);
-    }
-  },
-  
-  wpas: function () {
-    var heroSection = $$('.hero-section');
-    if (heroSection.length && heroSection.hasClass('has-map')) {
-      var ajaxForm = require('../components/ajax-form');
-      var mapContainer = $$('[data-map-container]');
-      var mapContainerID = '#' + mapContainer.attr('id');
-      var _this = this;
-      var map;
-      
-      if (mapContainer.length) {
-        map = new GMaps({
-          div: mapContainerID,
-          zoom: 5,
-          zoomControl: false,
-          mapTypeControl: false,
-          scaleControl: false,
-          streetViewControl: false,
-          lat: 48.9257791,
-          lng: 24.692838,
-          mapType: "roadmap",
-          height: '100%',
-          styles: mapStylesAdministrative,
-          idle: function (e) {
-            var form = new ajaxForm({
-              elem: '[data-ajax-form]',
-              
-              ajax_complete: function (data) {
-                
-                if (mapContainer.length) {
-                  var marcers = data.marcers;
-                  
-                  marcers.forEach(function (item) {
-                    
-                    if (!item.latitude || !item.longitude) {
-                      return;
-                    }
-                    
-                    var markerContent = '<div class="marker" data-marker-id="' + item.id + '">' +
-                                        '<div class="title">' + item.title + '</div>' +
-                                        '<div class="marker-wrapper">' +
-                                        (
-                                          item.featured == 1 ? '<div class="tag"><i class="fa fa-check"></i></div>' : '') +
-                                        '<div class="pin">' + '<div class="image" style="background-image: url(' + item.thumbnail + ');"></div>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '</div>';
-                    
-                    map.drawOverlay({
-                      mouseenter: function (e) {
-                        marcerMouseEvent(e);
-                      },
-                      mouseleave: function (e) {
-                        marcerMouseEvent(e);
-                      },
-                      lat: item.latitude,
-                      lng: item.longitude,
-                      content: markerContent,
-                      layer: 'overlayImage',
-                      verticalAlign: 'bottom',
-                      horizontalAlign: 'center'
-                    });
-                    
-                  });
-                }
-              }
-            });
-            var formBox = form.elem.closest('.form.search-form.vertical');
-            
-            formBox.removeClass('hide').addClass('show');
-            if (!_this.viewport.isSize('xs')) {
-              var heroSectionHeigh = heroSection[0].clientHeight;
-              var formWrapperHeight = formBox.find('.wrapper')[0].clientHeight;
-              formBox.css({
-                'position': 'absolute',
-                'top': (
-                       (
-                       heroSectionHeigh / 2) - (
-                       formWrapperHeight / 2) ) + 'px'
-              });
-            }
-          }
-        });
-      }
-      
-      function marcerMouseEvent(e) {
-        var marker = $$(e.el).find('.marker');
-        var markerID = marker.attr('data-marker-id');
-        var resultsContent = $$('#results-content');
-        var itemResult = resultsContent.find("[data-listing-id='" + markerID + "'] > a");
-        
-        itemResult.toggleClass('hover-state');
-      }
-    }
-  },
-  
-  responsiveNavigation: function () {
-    if (this.viewport.isSize('xs')) {
-      var hasChild = $$(".has-child");
-      
-      $$("body").addClass("nav-btn-only");
-      hasChild.children("a").attr("data-toggle", "collapse");
-      hasChild.find(".nav-wrapper").addClass("collapse");
-      
-      $$(".mega-menu .heading").forEach(function (element, iter) {
-        var _this = $$(element);
-        var elHtml = _this[0].outerHTML;
-        var parent = $$(_this.parent());
-        var linkCollapseID = '#mega-menu-collapse-' + iter;
-        parent.prepend("<a href='" + linkCollapseID + "' class='has-child' aria-controls='" + linkCollapseID + "' data-toggle='collapse'>" + elHtml + "</a>");
-        _this.remove();
-        
-      });
-      $$(".mega-menu ul").forEach(function (element, iter) {
-        var _this = $$(element);
-        _this.attr("id", "mega-menu-collapse-" + iter);
-        _this.addClass("collapse");
-      })
     }
   },
   
@@ -397,7 +229,7 @@ var Main = {
       '<i class="fa fa-star s10" data-score="10"></i>' +
       '</span>';
     
-    if (ratingBox.length > 0) {
+    if (ratingBox.length) {
       ratingBox.forEach(function (element) {
         var _this = $$(element);
         _this.append(ratingElement);

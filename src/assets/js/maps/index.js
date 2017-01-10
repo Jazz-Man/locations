@@ -6,8 +6,8 @@ var mapContainerID = '#' + mapContainer.attr('id');
 var mapType = mapContainer.attr('data-map-type');
 
 if (mapContainerID) {
-  var GMaps = require('../lib/gmaps');
-  var mapStylesAdministrative = require('../lib/map-styles');
+  var GMaps = require('../module/gmaps');
+  var mapStylesAdministrative = require('../module/map-styles');
   
   var map = new GMaps({
     div: mapContainerID,

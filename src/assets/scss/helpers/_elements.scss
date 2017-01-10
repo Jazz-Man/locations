@@ -49,21 +49,11 @@ a {
     &.icon {
       i {
         @include transit;
-        font-size: 12px;
+        //font-size: 12px;
         margin-left: 5px;
         position: relative;
         top: 1px;
         }
-      }
-    &:after {
-      @include elegant-font;
-      @include opacity(.6);
-      content: "$";
-      font-size: 14px;
-      vertical-align: middle;
-      margin-left: 2px;
-      top: -1px;
-      position: relative;
       }
     }
   &.icon {
@@ -74,6 +64,12 @@ a {
   &.underline {
     text-decoration: underline;
     }
+  }
+
+img{
+  display: block;
+  max-width: 100%;
+  height: auto;
   }
 
 dl {
