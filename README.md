@@ -1,0 +1,3 @@
+## Locations – Directory Listing HTML Template
+
+Locations is the **most complex** directory listing HTML template on ThemeForest. Awesome features such as Ajax modals, live map results, beautiful markers, quick view on listings, 4 map homepages, 4 hero homepages makes this template the most useful you have ever met. Your project will look extra ordinary thanks to beautiful clean design. Locations can be used for directiories, coupons, real estate, car rentals or any general listing website.
