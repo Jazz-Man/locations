@@ -1,6 +1,9 @@
 @import "../variables";
 @import "../mixin";
 
+//@import "~typeface-roboto-condensed/index.css";
+@import "~font-awesome/css/font-awesome.css";
+
 html {
   box-sizing: border-box;
   }
@@ -342,7 +345,7 @@ body {
       ul {
         min-width: 220px;
         padding-left: 0;
-        
+
         li {
           @include transit;
           border-bottom: 1px solid rgba($color-white, .1);

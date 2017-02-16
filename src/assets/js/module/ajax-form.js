@@ -1,27 +1,29 @@
 var $$ = require('domtastic');
 var serialize = require('form-serialize');
 var reqwest = require('reqwest');
+var template = require('../module/template');
 
-var autoComplete = require('./autoComplete');
+var AutoComplete = require('./autoComplete');
 
 
 function AjaxForm(options) {
-
-  this.elem = $$(options.elem);
-  if (this.elem.length){
-    this.elemID = this.elem.attr('id');
-    this.ajax_complete = options.ajax_complete;
-    this.current_page = 1;
+  var _this = this;
   
-    this.results_preloader = $$(this.getOption('resultsPreloader'));
-    this.results_container = $$(this.getOption('resultsContainer'));
+  _this.elem = $$(options.elem);
+  if (_this.elem.length){
+    _this.elemID = _this.elem.attr('id');
+    _this.ajax_complete = options.ajax_complete;
+    _this.current_page = 1;
   
-    this.button_load = $$(this.getOption('buttonLoad'));
-    this.storage = null;
-    this.storege_key = "wpasInstance_" + this.elemID;
-    this.show_default = this.getOption('showDefaultResults');
+    _this.results_preloader = $$(_this.getOption('resultsPreloader'));
+    _this.results_container = $$(_this.getOption('resultsContainer'));
   
-    this.init();
+    _this.button_load = $$(_this.getOption('buttonLoad'));
+    _this.storage = null;
+    _this.storege_key = "wpasInstance_" + _this.elemID;
+    _this.show_default = _this.getOption('showDefaultResults');
+  
+    _this.init();
   }
 
 }
@@ -75,17 +77,19 @@ AjaxForm.prototype.getSerialize = function(option) {
 };
 
 AjaxForm.prototype.setPage = function(pagenum) {
-  this.current_page = pagenum;
-  var elemPageField = this.elem.find('#wpas-paged');
+  var _this = this;
+  _this.current_page = pagenum;
+  var elemPageField = _this.elem.find('#wpas-paged');
   elemPageField[0].value = pagenum
 };
 
 AjaxForm.prototype.submitForm = function() {
-
-  this.setPage(1);
-  this.setRequest(this.getSerialize());
-  this.results_container.empty();
-  this.sendRequest(this.request_data, this.current_page);
+  var _this = this;
+  
+  _this.setPage(1);
+  _this.setRequest(_this.getSerialize());
+  _this.results_container.empty();
+  _this.sendRequest(this.request_data, _this.current_page);
 };
 
 AjaxForm.prototype.setRequest = function() {
@@ -93,28 +97,29 @@ AjaxForm.prototype.setRequest = function() {
 };
 
 AjaxForm.prototype.storeInstance = function(requestResults) {
-
+  var _this = this;
   var instance = {
-    request: this.request_data,
-    form: this.getSerialize({
+    request: _this.request_data,
+    form: _this.getSerialize({
       hash: true
     }),
     results: {
-      html: this.results_container.html(),
+      html: _this.results_container.html(),
       ajax: requestResults
     },
-    page: this.current_page
+    page: _this.current_page
   };
   instance = JSON.stringify(instance);
-  localStorage.setItem(this.storege_key, instance);
+  localStorage.setItem(_this.storege_key, instance);
 
 };
 
 AjaxForm.prototype.preloaderInit = function() {
-
-  this.loadingImage = $$("<img id='wpas-loading-img' src='" + this.getOption('loadingImageURL') + "'>");
-
-  this.results_preloader.append(this.loadingImage.addClass('hide'));
+  var _this = this;
+  
+  _this.loadingImage = $$("<img id='wpas-loading-img' src='" + _this.getOption('loadingImageURL') + "'>");
+  
+  _this.results_preloader.append(_this.loadingImage.addClass('hide'));
 };
 
 AjaxForm.prototype.appendResContainer = function(res) {
@@ -126,21 +131,21 @@ AjaxForm.prototype.urlHash = function() {
 };
 
 AjaxForm.prototype.respData = function(resp) {
-  this.resp_data = JSON.parse(resp.data);
-  return this.resp_data
+  var _this = this;
+  _this.resp_data = JSON.parse(resp.data);
+  return _this.resp_data
 };
 
 AjaxForm.prototype.sendRequest = function(data, page) {
 
   var _this = this;
-
-  this.hideEl(this.button_load);
-  this.showEl(this.loadingImage);
+  
+  _this.hideEl(_this.button_load);
+  _this.showEl(_this.loadingImage);
 
   reqwest({
     url: upages_params.ajaxurl,
     method: 'post',
-    type: 'json',
     data: {
       action: 'wpas_ajax_load',
       page: page,
@@ -148,7 +153,15 @@ AjaxForm.prototype.sendRequest = function(data, page) {
     },
     success: function(resp) {
       var res = _this.respData(resp);
-      _this.appendResContainer(res.results);
+  
+      var posts = res.query.posts;
+  
+      var listingItemTemplate = '';
+
+      posts.forEach(function (item) {
+        listingItemTemplate += template('map-listing-item', item);
+      });
+      _this.appendResContainer(listingItemTemplate);
       _this.hideEl(_this.loadingImage);
       _this.current_page = res.current_page;
       var max_page = res.max_page;
@@ -166,6 +179,7 @@ AjaxForm.prototype.sendRequest = function(data, page) {
       if (_this.ajax_complete) {
         var _resp = _this.respData(resp);
         _this.ajax_complete.apply(_resp, [_resp]);
+  
       }
     },
     error: function(err) {
@@ -175,24 +189,42 @@ AjaxForm.prototype.sendRequest = function(data, page) {
 };
 
 AjaxForm.prototype.autoComplete = function() {
-  var inputs = this.elem.find('input[type="text"]');
   var _this = this;
+  var inputs = _this.elem.find('input[type="text"]');
 
   inputs.forEach(function(e) {
-    var demo1 = new autoComplete({
+    var complete = new AutoComplete({
       selector: e,
       minChars: 1,
       source: function(term, suggest) {
         term = term.toLowerCase();
-        var choices = JSON.parse($$(e).attr('data-auto-complete'));
-        var suggestions = [];
+        var autocomplete_data = $$(e).attr('data-auto-complete');
+        var choices;
+        reqwest({
+          url: upages_params.ajaxurl,
+          method: 'post',
+          data: {
+            action: 'listing_autocomplete',
+            autocomplete_data: autocomplete_data
+          },
+          success:function (resp) {
+            choices = resp.data;
+            var suggestions = [];
+            if (choices.length){
+              choices.forEach(function (e) {
+                if (~e.toLowerCase().indexOf(term)) {
+                  suggestions.push(e);
+                }
+              });
+            }
   
-        choices.forEach(function (e) {
-          if (~e.toLowerCase().indexOf(term)) {
-            suggestions.push(e);
+            suggest(suggestions);
+          },
+          error: function(err) {
+            console.log(err);
           }
         });
-        suggest(suggestions);
+        
       },
       onSelect: function(e, term, item){
         e.preventDefault();
@@ -201,7 +233,6 @@ AjaxForm.prototype.autoComplete = function() {
         }
         _this.lockForm();
         _this.submitForm();
-        console.log(term);
       }
     });
   });
@@ -210,29 +241,43 @@ AjaxForm.prototype.autoComplete = function() {
 AjaxForm.prototype.init = function() {
 
   var _this = this;
-  this.preloaderInit();
-  if (window.location.hash.slice(1) == this.urlHash()) {
-    this.storage = JSON.parse(localStorage.getItem("wpasInstance_" + this.elemID));
+  _this.preloaderInit();
+  if (window.location.hash.slice(1) == _this.urlHash()) {
+    _this.storage = JSON.parse(localStorage.getItem("wpasInstance_" + _this.elemID));
   }
-  this.autoComplete();
-  this.setPage(1);
-  this.setRequest(this.getSerialize());
+  _this.autoComplete();
+  _this.setPage(1);
+  _this.setRequest(_this.getSerialize());
 
-  if (this.results_container.length) {
-    if (this.storage !== null) {
-      this.results_container.html(this.storage.results.html);
+  if (_this.results_container.length) {
+    if (_this.storage !== null) {
+      _this.results_container.html(_this.storage.results.html);
 
-      if (this.ajax_complete) {
-        var _resp = this.storage.results.ajax;
-        this.ajax_complete.apply(_resp, [_resp]);
+      if (_this.ajax_complete) {
+        var _resp = _this.storage.results.ajax;
+        _this.ajax_complete.apply(_resp, [_resp]);
       }
-    } else if (this.show_default) {
-      this.sendRequest(this.request_data, this.current_page);
+    } else if (_this.show_default) {
+      _this.sendRequest(_this.request_data, _this.current_page);
     }
   }
-
-
-  this.elem.on('submit', function(e) {
+  
+  var allInput = _this.elem.find('[type="text"]');
+  
+  if (_this.storage !== null){
+    allInput.forEach(function (e) {
+      var _e = $$(e);
+      var _id = _e.attr('id');
+      var storage = _this.storage.form;
+      if (_id in storage){
+        var _val =  [storage][0][_id];
+        _e.val(_val);
+      }
+      
+    });
+  }
+  
+  _this.elem.on('submit', function(e) {
     e.preventDefault();
     if (_this.formLocked()) {
       return;

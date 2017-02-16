@@ -1,12 +1,15 @@
-@import "bootstrap/bootstrap";
-@import "~owl.carousel/dist/assets/owl.carousel.css";
-@import "owl.transitions";
+//@import "bootstrap/bootstrap";
+// bootstrap 4
+@import "~bootstrap/scss/bootstrap";
+@import "mdbootstrap/sass/mdb";
+//@import "~owl.carousel/dist/assets/owl.carousel.css";
+//@import "owl.transitions";
 @import "bourbon";
 @import "compass-mixins/compass";
 @import "auto-complete";
 @import "acf/acf-input";
-@import "select2/select2";
+//@import "select2/select2";
 @import "spop";
-@import "jssocials/jssocials";
-@import "jssocials/jssocials-theme-flat";
-@import "lightbox/lightbox";
+//@import "jssocials/jssocials";
+//@import "jssocials/jssocials-theme-flat";
+//@import "lightbox/lightbox";

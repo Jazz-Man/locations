@@ -1,7 +1,7 @@
 include mixins
 
 doctype html
-html(lang=htmlWebpackPlugin.options.lang, manifest=htmlWebpackPlugin.files.manifest)
+html(lang=htmlWebpackPlugin.options.lang, manifest=htmlWebpackPlugin.files.manifest class='h-100')
 	head
 		meta(charset='utf-8')
 		meta(http-equiv='X-UA-Compatible', content='IE=edge')
@@ -15,14 +15,12 @@ html(lang=htmlWebpackPlugin.options.lang, manifest=htmlWebpackPlugin.files.manif
 		block head
 	block vars
 		- var bodyClass = ''
-	body(class=bodyClass)
-		.page-wrapper
-			include header
-			#page-content
-				block content
-
-			include footer
-
+	body(class='h-100')
+		include header
+		//.page-wrapper
+			//#page-content
+		block content
+		include footer
 		block defaultBody
 			+injectExtrasBody
 			+JS

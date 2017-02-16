@@ -1,8 +1,7 @@
 var template = require('lodash/template');
-var memoize = require('lodash/memoize');
 var $$ = require('domtastic');
 
-module.exports = memoize(function (id, data) {
+module.exports = function (id, data) {
   var tpl = $$('#tmpl-' + id).html();
   options = {
     evaluate: /<#([\s\S]+?)#>/g,
@@ -12,4 +11,4 @@ module.exports = memoize(function (id, data) {
   };
   var compiled = template(tpl, options);
   return compiled(data);
-});
+};

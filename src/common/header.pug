@@ -1,109 +1,43 @@
-header#page-header
-	nav
-		.left
-			a.brand(href='index.html')
-				img(src=require('assets/img/logo.png') alt='')
-		// end left
-		.right
-			.primary-nav.has-mega-menu
-				ul.navigation
-					li.active
-						a(href='#nav-homepages') Home
-					li
-						a(href='map.html') Map
-					li.has-child
-						a(href='#nav-listing') Listing
-						.wrapper
-							#nav-listing.nav-wrapper
-								ul
-									li.has-child
-										a(href='#nav-grid-listing') Grid Listing
-										#nav-grid-listing.nav-wrapper
-											ul
-												li
-													a(href='listing-grid-right-sidebar.html') With Right Sidebar
-												li
-													a(href='listing-grid-left-sidebar.html') With Left Sidebar
-												li
-													a(href='listing-grid-full-width.html') Full Width
-												li
-													a(href='listing-grid-different-widths.html') Different Widths
-												li
-													a(href='listing-grid-3-items.html') 3 Items in Row
-												li
-													a(href='listing-grid-4-items.html') 4 Items in Row
-									li.has-child
-										a(href='#nav-row-listing') Row Listing
-										#nav-row-listing.nav-wrapper
-											ul
-												li
-													a(href='listing-row-right-sidebar.html') Row Right Sidebar
-												li
-													a(href='listing-row-left-sidebar.html') Row Left Sidebar
-					li.mega-menu-parent.has-child
-						a(href='#nav-pages') Pages
-						.wrapper
-							.mega-menu
-								#nav-pages.nav-wrapper
-									.container
-										.row
-											.col-md-4.col-sm-4
-												h4.heading General
-												ul
-													li
-														a(href='faq.html') Faq
-													li
-														a(href='pricing.html') Pricing
-													li
-														a(href='submit.html') Submit Listing
-													li
-														a(href='detail.html') Listing Detail
-													li
-														a(href='detail-2.html') Listing Detail v2
-											// end col-md-3
-											.col-md-4.col-sm-4
-												h4.heading User
-												ul
-													li
-														a(href='profile.html') Profile Edit
-													li
-														a(href='user.html') User Edit
-													li
-														a(href='sign-in.html') Sign In
-													li
-														a(href='register.html') Register
-													li
-														a(href='reset-password.html') Reset Password
-													li
-														a(href='my-listings.html') My Listings
-													li
-														a(href='edit-listing.html') Edit Listing
-													li
-														a(href='reviews.html') Reviews
-											// end col-md-3
-											.col-md-4.col-sm-4
-												h4.heading Other
-												ul
-													li
-														a(href='404.html') 404 Error Page
-													li
-														a(href='terms-and-conditions.html') Terms & Conditions
-													li
-														a(href='how-it-works.html') How It Works
-					li
-						a(href='blog.html') Blog
-					li
-						a(href='contact.html') Contact
-				// end navigation
-			// end primary-nav
-			.secondary-nav
-				a(href='#' data-modal-external-file='modal_sign_in.html' data-target='modal-sign-in') Sign In
-				a.promoted(href='#' data-modal-external-file='modal_register.html' data-target='modal-register') Register
-			// end secondary-nav
-			a.btn.btn-primary.btn-small.btn-rounded.icon.shadow.add-listing(href='#' data-modal-external-file='modal_submit.html' data-target='modal-submit')
-				i.fa.fa-plus
-				span Add listing
-			.nav-btn
-				i
-				i
-				i
+header.h-100
+	nav.navbar.navbar-dark.fixed-top.navbar-toggleable-md.scrolling-navbar.warning-color-dark.zindex-sm
+		.container
+			button.navbar-toggler.navbar-toggler-right(type='button' data-toggle='collapse' data-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation')
+				span.navbar-toggler-icon
+			a.navbar-brand(href='#')
+				img.d-inline-block.align-top(src=require('assets/img/logo.png'))
+			.collapse.navbar-collapse#navbarNav
+				//.primary-nav.has-mega-menu
+				ul.navbar-nav.mr-auto.smooth-scroll
+					li.nav-item.active
+						a.nav-link.black-text(href='#home') Home
+					li.nav-item
+						a.nav-link.black-text(href='map.html') Map
+					li.nav-item
+						a.nav-link.black-text(href='blog.html') Blog
+					li.nav-item
+						a.nav-link.black-text(href='contact.html') Contact
+				ul.nav.navbar-nav.nav-flex-icons
+					li.nav-item
+						a.nav-link.waves-effect.waves-light
+							i.fa.fa-facebook
+					li.nav-item
+						a.nav-link.waves-effect.waves-light
+							i.fa.fa-twitter
+					li.nav-item
+						a.nav-link.waves-effect.waves-light
+							i.fa.fa-instagram
+
+	.view.h-100.zindex-xs.hm-stylish-light
+		.flex-center
+			.container
+				.row
+					.col-md-12.text-center.smooth-scroll.wow.fadeIn(data-wow-delay='0.2s', style='visibility: visible; animation-delay: 0.2s; animation-name: fadeIn;')
+						h1.white-text.brand-name.font-up.font-bold Transport
+						.hr-m
+							hr.hr-lgt.w-100.mb-1-half
+						h5.white-text Our 24 Hour's Services
+						h2.white-text.font-up.font-bold Ship of export & import
+						h5.white-text.mt-2.mb-1
+							| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid nisi aspernatur iure officiis repudiandae modi odit vel voluptates libero nesciunt aliquam corporis.
+						a.btn.btn-default.btn-rounded.waves-effect.waves-light(href='#getaquote') Get a quote
+		.mask

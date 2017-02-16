@@ -1,10 +1,8 @@
 var path = require('path');
 var webpack = require('webpack');
 var _ = require('lodash');
-var faker = require('faker');
 var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var WriteFilePlugin = require('write-file-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var pages = [
@@ -51,15 +49,16 @@ var externalPage = [
   'sidebar_results'
 ];
 
-var isProd = (process.env.NODE_ENV === 'production');
+// var env = process.env.NODE_ENV;
+var isProd = process.env.NODE_ENV === 'production' ? true : false;
 
 var outputPath;
 
-if (isProd) {
-  outputPath = '/home/jazzman/nginxstack/apps/upages/wp-content/themes/upages/assets';
+if (isProd === false) {
+  outputPath = path.join(__dirname, 'dist');
 }
 else {
-  outputPath = path.join(__dirname, 'dist');
+  outputPath = '/home/jazzman/lampstack/apps/upages/htdocs/wp-content/themes/upages/assets';
 }
 
 var uglifyOption = {
@@ -87,7 +86,7 @@ var uglifyOption = {
   }
 };
 var extractSCSS = new ExtractTextPlugin({
-  filename: 'css/[name].css?[hash]',
+  filename: 'assets/css/[name].css?[hash]',
   disable: false,
   // disable: isProd,
   allChunks: true
@@ -98,7 +97,7 @@ function htmlPage(name) {
     filename: 'assets/external/' + name + '.html',
     favicon: false,
     template: './assets/external/' + name + '.pug',
-    inject: false,
+    inject: false
   })
 }
 
@@ -116,7 +115,7 @@ function jadePage(name) {
         "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
         {
           tag: 'link',
-          href: 'https://fonts.googleapis.com/css?family=Lato:400,300,700,900,400italic',
+          href: 'https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&subset=cyrillic',
           rel: "stylesheet",
           type: "text/css"
         }
@@ -146,7 +145,7 @@ function getPlugins() {
   var plugins = [];
   
   plugins.push(
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
@@ -157,10 +156,7 @@ function getPlugins() {
       jQuery: "jquery",
       "window.jQuery": "jquery"
     }),
-    extractSCSS,
-    new WriteFilePlugin({
-      log: false,
-    })
+    extractSCSS
   );
   
   _.forEach(pages, function (e) {
@@ -183,14 +179,12 @@ function getPlugins() {
 module.exports = {
   context: path.join(__dirname, 'src'),
   entry: {
-    index: [
-      './assets/js'
-    ],
+    vendor:'./assets/js/vendor',
+    index: './assets/js'
   },
   output: {
-    filename: 'js/[name].js?[hash]',
-    chunkFilename: "js/[id].js",
-    path: outputPath,
+    filename: 'assets/js/[name].js',
+    path: outputPath
   },
   
   target: 'web',
@@ -306,16 +300,22 @@ module.exports = {
       },
       {
         test: /\.(ttf|eot|svg|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url'
+        loader: 'file',
+        query: {
+          name: 'assets/fonts/[name].[ext]'
+        }
       },
       {
         test: /\.(png|gif|jpg|jpeg)$/,
-        loader: 'url'
+        loader: 'file',
+        query: {
+          name: 'assets/img/[name].[ext]'
+        }
       }
     ],
     noParse: [
       /reqwest\/reqwest.js/,
-    ],
+    ]
   },
   
   plugins: getPlugins(),
@@ -323,6 +323,6 @@ module.exports = {
   devServer: {
     // noInfo: true,
     contentBase: outputPath,
-    port: 8081
+    port: 3000
   }
 };

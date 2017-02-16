@@ -16,7 +16,7 @@ if ($$(document.body).hasClass("single")) {
     };
     var mapSimple = new GMaps({
       div: mapContainerID,
-      zoom: 15,
+      zoom: Number(upages_params.map_zoom),
       zoomControl: false,
       mapTypeControl: false,
       scaleControl: false,

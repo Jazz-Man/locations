@@ -1,198 +1,28 @@
 extends common/layout
+
+block append head
+	style(rel='stylesheet').
+
+		.description {
+			padding-top: 25%;
+			padding-bottom: 3rem;
+			color: #ffffff
+			}
+
+		@media (max-width: 992px) {
+			.description {
+				padding-top: 7rem;
+				text-align: center;
+				}
+
+			#app-mockup {
+				max-height: 400px;
+				}
+			}
+
+
 block append vars
 	- var bodyClass = 'home'
 block append content
 
 	include sections/hero-section
-	//+hr
-	include sections/recent-places
-
-	+hr
-
-	include sections/browse-listings
-
-	include sections/subscribe
-
-	include sections/promoted-locations
-	section.block
-		.container
-			.section-title
-				h2 Events Near You
-			.row
-				.col-md-4.col-sm-4
-					.text-element.event
-						.date-icon
-							figure.day 22
-							figure.month Jun
-						h4
-							a(href='detail.html') Lorem ipsum dolor sit amet
-						figure.date
-							i.icon_clock_alt
-							| 08:00
-						p
-							| Ut nec vulputate enim. Nulla faucibus convallis dui. Donec arcu enim, scelerisque.
-						a.link.arrow(href='detail.html') More
-
-				.col-md-4.col-sm-4
-					.text-element.event
-						.date-icon
-							figure.day 04
-							figure.month Jul
-						h4
-							a(href='detail.html') Donec mattis mi vitae volutpat
-						figure.date
-							i.icon_clock_alt
-							| 12:00
-						p Nullam vitae ex ac neque viverra ullamcorper eu at nunc. Morbi imperdiet.
-						a.link.arrow(href='detail.html') More
-				.col-md-4.col-sm-4
-					.text-element.event
-						.date-icon
-							figure.day 12
-							figure.month Aug
-						h4
-							a(href='detail.html') Vivamus placerat
-						figure.date
-							i.icon_clock_alt
-							| 12:00
-						p Aenean sed purus ut massa scelerisque bibendum eget vel massa.
-						a.link.arrow(href='detail.html') More
-			.background-wrapper
-				.background-color.background-color-black.opacity-5
-
-	section.block
-		.container
-			.row
-				.col-md-9.col-sm-9
-					.section-title
-						h2 Recently Rated Items
-					.row
-						.col-md-4.col-sm-4
-							.item(data-id='2')
-								a(href='detail.html')
-									.description
-										.label.label-default Restaurant
-										h3 Ironapple
-										h4 4209 Glenview Drive
-									.image.bg-transfer(data-bg=require('assets/img/items/2.jpg'))
-								.additional-info
-									.rating-passive(data-rating='3')
-										span.stars
-										span.reviews 13
-									.controls-more
-										ul
-											li
-												a(href='#') Add to favorites
-											li
-												a(href='#') Add to watchlist
-											li
-												a.quick-detail(href='#') Quick detail
-
-						.col-md-5.col-sm-5
-							.item(data-id='3')
-								figure.ribbon Top
-								a(href='detail.html')
-									.description
-										figure Starts at: 19:00
-										.label.label-default Event
-										h3 Food Festival
-										h4 840 My Drive
-									.image.bg-transfer(data-bg=require('assets/img/items/4.jpg'))
-										//img(src=require('assets/img/items/4.jpg') alt='')
-								.additional-info
-									figure.circle(title='Featured')
-										i.fa.fa-check
-									.rating-passive(data-rating='5')
-										span.stars
-										span.reviews 12
-									.controls-more
-										ul
-											li
-												a(href='#') Add to favorites
-											li
-												a(href='#') Add to watchlist
-											li
-												a.quick-detail(href='#') Quick detail
-
-						.col-md-3.col-sm-3
-							.item(data-id='4')
-								a(href='detail.html')
-									.description
-										.label.label-default Lounge
-										h3 Cosmopolit
-										h4 2896 Ripple Street
-									.image.bg-transfer(data-bg=require('assets/img/items/5.jpg'))
-										//img(src=require('assets/img/items/5.jpg') alt='')
-								.additional-info
-									.rating-passive(data-rating='5')
-										span.stars
-										span.reviews 43
-									.controls-more
-										ul
-											li
-												a(href='#') Add to favorites
-											li
-												a(href='#') Add to watchlist
-											li
-												a.quick-detail(href='#') Quick detail
-
-				.col-md-3.col-sm-3
-					.section-title
-						h2 Client’s Word
-					.testimonials.center.box
-						.owl-carousel(data-owl-items='1' data-owl-nav='0' data-owl-dots='1')
-							blockquote
-								.image
-									.bg-transfer(data-bg=require('assets/img/person-01.jpg'))
-										//img(src=require('assets/img/person-01.jpg') alt='')
-								h3 Jane Woodstock
-								h4 CEO at ArtBrands
-								p
-									| Ut nec vulputate enim. Nulla faucibus convallis dui. Donec arcu enim, scelerisque gravida lacus vel.
-							blockquote
-								.image
-									.bg-transfer(data-bg=require('assets/img/person-04.jpg'))
-										//img(src=require('assets/img/person-04.jpg') alt='')
-								h3 Peter Doe
-								h4 CEO at ArtBrands
-								p
-									| Donec arcu enim, scelerisque gravida lacus vel, dignissim cursus lectus. Aliquam laoreet purus in iaculis sodales.
-
-	section.block
-		.container
-			.section-title
-				h2 From the Blog
-			.row
-				.col-md-4.col-sm-4
-					.text-element
-						h4
-							a(href='blog-detail.html') Lorem ipsum dolor sit amet
-						figure.date 21.06.2015
-						p
-							| Ut nec vulputate enim. Nulla faucibus convallis dui. Donec arcu enim, scelerisque gravida lacus vel, dignissim cursus
-						a(href='blog-detail.html')
-							i.arrow_right
-
-				.col-md-4.col-sm-4
-					.text-element
-						h4
-							a(href='blog-detail.html') Sed et justo ut nibh condimentum lacinia
-						figure.date 13.06.2015
-						p
-							| Donec arcu enim, scelerisque gravida lacus vel, dignissim cursus lectus. Aliquam laoreet purus in iaculis sodales.
-						a(href='blog-detail.html')
-							i.arrow_right
-
-				.col-md-4.col-sm-4
-					.text-element
-						h4
-							a(href='blog-detail.html') Suspendisse varius eros id enim
-						figure.date 03.04.2015
-						p
-							| Nullam nec turpis blandit, sodales risus vitae, tincidunt velit. Vestibulum ac ipsum tincidunt, vestibulum leo eget,
-						a(href='blog-detail.html')
-							i.arrow_right
-
-	+hr
-
-	include sections/partners
