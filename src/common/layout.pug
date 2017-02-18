@@ -15,10 +15,8 @@ html(lang=htmlWebpackPlugin.options.lang, manifest=htmlWebpackPlugin.files.manif
 		block head
 	block vars
 		- var bodyClass = ''
-	body(class='h-100')
+	body(class=bodyClass)
 		include header
-		//.page-wrapper
-			//#page-content
 		block content
 		include footer
 		block defaultBody

@@ -1,15 +1,14 @@
-header.h-100
-	nav.navbar.navbar-dark.fixed-top.navbar-toggleable-md.scrolling-navbar.warning-color-dark.zindex-sm
+header
+	nav.navbar.navbar-dark.fixed-top.navbar-toggleable-md.warning-color-dark.zindex-sm
 		.container
 			button.navbar-toggler.navbar-toggler-right(type='button' data-toggle='collapse' data-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation')
 				span.navbar-toggler-icon
 			a.navbar-brand(href='#')
 				img.d-inline-block.align-top(src=require('assets/img/logo.png'))
 			.collapse.navbar-collapse#navbarNav
-				//.primary-nav.has-mega-menu
-				ul.navbar-nav.mr-auto.smooth-scroll
+				ul.navbar-nav.mr-auto
 					li.nav-item.active
-						a.nav-link.black-text(href='#home') Home
+						a.nav-link.black-text(href='/') Home
 					li.nav-item
 						a.nav-link.black-text(href='map.html') Map
 					li.nav-item
@@ -26,18 +25,3 @@ header.h-100
 					li.nav-item
 						a.nav-link.waves-effect.waves-light
 							i.fa.fa-instagram
-
-	.view.h-100.zindex-xs.hm-stylish-light
-		.flex-center
-			.container
-				.row
-					.col-md-12.text-center.smooth-scroll.wow.fadeIn(data-wow-delay='0.2s', style='visibility: visible; animation-delay: 0.2s; animation-name: fadeIn;')
-						h1.white-text.brand-name.font-up.font-bold Transport
-						.hr-m
-							hr.hr-lgt.w-100.mb-1-half
-						h5.white-text Our 24 Hour's Services
-						h2.white-text.font-up.font-bold Ship of export & import
-						h5.white-text.mt-2.mb-1
-							| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid nisi aspernatur iure officiis repudiandae modi odit vel voluptates libero nesciunt aliquam corporis.
-						a.btn.btn-default.btn-rounded.waves-effect.waves-light(href='#getaquote') Get a quote
-		.mask

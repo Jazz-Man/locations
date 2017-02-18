@@ -6,4 +6,4 @@ $(function() {
     //Rotate/reset the clicked one
     $(this).find('.fa-angle-down').toggleClass('rotate-element');
   })
-})
+});

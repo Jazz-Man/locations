@@ -58,7 +58,7 @@ if (isProd === false) {
   outputPath = path.join(__dirname, 'dist');
 }
 else {
-  outputPath = '/home/jazzman/lampstack/apps/upages/htdocs/wp-content/themes/upages/assets';
+  outputPath = '/home/jazzman/lampstack/apps/upages/htdocs/wp-content/themes/upages';
 }
 
 var uglifyOption = {
@@ -86,9 +86,8 @@ var uglifyOption = {
   }
 };
 var extractSCSS = new ExtractTextPlugin({
-  filename: 'assets/css/[name].css?[hash]',
+  filename: 'css/[name].css',
   disable: false,
-  // disable: isProd,
   allChunks: true
 });
 
@@ -103,9 +102,9 @@ function htmlPage(name) {
 
 function jadePage(name) {
   return new HtmlWebpackPlugin({
-    filename: name + '.html',
+    filename: isProd ? 'assets/' + name + '.html' : name + '.html',
     mobile: true,
-    title: 'App',
+    title: 'uPages',
     lang: 'en',
     favicon: false,
     template: '!!pug!./src/' + name + '.pug',
@@ -167,11 +166,11 @@ function getPlugins() {
     plugins.push(htmlPage(e))
   });
   
-  // if (isProd) {
-  //   plugins.push(
-  //       new webpack.optimize.UglifyJsPlugin(uglifyOption)
-  //   );
-  // }
+  if (isProd) {
+    plugins.push(
+      new webpack.optimize.UglifyJsPlugin(uglifyOption)
+    );
+  }
   
   return plugins;
 }
@@ -179,11 +178,11 @@ function getPlugins() {
 module.exports = {
   context: path.join(__dirname, 'src'),
   entry: {
-    vendor:'./assets/js/vendor',
+    vendor: './assets/js/vendor',
     index: './assets/js'
   },
   output: {
-    filename: 'assets/js/[name].js',
+    filename: 'js/[name].js',
     path: outputPath
   },
   
@@ -255,7 +254,7 @@ module.exports = {
         
         loader: extractSCSS.extract({
           publicPath: '../',
-          fallbackLoader: 'style',
+          fallback: 'style',
           loader: [
             {
               loader: 'css',
@@ -302,14 +301,14 @@ module.exports = {
         test: /\.(ttf|eot|svg|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file',
         query: {
-          name: 'assets/fonts/[name].[ext]'
+          name: 'fonts/[name].[ext]'
         }
       },
       {
         test: /\.(png|gif|jpg|jpeg)$/,
         loader: 'file',
         query: {
-          name: 'assets/img/[name].[ext]'
+          name: 'img/[name].[ext]'
         }
       }
     ],
