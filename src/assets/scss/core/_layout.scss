@@ -1,8 +1,28 @@
 @import "../variables";
 @import "../mixin";
 
+
 .home{
   header{
     @extend .h-100;
     }
   }
+
+//.page-wrapper {
+//  display: table;
+//  @include size(100%);
+//  overflow: hidden;
+//
+//
+//  #page-content {
+//    height: auto;
+//    overflow: hidden;
+//    position: relative;
+//    display: table-row;
+//    }
+//
+//  .map-wrapper {
+//    display: inline-block;
+//    width: 100%;
+//    }
+//  }

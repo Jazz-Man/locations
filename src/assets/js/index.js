@@ -52,9 +52,9 @@ require('./../scss/style.scss');
 //
 //
 //   // require('./components/social-share');
-//   // require('./components/responsive');
+  require('./components/responsive');
 //   // require('./components/navigation');
-//   // require('./components/wpas');
+require('./components/wpas');
 //   // require('./components/map-simple');
 //   // require('./components/bg-transfer');
 //   // require('./module/fitvids');

@@ -1,212 +1,183 @@
-.hero-section {
+.results-wrapper {
+  //@include transition(.7s ease);
+  overflow: hidden;
+  overflow-y: scroll;
+  //@include box-shadow(-1px -1px 2px rgba($black, .1));
+  //background-color: $color-white;
+  //display: inline-block;
+  //height: 100%;
+  //position: relative;
 
-  .results-wrapper {
-    @include transition(.7s ease);
-    //@include box-shadow(-1px -1px 2px rgba($black, .1));
-    background-color: $color-white;
-    display: inline-block;
-    height: 100%;
-    position: relative;
 
-    &.show-detail {
-      .results {
-        @include transform(translateX(-100%));
-        }
-      .sidebar-detail {
-        @include transform(translateX(0%));
-        }
-      }
-    &.loading {
-
-      .sidebar-detail,
-      .results {
-        @include opacity(.5);
-        }
-      }
-
-    h2 {
-      @include margin(10px 20px);
-      display: inline-block;
-      font-size: 30px;
-
-      .results-number {
-        color: rgba($black, .4);
-        font-size: 22px;
-        margin-left: 10px;
-
-        &:before {
-          content: "(";
-          }
-
-        &:after {
-          content: ")";
-          }
-        }
-      }
-
-    .section-title {
-      margin-bottom: 0;
-      margin-top: 0;
-
-      .full-detail {
-        float: right;
-        margin-top: 10px;
-        }
-      }
-
+  &.loading {
     .results {
-      @include transition(.7s ease);
-      @include transform-style(preserve-3d);
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-      overflow-y: scroll;
+      @include opacity(.5);
       }
+    }
 
-    .result-item{
-      color: inherit;
-      position: relative;
-      display: table;
-      width: 100%;
-      height: 100%;
-      padding-left: 25px;
-      padding-right: 25px;
+  .results-title {
+    //@include margin(10px 20px);
+    //display: inline-block;
+    //font-size: 30px;
+
+    .results-number {
+      //color: rgba($black, .4);
+      //font-size: 22px;
+      //margin-left: 10px;
+
       &:before {
-        @include opacity(0);
-        @include transit;
-        position: absolute;
-        top: 0;
-        left: 0;
-        content: "";
-        width: 5px;
-        height: 100%;
-        background-color: $color-default;
-        }
-      &:hover, &.hover-state {
-        background-color: rgba($black, .05);
-        &:before {
-          @include opacity(1);
-          }
-        }
-      h3 {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 15px;
-        }
-      h4 {
-        @include opacity(.8);
-        font-size: 12px;
-        font-weight: normal;
-        margin-top: 0;
-        }
-      .result-item-detail {
-        position: relative;
-        display: table;
-
-        .image {
-          @include shadow;
-          color: $color-white;
-          width: 125px;
-          height: 100px;
-          background-size: cover;
-          top: 0;
-          left: 0;
-          text-align: center;
-          float: left;
-          clear: both;
-          position: relative;
-          &:after {
-            @include opacity(.7);
-            @include gradient-black;
-            background-color: rgba($black, .2);
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            @include size(100%);
-            content: "";
-            }
-          figure {
-            position: absolute;
-            bottom: 5px;
-            z-index: 1;
-            font-size: 12px;
-            font-weight: bold;
-            padding: 5px;
-            width: 100%;
-            }
-          }
-        .description {
-          padding-left: 140px;
-          h5 {
-            font-size: 14px;
-            margin-bottom: 5px;
-            margin-top: 0;
-            i {
-              @include opacity(.3);
-              margin-right: 5px;
-              font-size: 12px;
-              }
-            }
-          p {
-            font-size: 12px;
-            line-height: 16px;
-            max-height: 32px;
-            overflow: hidden;
-            margin-bottom: 0;
-            }
-          .label {
-            @include box-shadow(none);
-            color: rgba($black, .5);
-            border: 1px solid rgba($black, .2);
-            background-color: transparent;
-            margin: 3px 0;
-            display: inline-block;
-            margin: 8px 0;
-            }
-          }
+        content: "(";
         }
 
-      .ribbon {
-        right: 10px;
-        font-size: 9px;
-        }
-      .controls-more {
-        padding: 1px 15px;
-        z-index: 5;
-        a {
-          padding: 7px 10px;
-          }
-        ul {
-          right: 15px;
-          }
-        }
-      }
-    .image,
-    .gallery-wrapper {
-      .price {
-        @include shadow;
-        background-color: $color-grey-light;
-        color: $color-grey-dark;
-        font-size: 12px;
-        font-weight: 900;
-        left: -6px;
-        padding: 5px;
-        position: absolute;
-        top: 10px;
-        z-index: 2;
-
-        &:after {
-          @include size(0);
-          border-color: transparent #ababab transparent transparent;
-          border-style: solid;
-          border-width: 0 6px 6px 0;
-          bottom: -6px;
-          content: "";
-          left: 0;
-          position: absolute;
-          }
+      &:after {
+        content: ")";
         }
       }
     }
 
+
+  .results {
+    //@include transition(.7s ease);
+    //@include transform-style(preserve-3d);
+    //height: 100%;
+    //position: relative;
+    }
+
+  .result-item {
+    //color: inherit;
+    //position: relative;
+    //display: table;
+    //width: 100%;
+    //height: 100%;
+    //padding-left: 25px;
+    //padding-right: 25px;
+    &:before {
+      @include opacity(0);
+      @include transit;
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: "";
+      width: 5px;
+      height: 100%;
+      background-color: $color-default;
+      }
+    &:hover, &.hover-state {
+      background-color: rgba($black, .05);
+      &:before {
+        @include opacity(1);
+        }
+      }
+
+    .result-item-detail {
+      //position: relative;
+      //display: table;
+
+      .image {
+        @include shadow;
+        color: $color-white;
+        width: 125px;
+        height: 100px;
+        background-size: cover;
+        top: 0;
+        left: 0;
+        text-align: center;
+        float: left;
+        clear: both;
+        position: relative;
+
+        &:after {
+          @include opacity(.7);
+          @include gradient-black;
+          background-color: rgba($black, .2);
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          @include size(100%);
+          content: "";
+          }
+
+        figure {
+          position: absolute;
+          bottom: 5px;
+          z-index: 1;
+          font-size: 12px;
+          font-weight: bold;
+          padding: 5px;
+          width: 100%;
+          }
+        }
+      .description {
+        padding-left: 140px;
+        h5 {
+          font-size: 14px;
+          margin-bottom: 5px;
+          margin-top: 0;
+          i {
+            @include opacity(.3);
+            margin-right: 5px;
+            font-size: 12px;
+            }
+          }
+        p {
+          font-size: 12px;
+          line-height: 16px;
+          max-height: 32px;
+          overflow: hidden;
+          margin-bottom: 0;
+          }
+        .label {
+          @include box-shadow(none);
+          color: rgba($black, .5);
+          border: 1px solid rgba($black, .2);
+          background-color: transparent;
+          margin: 3px 0;
+          display: inline-block;
+          margin: 8px 0;
+          }
+        }
+      }
+
+    .ribbon {
+      right: 10px;
+      font-size: 9px;
+      }
+    .controls-more {
+      padding: 1px 15px;
+      z-index: 5;
+      a {
+        padding: 7px 10px;
+        }
+      ul {
+        right: 15px;
+        }
+      }
+    }
+  .image,
+  .gallery-wrapper {
+    .price {
+      @include shadow;
+      background-color: $color-grey-light;
+      color: $color-grey-dark;
+      font-size: 12px;
+      font-weight: 900;
+      left: -6px;
+      padding: 5px;
+      position: absolute;
+      top: 10px;
+      z-index: 2;
+
+      &:after {
+        @include size(0);
+        border-color: transparent #ababab transparent transparent;
+        border-style: solid;
+        border-width: 0 6px 6px 0;
+        bottom: -6px;
+        content: "";
+        left: 0;
+        position: absolute;
+        }
+      }
+    }
   }
+
