@@ -2,6 +2,7 @@ var template = require('lodash/template');
 var $$ = require('domtastic');
 
 module.exports = function (id, data) {
+  
   var tpl = $$('#tmpl-' + id).html();
   options = {
     evaluate: /<#([\s\S]+?)#>/g,

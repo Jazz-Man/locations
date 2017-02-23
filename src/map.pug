@@ -15,74 +15,57 @@ block append content
 								h2.results-title.m-3 Search Results
 									small.results-number.text-muted 30
 
-								#results-content
-									.list-group
-										- var n = 1;
-										while n <= 30
-											-var idCurrent = n++
-											a.list-group-item.list-group-item-action.flex-column.align-items-start.result-item(href='#')
-												.d-flex.w-100.justify-content-between
-													h3.mb-1.blue-text.h3-responsive Відпочинковий комплекс “Канада”
-												.mb-1.media
-													- var imgSrc = 'http://upages.com.ua/wp-content/uploads/2016/09/00_listable_demo-1024x636.jpg'
-													img.img-fluid.w-50.mr-3(src=imgSrc)
-													.media-body
-														h5
-															i.fa.fa-map-marker #{idCurrent} вулиця Бориславська
-														.badge.grey Відпочинково-оздоровчі бази
-														.badge.grey Спорт та відпочинок
+								.list-group#results-content
+									- var n = 1;
+									while n <= 30
+										-var idCurrent = n++
+										a.list-group-item.list-group-item-action.flex-column.align-items-start.result-item(href='#')
+											.d-flex.w-100.justify-content-between
+												h3.mb-1.blue-text.h3-responsive Відпочинковий комплекс “Канада”
+											.mb-1.media
+												- var imgSrc = 'http://upages.com.ua/wp-content/uploads/2016/09/00_listable_demo-1024x636.jpg'
+												img.img-fluid.w-50.mr-3(src=imgSrc)
+												.media-body
+													h5
+														i.fa.fa-map-marker #{idCurrent} вулиця Бориславська
+													.badge.grey Відпочинково-оздоровчі бази
+													.badge.grey Спорт та відпочинок
 
 
-	//.hero-section.full-screen.has-map.has-sidebar
-	//	.map-wrapper
-	//		#map-homepage.map(data-map-container data-map-type='hero')
-	//	.results-wrapper
-	//		.results
-	//			.tse-scrollable
-	//				.tse-content
-	//					.section-title
-	//						h2
-	//							| Search Results
-	//							span.results-number
-	//					#results-content
-	//					button#wpas-load-btn.btn.btn-primary Load More Results
-	//					#wpas-load
-	//	.form.search-form.vertical
-	//		.container
-	//			- var formData = {
-	//			-			resultsWrap:'#wpas-results',
-	//			-			resultsPreloader:'#wpas-load',
-	//			-			buttonText:'Load More Results',
-	//			-			buttonLoad:'#wpas-load-btn',
-	//			-			callback:'ajax_callback',
-	//			-			loading:'http://localhost:8080/upages/wp-content/plugins/wpas/img/loading.gif',
-	//			-			showDefault:true,
-	//			-			urlHash:'results',
-	//			-	}
-	//			form(data-ajax-form data-ajax-form-option=formData)
-	//				.row
-	//					.col-md-4.col-sm-4
-	//						.wrapper.clearfix
-	//							.form-group
-	//								input.form-control(type='text' name='keyword' placeholder='Enter keyword')
-	//							.form-group
-	//								select.form-control.selectpicker(name='location')
-	//									option(value='') Location
-	//									option(value='1') New York
-	//									option(value='2') Washington
-	//									option(value='3') London
-	//									option(value='4') Paris
-	//							.form-group
-	//								select.form-control.selectpicker(name='category')
-	//									option(value='') Category
-	//									option(value='1') Restaurant
-	//									option(value='2') Event
-	//									option(value='3') Adrenaline
-	//									option(value='4') Sport
-	//									option(value='5') Wellness
-	//							.form-group
-	//								input.form-control(type='text' name='min-price' placeholder='Minimal Price')
-	//							.form-group
-	//								button.btn.btn-primary.pull-right(type='submit')
-	//									| Search Now
-	//									i.fa.fa-search
+block scripts
+	script#tmpl-listings-map-view-controll(type='text/html')
+		form.m-1(action='')
+			.btn-group(data-toggle='buttons')
+				label.btn.btn-primary.px-4.active
+					input#view-map(type='radio' name='options' autocomplete='off' checked)
+					i.fa.fa-map-marker(aria-hidden='true')
+				label.btn.btn-primary.px-4
+					input#view-grid(type='radio' name='options' autocomplete='off')
+					i.fa.fa-th(aria-hidden='true')
+				label.btn.btn-primary.px-4
+					input#view-row(type='radio' name='options' autocomplete='off')
+					i.fa.fa-bars(aria-hidden='true')
+
+	script#tmpl-listings-map-search-form(type='text/html')
+		.card.m-1
+			.card-block.p-0
+				- var formData = {
+				-      resultsWrap:'#wpas-results',
+				-      resultsPreloader:'#wpas-load',
+				-      buttonText:'Load More Results',
+				-      buttonLoad:'#wpas-load-btn',
+				-      callback:'ajax_callback',
+				-      loadingImageURL:'http://upages.com.ua/wp-content/plugins/wpas/img/loading.gif',
+				-      showDefaultResults:true,
+				-      urlHash:'results',
+				-  }
+				form#listings-map-search-form(data-ajax-form data-ajax-form-option=formData)
+					.container-fluid
+						.row.no-gutters
+							.col-sm-4
+								input.form-control-sm.px-0(type='text' placeholder='Назва')
+							.col-sm-4
+								input.form-control-sm.px-0(type='text', placeholder='Місто')
+							.col-sm-4
+								input.form-control-sm.px-0(type='text', placeholder='Категорія')
+					input#wpas-paged(type='hidden' name="paged" value="1")

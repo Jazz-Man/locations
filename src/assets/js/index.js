@@ -1,10 +1,10 @@
 require('./../scss/style.scss');
 
-// var $$ = require('domtastic');
+var $$ = require('domtastic');
 // var bsn = require('./module/bootstrap.native.js');
 // var acf = require('./lib/acf-input');
 // var spop = require('./module/spop');
-// var doc = $$(document);
+var doc = $$(document);
 
 // var apl = require('./module/ajax-page-loader');
 
@@ -12,11 +12,11 @@ require('./../scss/style.scss');
 
 // var Main = require('./main/index');
 
-// doc.on('complete',init);
+doc.on('complete',init);
 
-// doc.ready(init);
+doc.ready(init);
 
-// function init(e) {
+function init(e) {
 //
 //   var links = doc.prop('links');
 //   $$(links).forEach(function (e) {
@@ -61,4 +61,4 @@ require('./components/wpas');
 //   // Main.initializeOwl();
 //   // require('./components/rating');
 //   // require('./components/add-listing-form');
-// }
+}
