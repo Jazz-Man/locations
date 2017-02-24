@@ -1,7 +1,7 @@
-require('expose?window.Tether!tether');
-require('bootstrap');
+// require('expose?window.Tether!tether');
+// require('bootstrap.native');
 
 // Material Design for Bootstrap 4 modules
-require('expose?window.MDB!./mdbootstrap/js/modules/global');
+// require('expose?window.MDB!./mdbootstrap/js/modules/global');
 // require('./mdbootstrap/js/modules/dropdown');
-require('./mdbootstrap/js/modules/autocomplete');
+// require('./mdbootstrap/js/modules/autocomplete');

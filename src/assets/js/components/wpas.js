@@ -6,11 +6,11 @@ var AjaxForm = require('../module/ajax-form');
 // var bsn = require('../module/bootstrap.native.js');
 var wp = require('../module/wp');
 
-wp.listings().param( 'author', 2 ).then(function (listings) {
-  console.log(listings);
-}).catch(function (err) {
-  console.log(err);
-});
+// wp.users().me().then(function (listings) {
+//   console.log(listings);
+// }).catch(function (err) {
+//   console.log(err);
+// });
 
 
 var viewport = require('../module/viewport');

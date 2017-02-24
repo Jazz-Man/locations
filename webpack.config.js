@@ -212,8 +212,7 @@ module.exports = {
       '.gif'
     ],
     alias: {
-      'zabuto_calendar_js': 'zabuto_calendar/zabuto_calendar.js',
-      'zabuto_calendar_css': 'zabuto_calendar/zabuto_calendar.css'
+      'bootstrap.native': 'bootstrap.native/dist/bootstrap-native-v4'
     }
   },
   resolveLoader: {

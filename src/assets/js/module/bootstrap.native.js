@@ -388,7 +388,7 @@ var Carousel = function (element, options) {
     isIE && isIE < 10) ? 0 : (
     parseInt(options.duration) || this.duration);
 
-  var items = this.carousel.querySelectorAll('.item'),
+  var items = this.carousel.querySelectorAll('.carousel-item'),
     il = items.length; //this is an object
   this.controls = this.carousel.querySelectorAll('.carousel-control');
   this.prev = this.controls[0];
@@ -523,7 +523,7 @@ var Carousel = function (element, options) {
     this.options.keyboard === true && window.removeEventListener('keydown', this.keyHandler, false);
   };
   this._getActiveIndex = function () {
-    return this.slides.indexOf(this.carousel.querySelector('.item.active'));
+    return this.slides.indexOf(this.carousel.querySelector('.carousel-item.active'));
   };
   this._curentPage = function (p) {
     for (var i = 0; i < this.indicators.length; ++i) {

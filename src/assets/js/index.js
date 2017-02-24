@@ -1,7 +1,7 @@
 require('./../scss/style.scss');
 
 var $$ = require('domtastic');
-// var bsn = require('./module/bootstrap.native.js');
+var bsn = require('./module/bootstrap-native-v4');
 // var acf = require('./lib/acf-input');
 // var spop = require('./module/spop');
 var doc = $$(document);
