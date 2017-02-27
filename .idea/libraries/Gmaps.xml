@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gmaps" type="javaScript">
+    <properties>
+      <option name="frameworkName" value="node_modules" />
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/node_modules/gmaps/gmaps.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/gmaps/gmaps.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>
