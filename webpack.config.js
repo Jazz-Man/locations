@@ -54,12 +54,12 @@ var isProd = process.env.NODE_ENV === 'production' ? true : false;
 
 var outputPath;
 
-if (isProd === false) {
-  outputPath = path.join(__dirname, 'dist');
-}
-else {
-  outputPath = '/home/jazzman/lampstack/apps/upages/htdocs/wp-content/themes/upages';
-}
+ if (isProd === false) {
+outputPath = path.join(__dirname, 'dist');
+ }
+ else {
+   outputPath = '/home/jazzman/lampstack/apps/upages/htdocs/wp-content/themes/upages';
+ }
 
 var uglifyOption = {
   mangle: true,
@@ -109,6 +109,7 @@ function jadePage(name) {
     favicon: false,
     template: '!!pug!./src/' + name + '.pug',
     inject: false,
+    homePage: "http://localhost:3000",
     injectExtras: {
       head: [
         "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
@@ -182,8 +183,10 @@ module.exports = {
     index: './assets/js'
   },
   output: {
-    filename: 'js/[name].js',
-    path: outputPath
+    filename: 'assets/js/[name].js',
+    chunkFilename: "assets/js/[id].chunk.js",
+    path: outputPath,
+    publicPath: "/assets/",
   },
   
   target: 'web',
@@ -197,19 +200,15 @@ module.exports = {
   resolve: {
     modules: [
       path.resolve(__dirname, 'src'),
-      'node_modules',
-      'bower_components'
+      'node_modules'
     ],
     extensions: [
       '.js',
-      '.coffee',
-      '.html',
       '.pug',
       '.css',
       '.scss',
       '.png',
       '.jpg',
-      '.gif'
     ],
     alias: {
       'bootstrap.native': 'bootstrap.native/dist/bootstrap-native-v4'
@@ -217,53 +216,38 @@ module.exports = {
   },
   resolveLoader: {
     moduleExtensions: ['-loader'],
-    extensions: [
-      '.pug',
-      '.html',
-      '.js',
-      '.scss',
-      '.css',
-      'png',
-      'gif',
-      'jpeg',
-      'ttf',
-      'eot',
-      'svg',
-      'woff',
-      'woff2'
-    ]
   },
+  cache: true,
   module: {
-    loaders: [
-      {
-        test: /acf-input.js$/,
-        loader: 'expose?acf'
-      },
+    rules: [
       {
         test: /\.pug$/,
         exclude: /node_modules/,
-        loader: 'pug',
-        query: {
-          pretty: true
-        }
+        use: [
+          {
+            loader: 'pug',
+            options: {pretty: true}
+          }
+        ],
       },
       {
         test: /\.scss$/,
         include: path.join(__dirname, 'src'),
         
-        loader: extractSCSS.extract({
+        use: extractSCSS.extract({
           publicPath: '../',
           fallback: 'style',
-          loader: [
+          use: [
             {
               loader: 'css',
-              query: {
+              options: {
+                camelCase: true,
                 sourceMap: true
               }
             },
             {
               loader: 'autoprefixer',
-              query: {
+              options: {
                 browsers: [
                   "android >= 4.4",
                   "chrome >= 20",
@@ -274,21 +258,19 @@ module.exports = {
                   "ios > 6"
                 ],
                 add: true,
-                remove: true,
-                flexbox: true,
-                grid: true
+                remove: true
               }
             },
             {
               loader: 'resolve-url',
-              query: {
+              options: {
                 root: '../',
                 keepQuery: true
               }
             },
             {
               loader: 'sass',
-              query: {
+              options: {
                 sourceMap: true,
                 includePaths: path.resolve(__dirname, "src")
               }
@@ -298,17 +280,23 @@ module.exports = {
       },
       {
         test: /\.(ttf|eot|svg|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file',
-        query: {
-          name: 'fonts/[name].[ext]'
-        }
+        use: [
+          {
+            loader: 'file',
+            options: {
+              name: 'fonts/[name].[ext]'
+            }
+          }
+        ]
       },
       {
         test: /\.(png|gif|jpg|jpeg)$/,
-        loader: 'file',
-        query: {
-          name: 'img/[name].[ext]'
-        }
+        use:[{
+          loader: 'file',
+          options: {
+            name: 'img/[name].[ext]'
+          }
+        }]
       }
     ],
     noParse: [

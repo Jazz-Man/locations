@@ -1,9 +1,7 @@
 extends common/layout
-block append vars
-	- var bodyClass = 'listings map'
 block append content
 
-	main
+	main#page-content
 		.container-fluid
 			.row.no-gatters.full-height
 				.col-md-8.p-0
@@ -27,7 +25,8 @@ block append content
 												img.img-fluid.w-50.mr-3(src=imgSrc)
 												.media-body
 													h5
-														i.fa.fa-map-marker #{idCurrent} вулиця Бориславська
+														i.fa.fa-map-marker.fa-fw
+														| #{idCurrent} вулиця Бориславська
 													.badge.grey Відпочинково-оздоровчі бази
 													.badge.grey Спорт та відпочинок
 

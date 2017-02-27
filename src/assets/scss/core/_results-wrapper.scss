@@ -137,47 +137,6 @@
           }
         }
       }
-
-    .ribbon {
-      right: 10px;
-      font-size: 9px;
-      }
-    .controls-more {
-      padding: 1px 15px;
-      z-index: 5;
-      a {
-        padding: 7px 10px;
-        }
-      ul {
-        right: 15px;
-        }
-      }
-    }
-  .image,
-  .gallery-wrapper {
-    .price {
-      @include shadow;
-      background-color: $color-grey-light;
-      color: $color-grey-dark;
-      font-size: 12px;
-      font-weight: 900;
-      left: -6px;
-      padding: 5px;
-      position: absolute;
-      top: 10px;
-      z-index: 2;
-
-      &:after {
-        @include size(0);
-        border-color: transparent #ababab transparent transparent;
-        border-style: solid;
-        border-width: 0 6px 6px 0;
-        bottom: -6px;
-        content: "";
-        left: 0;
-        position: absolute;
-        }
-      }
     }
   }
 

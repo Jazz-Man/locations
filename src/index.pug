@@ -1,31 +1,8 @@
 extends common/layout
 
-block append head
-	style(rel='stylesheet').
-
-		.description {
-			padding-top: 25%;
-			padding-bottom: 3rem;
-			color: #ffffff
-			}
-
-		@media (max-width: 992px) {
-			.description {
-				padding-top: 7rem;
-				text-align: center;
-				}
-
-			#app-mockup {
-				max-height: 400px;
-				}
-			}
-
-
-block append vars
-	- var bodyClass = 'home h-100'
 block append content
 
-	main
+	main#page-content
 		.view.h-100.zindex-xs.full-bg-img
 			.flex-center
 				.container
@@ -54,18 +31,16 @@ block append content
 													i.fa.fa-search
 
 
-
-
 		.carousel-fade.full-bg-img.view.hm-stylish-light#myCarousel(data-ride='carousel')
-			//ol.carousel-indicators
-			//	li.active(data-target='#myCarousel', data-slide-to='0')
-			//	li(data-target='#myCarousel', data-slide-to='1')
-			//	li(data-target='#myCarousel', data-slide-to='2')
+			ol.carousel-indicators
+				li.active(data-target='#myCarousel', data-slide-to='0')
+				li(data-target='#myCarousel', data-slide-to='1')
+				li(data-target='#myCarousel', data-slide-to='2')
 			.carousel-inner.h-100(role='listbox')
-				.carousel-item.h-100
+				.carousel-item.h-100.active
 					img.w-100.img-fluid(src='http://upages.com.ua/wp-content/uploads/2016/09/00_listable_demojpg',
 					alt='First slide')
-				.carousel-item.h-100.active
+				.carousel-item.h-100
 					img.w-100.img-fluid(src='http://upages.com.ua/wp-content/uploads/2016/09/01_listable_demojpg', alt='First slide')
 				.carousel-item.h-100
 					img.w-100.img-fluid(src='http://upages.com.ua/wp-content/uploads/2016/09/03_listable_demojpg', alt='First slide')

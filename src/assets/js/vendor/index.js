@@ -1,5 +1,4 @@
-// require('expose?window.Tether!tether');
-// require('bootstrap.native');
+require('bootstrap.native');
 
 // Material Design for Bootstrap 4 modules
 // require('expose?window.MDB!./mdbootstrap/js/modules/global');

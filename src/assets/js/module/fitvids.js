@@ -1,5 +1,7 @@
 var $$ = require('domtastic');
 
+var Hooks = require("./hooks");
+
 var selectors = [
   'iframe[src*="player.vimeo.com"]',
   'iframe[src*="youtube.com"]',
@@ -11,7 +13,6 @@ var selectors = [
 function fitvids(parentSelector, opts) {
   parentSelector = parentSelector || 'body';
   opts = opts || {};
-  
   if (isObject(parentSelector)) {
     opts = parentSelector;
     parentSelector = 'body'
@@ -103,5 +104,5 @@ function isObject(input) {
   return Object.prototype.toString.call(input) === '[object Object]'
 }
 
-
-fitvids();
+Hooks.addAction("init", fitvids);
+Hooks.addAction("pageLoader.processEnd", fitvids);

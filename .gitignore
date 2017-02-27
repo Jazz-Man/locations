@@ -6,7 +6,7 @@ bower_components/
 
 build/
 dist/
-### Sass template
+cache/
 .sass-cache/
 *.css.map
 ### JetBrains template

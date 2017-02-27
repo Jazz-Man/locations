@@ -8,13 +8,13 @@ header#page-header
 			.collapse.navbar-collapse#navbarNav
 				ul.navbar-nav.mr-auto
 					li.nav-item.active
-						a.nav-link.black-text(href='/') Home
+						+link('/','Home')(class="nav-link black-text")
 					li.nav-item
-						a.nav-link.black-text(href='map.html') Map
+						+link('/map.html','Map')(class="nav-link black-text")
 					li.nav-item
-						a.nav-link.black-text(href='blog.html') Blog
+						+link('/blog.html','Blog')(class="nav-link black-text")
 					li.nav-item
-						a.nav-link.black-text(href='contact.html') Contact
+						+link('/contact.html','Contact')(class="nav-link black-text")
 				ul.nav.navbar-nav.nav-flex-icons
 					li.nav-item
 						a.nav-link.waves-effect.waves-light
