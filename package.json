@@ -4,8 +4,10 @@
   "description": "A resume website",
   "main": "src/index.js",
   "scripts": {
-    "dev": "webpack-dev-server",
-    "webpack": "webpack"
+    "wds-dev": "webpack-dev-server --hot --inline --devtool eval --history-api-fallback --watch --watch-content-base --colors",
+    "wds-prod": "NODE_ENV=production webpack-dev-server --hot --inline --devtool eval",
+    "webpack-watch": "webpack --watch",
+    "webpack-prod": "webpack -p"
   },
   "repository": {
     "type": "git",

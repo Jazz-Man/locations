@@ -14,5 +14,5 @@ function responsive_init() {
 }
 
 
-Hooks.addAction("init", responsive_init);
+Hooks.addAction("_init", responsive_init);
 Hooks.addAction("pageLoader.processEnd", responsive_init);

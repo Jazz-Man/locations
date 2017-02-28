@@ -37,29 +37,17 @@ var pages = [
   'listing-row-right-sidebar',
 ];
 
-var externalPage = [
-  'email',
-  'infobox',
-  'modal_item',
-  'modal_register',
-  'modal_reset_password',
-  'modal_sign_in',
-  'modal_submit',
-  'sidebar_detail',
-  'sidebar_results'
-];
-
 // var env = process.env.NODE_ENV;
 var isProd = process.env.NODE_ENV === 'production' ? true : false;
 
 var outputPath;
 
- if (isProd === false) {
+ // if (isProd === false) {
 outputPath = path.join(__dirname, 'dist');
- }
- else {
-   outputPath = '/home/jazzman/lampstack/apps/upages/htdocs/wp-content/themes/upages';
- }
+ // }
+ // else {
+ //   outputPath = '/home/jazzman/lampstack/apps/upages/htdocs/wp-content/themes/upages';
+ // }
 
 var uglifyOption = {
   mangle: true,
@@ -91,14 +79,6 @@ var extractSCSS = new ExtractTextPlugin({
   allChunks: true
 });
 
-function htmlPage(name) {
-  return new HtmlWebpackPlugin({
-    filename: 'assets/external/' + name + '.html',
-    favicon: false,
-    template: './assets/external/' + name + '.pug',
-    inject: false
-  })
-}
 
 function jadePage(name) {
   return new HtmlWebpackPlugin({
@@ -163,10 +143,6 @@ function getPlugins() {
     plugins.push(jadePage(e))
   });
   
-  _.forEach(externalPage, function (e) {
-    plugins.push(htmlPage(e))
-  });
-  
   if (isProd) {
     plugins.push(
       new webpack.optimize.UglifyJsPlugin(uglifyOption)
@@ -217,7 +193,7 @@ module.exports = {
   resolveLoader: {
     moduleExtensions: ['-loader'],
   },
-  cache: true,
+  // cache: true,
   module: {
     rules: [
       {

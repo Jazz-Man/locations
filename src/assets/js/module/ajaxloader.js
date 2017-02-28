@@ -1,7 +1,6 @@
 var isString = require('lodash/isString');
 var isElement = require('lodash/isElement');
 var isUndefined = require('lodash/isUndefined');
-var isFunction = require('lodash/isFunction');
 var isPlainObject = require('lodash/isPlainObject');
 var keys = require('lodash/keys');
 var camelCase = require('lodash/camelCase');
@@ -43,7 +42,7 @@ var _configPreset = {
     ignoreHref: [/^\#/]
   },
   cache: {
-    active: true,
+    active: false,
     timeout: 1000 * 60 * 5 // 5 minutes
   },
   content: {
@@ -52,7 +51,7 @@ var _configPreset = {
   fetchParams: {
     method: 'GET'
   },
-  cleanHtml: true,
+  cleanHtml: false,
   evalJs: true
 };
 
@@ -69,7 +68,7 @@ PageLoaderModule.prototype.hook = function (hookName, promiseId, callback) {
   
   promiseId = camelCase(promiseId);
   
-  if (isFunction(callback)) {
+  if (/*isFunction(callback) */typeof callback === "function") {
     _promises[hookName].push({
       id: promiseId,
       callback: callback
@@ -223,13 +222,12 @@ PageLoaderModule.prototype.setup = function () {
           el = null;
         }();
         
-        if ((
-            typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") {
+        if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") {
           return _ret.v;
         }
       }
       else {
-        el = el.parentNode;
+        el = el[0].parentNode;
       }
     }
   }, false);

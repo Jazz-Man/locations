@@ -22,5 +22,5 @@ function init(e) {
 //   // require('./components/rating');
 //   // require('./components/add-listing-form');
   
-  Hooks.doAction('init');
+  Hooks.doAction('_init');
 }

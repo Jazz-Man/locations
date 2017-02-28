@@ -105,6 +105,7 @@ function wasp_init() {
       
       // var btnControll = $$(map.controls).find('[data-toggle=buttons]');
       
+      
       // btnControll.forEach(function (element) {
       //   new bsn.Button(element);
       //   element.addEventListener('bs.button.change', function (e) {
@@ -124,5 +125,5 @@ function wasp_init() {
   }
 }
 
-Hooks.addAction("init", wasp_init);
+Hooks.addAction("_init", wasp_init);
 Hooks.addAction("pageLoader.processEnd", wasp_init);
