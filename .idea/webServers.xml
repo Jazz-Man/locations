@@ -11,7 +11,7 @@
         </fileTransfer>
       </webServer>
       <webServer id="f9a6c5b1-531d-4e50-8935-df751396ee76" name="uPages" url="http://dev.upages.com.ua/">
-        <fileTransfer host="homeking.ftp.ukraine.com.ua" port="21" rootFolder="/upages.com.ua/dev">
+        <fileTransfer host="homeking.ftp.ukraine.com.ua" port="21" rootFolder="/upages.com.ua/dev" password="df9adf9bdfe8df92dfc4dfdadfeedff9df99dfc9" username="homeking_jazzman">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
           </advancedOptions>

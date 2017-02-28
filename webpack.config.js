@@ -216,10 +216,9 @@ module.exports = {
           use: [
             {
               loader: 'css',
-              options: {
-                camelCase: true,
-                sourceMap: true
-              }
+              // options: {
+              //   sourceMap: true
+              // }
             },
             {
               loader: 'autoprefixer',
@@ -248,7 +247,7 @@ module.exports = {
               loader: 'sass',
               options: {
                 sourceMap: true,
-                includePaths: path.resolve(__dirname, "src")
+                // includePaths: path.resolve(__dirname, "src")
               }
             }
           ]

@@ -4,9 +4,9 @@
   "description": "A resume website",
   "main": "src/index.js",
   "scripts": {
-    "wds-dev": "webpack-dev-server --hot --inline --devtool eval --history-api-fallback --watch --watch-content-base --colors",
-    "wds-prod": "NODE_ENV=production webpack-dev-server --hot --inline --devtool eval",
-    "webpack-watch": "webpack --watch",
+    "wds-dev": "webpack-dev-server --hot --inline --devtool eval --history-api-fallback --watch --watch-content-base --colors --display-error-details",
+    "wds-prod": "NODE_ENV=production webpack-dev-server --hot --inline --devtool eval --display-error-details",
+    "webpack-watch": "webpack --watch --display-error-details",
     "webpack-prod": "webpack -p"
   },
   "repository": {

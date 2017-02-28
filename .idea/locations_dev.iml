@@ -5,6 +5,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/dist" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/node_modules" />
     </content>
     <content url="file://$USER_HOME$/lampstack/apps/upages/htdocs">
       <excludeFolder url="file://$USER_HOME$/lampstack/apps/upages/htdocs/wp-content/vendor/altorouter/altorouter" />
