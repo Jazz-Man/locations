@@ -16,9 +16,6 @@
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
-  <component name="SvnConfiguration">
-    <configuration>$USER_HOME$/.subversion</configuration>
-  </component>
   <component name="UnicodeBrowser">
     <option name="fontName" value="DejaVu Sans Mono" />
   </component>

@@ -1,6 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
-var _ = require('lodash');
+var forEach = require('lodash/forEach');
 var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -70,12 +70,7 @@ var uglifyOption = {
 var extractSCSS = new ExtractTextPlugin({
   filename: 'assets/css/[name].css',
   disable: false,
-  allChunks: false
-});
-var bootstrapGrid = new ExtractTextPlugin({
-  filename: 'assets/css/bootstrap-grid.css',
-  disable: false,
-  allChunks: false
+  allChunks: true
 });
 
 function jadePage(name) {
@@ -128,15 +123,15 @@ function getPlugins() {
       jQuery: "jquery",
       "window.jQuery": "jquery"
     }),
-    extractSCSS,
-    bootstrapGrid,
-    new StyleExtHtmlWebpackPlugin({
-      file:'assets/css/bootstrap-grid.css',
-      position: 'head-top'
-    })
+    extractSCSS
+    // bootstrapGrid,
+    // new StyleExtHtmlWebpackPlugin({
+    //   filename:'assets/css/inline.css',
+    //   position:'head-top'
+    // })
   );
   
-  _.forEach(pages, function (e) {
+  forEach(pages, function (e) {
     plugins.push(jadePage(e))
   });
   
@@ -153,7 +148,8 @@ module.exports = {
   context: path.join(__dirname, 'src'),
   entry: {
     vendor: './assets/js/vendor',
-    index: './assets/js'
+    // inline:'./assets/scss/inline.scss',
+    index: ['./assets/js','./assets/scss']
   },
   output: {
     filename: 'assets/js/[name].js',
@@ -171,7 +167,7 @@ module.exports = {
   
   resolve: {
     modules: [
-      path.resolve(__dirname, 'src'),
+      'src',
       'node_modules'
     ],
     extensions: [
@@ -198,17 +194,17 @@ module.exports = {
         use: [
           {
             loader: 'pug',
-            options: {pretty: true}
+            options: {
+              pretty: true
+            }
           }
         ]
       },
       {
         test: /\.scss$/,
-        exclude: /bootstrap-grid.scss/,
         include: path.join(__dirname, 'src'),
-        
         use: extractSCSS.extract({
-          publicPath: '../',
+          publicPath: '/',
           fallback: 'style',
           use: [
             {
@@ -236,45 +232,45 @@ module.exports = {
           ]
         })
       },
-      {
-        test: /bootstrap-grid.scss/,
-        include: path.join(__dirname, 'src'),
-        
-        use: bootstrapGrid.extract({
-          publicPath: '../',
-          fallback: 'style',
-          use: [
-            {
-              loader: 'css',
-              options: {
-                sourceMap: !isProd
-              }
-            },
-            {
-              loader: 'autoprefixer'
-            },
-            {
-              loader: 'resolve-url',
-              options: {
-                root: '../',
-                keepQuery: true
-              }
-            },
-            {
-              loader: 'sass',
-              options: {
-                sourceMap: !isProd
-              }
-            }
-          ]
-        })
-      },
+      // {
+      //   test: /inline\.scss$/,
+      //   include: path.join(__dirname, 'src'),
+      //   use: bootstrapGrid.extract({
+      //     publicPath: '../',
+      //     fallback: 'style',
+      //     use: [
+      //       {
+      //         loader: 'css',
+      //         options: {
+      //           minimize: true
+      //         }
+      //       },
+      //       {
+      //         loader: 'autoprefixer'
+      //       },
+      //       {
+      //         loader: 'resolve-url',
+      //         options: {
+      //           root: '../',
+      //           keepQuery: true
+      //         }
+      //       },
+      //       {
+      //         loader: 'sass',
+      //         options: {
+      //           outputStyle: 'compressed'
+      //         }
+      //       }
+      //     ]
+      //   })
+      // },
       {
         test: /\.(ttf|eot|svg|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         use: [
           {
             loader: 'file',
             options: {
+              publicPath: false,
               name: 'assets/fonts/[name].[ext]'
             }
           }
@@ -286,6 +282,7 @@ module.exports = {
           {
             loader: 'file',
             options: {
+              publicPath: false,
               name: 'assets/img/[name].[ext]'
             }
           }

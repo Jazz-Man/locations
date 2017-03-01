@@ -1,5 +1,4 @@
-require('./../scss/vendor/bootstrap/bootstrap-grid.scss');
-require('./../scss/index.scss');
+// require('./../scss/style.scss');
 
 var $$ = require('domtastic');
 require('./module/viewport');
