@@ -1,29 +1,15 @@
 .results-wrapper {
-  //@include transition(.7s ease);
   overflow: hidden;
   overflow-y: scroll;
-  //@include box-shadow(-1px -1px 2px rgba($black, .1));
-  //background-color: $color-white;
-  //display: inline-block;
-  //height: 100%;
-  //position: relative;
-
-
   &.loading {
     .results {
-      @include opacity(.5);
+      opacity:.5;
       }
     }
 
   .results-title {
-    //@include margin(10px 20px);
-    //display: inline-block;
-    //font-size: 30px;
 
     .results-number {
-      //color: rgba($black, .4);
-      //font-size: 22px;
-      //margin-left: 10px;
 
       &:before {
         content: "(";
@@ -36,23 +22,10 @@
     }
 
 
-  .results {
-    //@include transition(.7s ease);
-    //@include transform-style(preserve-3d);
-    //height: 100%;
-    //position: relative;
-    }
-
   .result-item {
-    //color: inherit;
-    //position: relative;
-    //display: table;
-    //width: 100%;
-    //height: 100%;
-    //padding-left: 25px;
-    //padding-right: 25px;
+
     &:before {
-      @include opacity(0);
+      opacity:0;
       @include transit;
       position: absolute;
       top: 0;
@@ -65,7 +38,7 @@
     &:hover, &.hover-state {
       background-color: rgba($black, .05);
       &:before {
-        @include opacity(1);
+        opacity: 1;
         }
       }
 
@@ -87,7 +60,7 @@
         position: relative;
 
         &:after {
-          @include opacity(.7);
+          opacity:.7;
           @include gradient-black;
           background-color: rgba($black, .2);
           position: absolute;
@@ -97,44 +70,6 @@
           content: "";
           }
 
-        figure {
-          position: absolute;
-          bottom: 5px;
-          z-index: 1;
-          font-size: 12px;
-          font-weight: bold;
-          padding: 5px;
-          width: 100%;
-          }
-        }
-      .description {
-        padding-left: 140px;
-        h5 {
-          font-size: 14px;
-          margin-bottom: 5px;
-          margin-top: 0;
-          i {
-            @include opacity(.3);
-            margin-right: 5px;
-            font-size: 12px;
-            }
-          }
-        p {
-          font-size: 12px;
-          line-height: 16px;
-          max-height: 32px;
-          overflow: hidden;
-          margin-bottom: 0;
-          }
-        .label {
-          @include box-shadow(none);
-          color: rgba($black, .5);
-          border: 1px solid rgba($black, .2);
-          background-color: transparent;
-          margin: 3px 0;
-          display: inline-block;
-          margin: 8px 0;
-          }
         }
       }
     }

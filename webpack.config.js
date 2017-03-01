@@ -4,6 +4,7 @@ var _ = require('lodash');
 var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var StyleExtHtmlWebpackPlugin = require('style-ext-html-webpack-plugin');
 
 var pages = [
   '404',
@@ -34,20 +35,13 @@ var pages = [
   'listing-grid-left-sidebar',
   'listing-grid-right-sidebar',
   'listing-row-left-sidebar',
-  'listing-row-right-sidebar',
+  'listing-row-right-sidebar'
 ];
 
-// var env = process.env.NODE_ENV;
 var isProd = process.env.NODE_ENV === 'production' ? true : false;
 
-var outputPath;
+var outputPath = path.join(__dirname, 'dist');
 
- // if (isProd === false) {
-outputPath = path.join(__dirname, 'dist');
- // }
- // else {
- //   outputPath = '/home/jazzman/lampstack/apps/upages/htdocs/wp-content/themes/upages';
- // }
 
 var uglifyOption = {
   mangle: true,
@@ -74,15 +68,19 @@ var uglifyOption = {
   }
 };
 var extractSCSS = new ExtractTextPlugin({
-  filename: 'css/[name].css',
+  filename: 'assets/css/[name].css',
   disable: false,
-  allChunks: true
+  allChunks: false
 });
-
+var bootstrapGrid = new ExtractTextPlugin({
+  filename: 'assets/css/bootstrap-grid.css',
+  disable: false,
+  allChunks: false
+});
 
 function jadePage(name) {
   return new HtmlWebpackPlugin({
-    filename: isProd ? 'assets/' + name + '.html' : name + '.html',
+    filename: name + '.html',
     mobile: true,
     title: 'uPages',
     lang: 'en',
@@ -103,15 +101,9 @@ function jadePage(name) {
       body: [
         {
           tag: "script",
-          innerHTML: "var upages_params = {url:'http://localhost:8080/upages/wp-admin/admin-ajax.php'}",
-          type: "text/javascript"
-        },
-        {
-          tag: "script",
           src: "http://maps.google.com/maps/api/js?key=AIzaSyBEDfNcQRmKQEyulDN8nGWjLYPm8s4YB58&libraries=places"
         },
         "https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js",
-        // "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
         {
           tag: "noscript",
           innerHTML: "JavaScript is disabled in your browser. <a href='http://www.enable-javascript.com/' target='_blank'>Here</a> is how to enable it."
@@ -136,7 +128,12 @@ function getPlugins() {
       jQuery: "jquery",
       "window.jQuery": "jquery"
     }),
-    extractSCSS
+    extractSCSS,
+    bootstrapGrid,
+    new StyleExtHtmlWebpackPlugin({
+      file:'assets/css/bootstrap-grid.css',
+      position: 'head-top'
+    })
   );
   
   _.forEach(pages, function (e) {
@@ -161,8 +158,7 @@ module.exports = {
   output: {
     filename: 'assets/js/[name].js',
     chunkFilename: "assets/js/[id].chunk.js",
-    path: outputPath,
-    publicPath: "/assets/",
+    path: outputPath
   },
   
   target: 'web',
@@ -184,14 +180,14 @@ module.exports = {
       '.css',
       '.scss',
       '.png',
-      '.jpg',
+      '.jpg'
     ],
     alias: {
       'bootstrap.native': 'bootstrap.native/dist/bootstrap-native-v4'
     }
   },
   resolveLoader: {
-    moduleExtensions: ['-loader'],
+    moduleExtensions: ['-loader']
   },
   // cache: true,
   module: {
@@ -204,10 +200,11 @@ module.exports = {
             loader: 'pug',
             options: {pretty: true}
           }
-        ],
+        ]
       },
       {
         test: /\.scss$/,
+        exclude: /bootstrap-grid.scss/,
         include: path.join(__dirname, 'src'),
         
         use: extractSCSS.extract({
@@ -216,25 +213,12 @@ module.exports = {
           use: [
             {
               loader: 'css',
-              // options: {
-              //   sourceMap: true
-              // }
+              options: {
+                sourceMap: !isProd
+              }
             },
             {
-              loader: 'autoprefixer',
-              options: {
-                browsers: [
-                  "android >= 4.4",
-                  "chrome >= 20",
-                  "ff >= 20",
-                  "ie > 8",
-                  "ie_mob >= 10",
-                  "safari > 6",
-                  "ios > 6"
-                ],
-                add: true,
-                remove: true
-              }
+              loader: 'autoprefixer'
             },
             {
               loader: 'resolve-url',
@@ -246,8 +230,40 @@ module.exports = {
             {
               loader: 'sass',
               options: {
-                sourceMap: true,
-                // includePaths: path.resolve(__dirname, "src")
+                sourceMap: !isProd
+              }
+            }
+          ]
+        })
+      },
+      {
+        test: /bootstrap-grid.scss/,
+        include: path.join(__dirname, 'src'),
+        
+        use: bootstrapGrid.extract({
+          publicPath: '../',
+          fallback: 'style',
+          use: [
+            {
+              loader: 'css',
+              options: {
+                sourceMap: !isProd
+              }
+            },
+            {
+              loader: 'autoprefixer'
+            },
+            {
+              loader: 'resolve-url',
+              options: {
+                root: '../',
+                keepQuery: true
+              }
+            },
+            {
+              loader: 'sass',
+              options: {
+                sourceMap: !isProd
               }
             }
           ]
@@ -259,23 +275,25 @@ module.exports = {
           {
             loader: 'file',
             options: {
-              name: 'fonts/[name].[ext]'
+              name: 'assets/fonts/[name].[ext]'
             }
           }
         ]
       },
       {
         test: /\.(png|gif|jpg|jpeg)$/,
-        use:[{
-          loader: 'file',
-          options: {
-            name: 'img/[name].[ext]'
+        use: [
+          {
+            loader: 'file',
+            options: {
+              name: 'assets/img/[name].[ext]'
+            }
           }
-        }]
+        ]
       }
     ],
     noParse: [
-      /reqwest\/reqwest.js/,
+      /reqwest\/reqwest.js/
     ]
   },
   

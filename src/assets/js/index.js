@@ -1,4 +1,6 @@
-require('./../scss/style.scss');
+require('./../scss/vendor/bootstrap/bootstrap-grid.scss');
+require('./../scss/index.scss');
+
 var $$ = require('domtastic');
 require('./module/viewport');
 // var acf = require('./lib/acf-input');

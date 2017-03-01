@@ -125,6 +125,6 @@ function view_port_init() {
   self._watcher();
 }
 
-Hooks.addAction("init", view_port_init);
+Hooks.addAction("_init", view_port_init);
 
 module.exports = ViewPort;

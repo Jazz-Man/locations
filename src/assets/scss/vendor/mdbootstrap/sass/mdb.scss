@@ -5,9 +5,9 @@
 @import "mdb/free/data/prefixer";
 @import "mdb/free/data/mixins";
 // Variables
-@import "mdb/free/data/colors"; 
+@import "mdb/free/data/colors";
 @import "mdb/free/data/variables-b4";
-@import "mdb/free/data/variables";  
+@import "mdb/free/data/variables";
 //Global
 @import "mdb/free/global"; 
   
@@ -27,41 +27,41 @@
  
 // MDB Premium  
 @import "mdb/pro/forms-pro"; 
-@import "mdb/pro/tabs"; 
+//@import "mdb/pro/tabs";
 @import "mdb/pro/msc"; 
-@import "mdb/pro/progress"; 
-@import "mdb/pro/accordion"; 
+//@import "mdb/pro/progress";
+//@import "mdb/pro/accordion";
 @import "mdb/pro/buttons-pro"; 
-@import "mdb/pro/social-buttons"; 
+//@import "mdb/pro/social-buttons";
 @import "mdb/pro/cards-pro";  
 @import "mdb/pro/dropdowns-pro";   
-@import "mdb/pro/light-box";  
+//@import "mdb/pro/light-box";
 @import "mdb/pro/side-nav"; 
 @import "mdb/pro/navbars-pro";  
 @import "mdb/pro/carousels-pro";  
 @import "mdb/pro/modals-pro";   
 @import "mdb/pro/toasts"; 
-@import "mdb/pro/scrollspy";   
+//@import "mdb/pro/scrollspy";
 @import "mdb/pro/charts-pro";   
 @import "mdb/pro/animations-pro";   
-@import "mdb/pro/scrollbar";   
-@import "mdb/pro/ecommerce";
-@import "mdb/pro/skins";  
+//@import "mdb/pro/scrollbar";
+//@import "mdb/pro/ecommerce";
+//@import "mdb/pro/skins";
 @import "mdb/pro/chips"; 
-@import "mdb/pro/parallax"; 
+//@import "mdb/pro/parallax";
 // DATE & TIME PICKERS 
-@import "mdb/pro/date_picker/default.scss";
-@import "mdb/pro/date_picker/default.date.scss";
-@import "mdb/pro/date_picker/default.time.scss"; 
+//@import "mdb/pro/date_picker/default.scss";
+//@import "mdb/pro/date_picker/default.date.scss";
+//@import "mdb/pro/date_picker/default.time.scss";
 // SECTIONS
-@import "mdb/pro/sections/blog"; 
-@import "mdb/pro/sections/magazine"; 
-@import "mdb/pro/sections/pricing";   
-@import "mdb/pro/sections/testimonials";    
-@import "mdb/pro/sections/features";    
-@import "mdb/pro/sections/team";    
-@import "mdb/pro/sections/form-sets";    
-@import "mdb/pro/sections/templates";    
+//@import "mdb/pro/sections/blog";
+//@import "mdb/pro/sections/magazine";
+//@import "mdb/pro/sections/pricing";
+//@import "mdb/pro/sections/testimonials";
+//@import "mdb/pro/sections/features";
+//@import "mdb/pro/sections/team";
+//@import "mdb/pro/sections/form-sets";
+//@import "mdb/pro/sections/templates";
   
  
  

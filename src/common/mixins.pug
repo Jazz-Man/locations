@@ -28,7 +28,7 @@ mixin injectExtras(extras)
 				- throw new Error("Can't deduce tag from filename: " + item);
 		else if !item.tag
 			- throw new Error("Item " + JSON.stringify(item) + " must have a valid tag property")
-			
+
 		- var attrs = Object.assign({}, item, {tag: null, innerHTML: null});
 		if selfclosingTags.has(item.tag)
 			#{item.tag}&attributes(attrs)/
@@ -120,9 +120,9 @@ mixin inject(filename, tag, searchWithin)
 mixin inlineCSS(cssList)
 	if cssList === undefined
 		- cssList = cssToInline;
-		
+
 	- var inclExcl = constructIncludeExclude(cssList, cssToInline);
-	
+
 	- var include = inclExcl.include;
 	- var exclude = inclExcl.exclude;
 
@@ -133,9 +133,9 @@ mixin inlineCSS(cssList)
 mixin injectCSS(cssList)
 	if cssList === undefined
 		- cssList = cssToInject;
-		
+
 	- var inclExcl = constructIncludeExclude(cssList, cssToInject);
-	
+
 	- var include = inclExcl.include;
 	- var exclude = inclExcl.exclude;
 
@@ -146,9 +146,9 @@ mixin injectCSS(cssList)
 mixin inlineJS(jsList)
 	if jsList === undefined
 		- jsList = jsToInline;
-		
+
 	- var inclExcl = constructIncludeExclude(jsList, jsToInline);
-	
+
 	- var include = inclExcl.include;
 	- var exclude = inclExcl.exclude;
 
@@ -159,9 +159,9 @@ mixin inlineJS(jsList)
 mixin injectJS(jsList)
 	if jsList === undefined
 		- jsList = jsToInject;
-		
+
 	- var inclExcl = constructIncludeExclude(jsList, jsToInject);
-	
+
 	- var include = inclExcl.include;
 	- var exclude = inclExcl.exclude;
 
@@ -192,7 +192,7 @@ mixin JS
 - function processRc(rcList, cb, excludeSet) {
 	if !Array.isArray(rcList)
 		- rcList = [rcList];
-		
+
 	each rc in rcList
 		if !injected.has(rc) && !inlined.has(rc) && !excludeSet.has(rc)
 			- cb(rc);
@@ -222,13 +222,13 @@ mixin JS
 mixin inlineChunk(chunkNames, type)
 	if !Array.isArray(chunkNames)
 		- chunkNames = [chunkNames];
-		
+
 	each chunkName in chunkNames
 		- var chunk = htmlWebpackPlugin.files.chunks[chunkName];
 		if !chunk
 			- console.warn("No such chunk", chunkName);
 			- continue;
-		
+
 		if type === "css"
 			each file in chunk.css
 				style!= compilation.assets[file.substr(substrStart)].source()
@@ -242,21 +242,21 @@ mixin inlineChunk(chunkNames, type)
 			each file in chunk.css
 				style!= compilation.assets[file.substr(substrStart)].source()
 				- inlined.add(file);
-				
+
 			script!= compilation.assets[chunk.entry.substr(substrStart)].source()
 			- inlined.add(chunk.entry);
-	
+
 
 mixin injectChunk(chunkNames, type)
 	if !Array.isArray(chunkNames)
 		- chunkNames = [chunkNames];
-		
+
 	each chunkName in chunkNames
 		- var chunk = htmlWebpackPlugin.files.chunks[chunkName];
 		if !chunk
 			- console.warn("No such chunk", chunkName);
 			- continue;
-		
+
 		if type === "css"
 			each file in chunk.css
 				link(rel="stylesheet", href=file)
@@ -270,7 +270,7 @@ mixin injectChunk(chunkNames, type)
 			each file in chunk.css
 				link(rel="stylesheet", href=file)
 				- injected.add(file);
-				
+
 			script(src=chunk.entry)
 			- injected.add(chunk.entry);
 
