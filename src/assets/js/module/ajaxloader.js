@@ -1,18 +1,13 @@
 var isElement = require('lodash/isElement');
 var isPlainObject = require('lodash/isPlainObject');
-var keys = require('lodash/keys');
-var camelCase = require('lodash/camelCase');
-var assign = require('lodash/assign');
-var every = require('lodash/every');
 var clone = require('lodash/clone');
 var map = require('lodash/map');
 var $$ = require('domtastic');
 var Hooks = require('./hooks');
-var reqwest = require('reqwest');
+// var reqwest = require('reqwest');
 
 var win = window;
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 var _response = null;
 var _promises = {
   beforeLoad: [],
@@ -30,40 +25,30 @@ var _support = [
   !!win.fetch
 ];
 
-var _configPreset = {
-  anchors: {
-    ignoreClass: 'page-loader-ignore',
-    preloadClass: 'nav-link',
-    ignoreBlank: true, // ignore links with blank target attribute
-    ignoreHref: [/^\#/]
-  },
-  cache: {
-    active: false,
-    timeout: 1000 * 60 * 5 // 5 minutes
-  },
-  content: {
-    selector: '#page-content'
-  },
-  fetchParams: {
-    method: 'GET'
-  },
-  cleanHtml: false,
-  evalJs: true
-};
-
 function PageLoaderModule(params) {
-  this.config = assign(_configPreset, isPlainObject(params) ? params : {});
-  console.log(_configPreset);
+
+  this.config = params || {
+        ignoreClass: 'page-loader-ignore',
+        preloadClass: 'nav-link',
+        ignoreBlank: true, // ignore links with blank target attribute
+        ignoreHref: [/^\#/],
+        cacheActive: true,
+        cacheTimeout: 1000 * 60 * 5,
+        contentSelector:'#page-content',
+        fetchParams: {
+          method: 'GET'
+        },
+        cleanHtml: false,
+        evalJs: true
+      };
   this.setup();
 }
 
 PageLoaderModule.prototype.hook = function (hookName, promiseId, callback) {
-  
-  if (keys(_promises).indexOf(hookName) < 0) {
+
+  if (Object.keys(_promises).indexOf(hookName) < 0) {
     return false;
   }
-  
-  promiseId = camelCase(promiseId);
   
   if (typeof callback === "function") {
     _promises[hookName].push({
@@ -87,7 +72,9 @@ PageLoaderModule.prototype.hook = function (hookName, promiseId, callback) {
 };
 
 PageLoaderModule.prototype.available = function () {
-  return every(_support, Boolean);
+  return _support.every(function(element){
+    return element === true
+  });
 };
 
 PageLoaderModule.prototype.setup = function () {
@@ -120,7 +107,8 @@ PageLoaderModule.prototype.setup = function () {
   // set cache
   _this.hook('afterReplace', 'pageLoaderSetCache', function () {
     // set cache, skip if is already cache response
-    if (_this.config.cache.active && !_response.fromCache) {
+    if (_this.config.cacheActive && !_response.fromCache) {
+
       var cacheResponse = clone(_response);
       cacheResponse.time = Date.now();
       cacheResponse.fromCache = true;
@@ -182,12 +170,12 @@ PageLoaderModule.prototype.setup = function () {
           a.attr('href', href);
           
           // test ignore class
-          if (el.hasClass(_this.config.anchors.ignoreClass)) {
+          if (el.hasClass(_this.config.ignoreClass)) {
             valid = false;
           }
           
           // test blank target attribute
-          if (_this.config.anchors.ignoreBlank && el.attr('target') === '_blank') {
+          if (_this.config.ignoreBlank && el.attr('target') === '_blank') {
             valid = false;
           }
           
@@ -197,8 +185,8 @@ PageLoaderModule.prototype.setup = function () {
           }
           
           // test href regexp
-          if (_this.config.anchors.ignoreHref) {
-            _this.config.anchors.ignoreHref.forEach(function (regexp) {
+          if (_this.config.ignoreHref) {
+            _this.config.ignoreHref.forEach(function (regexp) {
               if (href.match(regexp)) {
                 valid = false;
               }
@@ -216,8 +204,7 @@ PageLoaderModule.prototype.setup = function () {
           
           el = null;
         }();
-        
-        if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") {
+        if ((typeof _ret === 'undefined' ? 'undefined' : typeof _ret) === "object") {
           return _ret.v;
         }
       }
@@ -234,8 +221,6 @@ PageLoaderModule.prototype.preload = function (url, force) {
   if (!force) {
     force = false;
   }
-  
-  // return if already loaded
   if (!force && _cache[url]) {
     return;
   }
@@ -272,7 +257,7 @@ PageLoaderModule.prototype.preload = function (url, force) {
     response.title = response.document.querySelector('title').innerHTML.trim();
     response.bodyClasses = response.document.querySelector('body').className;
   }).then(function () {
-    if (_this.config.cache.active) {
+    if (_this.config.cacheActive) {
       response.time = Date.now();
       response.fromCache = true;
       _cache[response.url] = response;
@@ -344,14 +329,15 @@ PageLoaderModule.prototype.load = function (url, forceLoad) {
   if (!forceLoad) {
     forceLoad = false;
   }
+
   if (!url) {
     isProcess = true;
-    url = _response.url;
+    url = _response.url || '';
   }
-  
+
   // set cache response
   var cacheResponse = _cache[url];
-  if (isProcess && cacheResponse && !forceLoad && cacheResponse.time + this.config.cache.timeout > Date.now()) {
+  if (isProcess && cacheResponse && !forceLoad && cacheResponse.time + this.config.cacheTimeout > Date.now()) {
     cacheResponse.isPopState = !!_response.isPopState; // set current _response isPopState property to cache response.
     _response = cacheResponse;
     return Promise.resolve();
@@ -419,16 +405,16 @@ PageLoaderModule.prototype.clean = function (html) {
 PageLoaderModule.prototype.parsePreload = function () {
   var _this = this;
   
-  if (!this.config.cache.active) {
+  if (!this.config.cacheActive) {
     return;
   }
-  
-  $$("a." + this.config.anchors.preloadClass).forEach(function (a) {
+  $$("a." + this.config.preloadClass).forEach(function (a) {
     var url = a.href;
-  
-    setTimeout(function () {
-      return _this.preload(url);
-    }, 1);
+    if('' !== url){
+      setTimeout(function () {
+        return _this.preload(url);
+      }, 1);
+    }
     
   });
 };
@@ -458,8 +444,8 @@ PageLoaderModule.prototype.replace = function (content) {
     return;
   }
   
-  var newContent = isElement(content) ? content : $$(_response.document).find(this.config.content.selector).clone()[0];
-  var oldContent = $$(this.config.content.selector)[0];
+  var newContent = isElement(content) ? content : $$(_response.document).find(this.config.contentSelector).clone()[0];
+  var oldContent = $$(this.config.contentSelector)[0];
   
   if (isElement(newContent) && isElement(oldContent)) {
     Hooks.doAction('pageLoader.beforeReplace', newContent, oldContent);

@@ -2,14 +2,6 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="9c771b6e-40f2-4552-8493-9832aec1af50" name="files.000webhost.com" url="http://vsokolyk.tk/">
-        <fileTransfer host="files.000webhost.com" port="21" rootFolder="/public_html">
-          <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
-          </advancedOptions>
-          <option name="port" value="21" />
-        </fileTransfer>
-      </webServer>
       <webServer id="f9a6c5b1-531d-4e50-8935-df751396ee76" name="uPages" url="http://dev.upages.com.ua/">
         <fileTransfer host="homeking.ftp.ukraine.com.ua" port="21" rootFolder="/upages.com.ua/dev" password="df9adf9bdfe8df92dfc4dfdadfeedff9df99dfc9" username="homeking_jazzman">
           <advancedOptions>

@@ -65,7 +65,7 @@ var uglifyOption = {
   }
 };
 var extractSCSS = new ExtractTextPlugin({
-  filename: 'assets/css/[name].css',
+  filename: 'css/[name].css',
   disable: false,
   allChunks: true
 });
@@ -151,9 +151,11 @@ module.exports = {
     ]
   },
   output: {
-    filename: 'assets/js/[name].js',
-    chunkFilename: "assets/js/[id].chunk.js",
-    path: outputPath
+    filename: 'js/[name].js',
+    chunkFilename: "js/[id]-[name].chunk.js",
+    path: outputPath,
+    publicPath: '/assets/',
+    pathinfo: true
   },
   
   target: 'web',
@@ -204,7 +206,7 @@ module.exports = {
         test: /index.scss/,
         include: path.join(__dirname, 'src'),
         use: extractSCSS.extract({
-          publicPath: '/',
+          publicPath: '/assets/',
           fallback: 'style',
           use: [
             {
@@ -238,8 +240,8 @@ module.exports = {
           {
             loader: 'file',
             options: {
-              publicPath: false,
-              name: 'assets/fonts/[name].[ext]'
+              publicPath: '/assets/',
+              name: 'fonts/[name].[ext]'
             }
           }
         ]
@@ -250,8 +252,8 @@ module.exports = {
           {
             loader: 'file',
             options: {
-              publicPath: false,
-              name: 'assets/img/[name].[ext]'
+              publicPath: '/assets/',
+              name: 'img/[name].[ext]'
             }
           }
         ]
