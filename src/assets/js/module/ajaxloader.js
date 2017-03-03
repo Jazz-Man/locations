@@ -1,13 +1,9 @@
-var isString = require('lodash/isString');
 var isElement = require('lodash/isElement');
-var isUndefined = require('lodash/isUndefined');
 var isPlainObject = require('lodash/isPlainObject');
 var keys = require('lodash/keys');
 var camelCase = require('lodash/camelCase');
 var assign = require('lodash/assign');
 var every = require('lodash/every');
-var delay = require('lodash/delay');
-var defer = require('lodash/defer');
 var clone = require('lodash/clone');
 var map = require('lodash/map');
 var $$ = require('domtastic');
@@ -57,6 +53,7 @@ var _configPreset = {
 
 function PageLoaderModule(params) {
   this.config = assign(_configPreset, isPlainObject(params) ? params : {});
+  console.log(_configPreset);
   this.setup();
 }
 
@@ -68,7 +65,7 @@ PageLoaderModule.prototype.hook = function (hookName, promiseId, callback) {
   
   promiseId = camelCase(promiseId);
   
-  if (/*isFunction(callback) */typeof callback === "function") {
+  if (typeof callback === "function") {
     _promises[hookName].push({
       id: promiseId,
       callback: callback
@@ -157,7 +154,7 @@ PageLoaderModule.prototype.setup = function () {
   }, document.title, win.location.href);
   
   // popstate event
-  delay(function () {
+  setTimeout(function () {
     win.addEventListener('popstate', function (e) {
       if (history.state && history.state.pageLoader) {
         _this.process({
@@ -174,8 +171,6 @@ PageLoaderModule.prototype.setup = function () {
   // click event
   win.document.addEventListener('click', function (e) {
     var el = $$(e.target);
-    
-    // console.log($$(el).prop('tagName'));
     
     if (isElement(el[0])) {
       if (el.prop('tagName') === 'A') {
@@ -254,7 +249,7 @@ PageLoaderModule.prototype.preload = function (url, force) {
   }).then(function (text) {
     return new Promise(function (resolve, reject) {
       if (_this.config.cleanHtml) {
-        if (isString(text)) {
+        if (typeof text === 'string') {
           response.html = _this.clean(text);
           resolve();
         }
@@ -263,7 +258,7 @@ PageLoaderModule.prototype.preload = function (url, force) {
         }
       }
       else {
-        if (isString(text)) {
+        if (typeof text === 'string') {
           response.html = text;
           resolve();
         }
@@ -399,11 +394,11 @@ PageLoaderModule.prototype.load = function (url, forceLoad) {
 
 PageLoaderModule.prototype.clean = function (html) {
   // skip if cache
-  if (isUndefined(html) && _response && _response.fromCache) {
+  if (html === undefined && _response && _response.fromCache) {
     return;
   }
   
-  html = isString(html) ? html : _response.html;
+  html = typeof html === 'string' ? html : _response.html;
   
   if (!html) {
     return;
@@ -430,19 +425,21 @@ PageLoaderModule.prototype.parsePreload = function () {
   
   $$("a." + this.config.anchors.preloadClass).forEach(function (a) {
     var url = a.href;
-    defer(function () {
+  
+    setTimeout(function () {
       return _this.preload(url);
-    });
+    }, 1);
+    
   });
 };
 
 PageLoaderModule.prototype.parse = function (html) {
   // skip if cache
-  if (isUndefined(html) && _response && _response.fromCache) {
+  if (html === undefined && _response && _response.fromCache) {
     return _response.document;
   }
   
-  html = isString(html) ? html : _response.html;
+  html = typeof html === 'string' ? html : _response.html;
   
   if (!html) {
     return;

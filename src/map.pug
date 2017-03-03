@@ -1,70 +1,32 @@
 extends common/layout
 block append content
 
-	main#page-content
-		.container-fluid
-			.row.no-gatters.full-height
-				.col-md-8.p-0
-					#map-homepage.map(data-map-container)
-				.col-md-4.results-wrapper
-					.row.no-gatters
-						.col-sm-12.p-0
-							.results.h-100
-								h2.results-title.m-3 Search Results
-									small.results-number.text-muted 30
+  main#page-content
+    .container-fluid
+      .row.no-gatters.full-height
+        .col-md-8.p-0
+          #map-homepage.map(data-map-container)
+        .col-md-4.results-wrapper
+          .row.no-gatters
+            .col-sm-12.p-0
+              .results.h-100
+                h2.results-title.m-3 Search Results
+                  small.results-number.text-muted 30
 
-								.list-group#results-content
-									- var n = 1;
-									while n <= 30
-										-var idCurrent = n++
-										a.list-group-item.list-group-item-action.flex-column.align-items-start.result-item(href='#')
-											.d-flex.w-100.justify-content-between
-												h3.mb-1.blue-text.h3-responsive Відпочинковий комплекс “Канада”
-											.mb-1.media
-												- var imgSrc = 'http://upages.com.ua/wp-content/uploads/2016/09/00_listable_demo-1024x636.jpg'
-												img.img-fluid.w-50.mr-3(src=imgSrc)
-												.media-body
-													h5
-														i.fa.fa-map-marker.fa-fw
-														| #{idCurrent} вулиця Бориславська
-													.badge.grey Відпочинково-оздоровчі бази
-													.badge.grey Спорт та відпочинок
+                .list-group#results-content
+                  - var n = 1;
+                  while n <= 30
+                    -var idCurrent = n++
+                    a.list-group-item.list-group-item-action.flex-column.align-items-start.result-item(href='#')
+                      .d-flex.w-100.justify-content-between
+                        h3.mb-1.blue-text.h3-responsive Відпочинковий комплекс “Канада”
+                      .mb-1.media
+                        - var imgSrc = 'http://upages.com.ua/wp-content/uploads/2016/09/00_listable_demo-1024x636.jpg'
+                        img.img-fluid.w-50.mr-1(src=imgSrc)
+                        .media-body
+                          h5
+                            i.fa.fa-map-marker.fa-fw
+                            | #{idCurrent} вулиця Бориславська
+                          .badge.grey Відпочинково-оздоровчі бази
+                          .badge.grey Спорт та відпочинок
 
-
-block scripts
-	script#tmpl-listings-map-view-controll(type='text/html')
-		form.m-1(action='')
-			.btn-group(data-toggle='buttons')
-				label.btn.btn-primary.px-4.active
-					input#view-map(type='radio' name='options' autocomplete='off' checked)
-					i.fa.fa-map-marker(aria-hidden='true')
-				label.btn.btn-primary.px-4
-					input#view-grid(type='radio' name='options' autocomplete='off')
-					i.fa.fa-th(aria-hidden='true')
-				label.btn.btn-primary.px-4
-					input#view-row(type='radio' name='options' autocomplete='off')
-					i.fa.fa-bars(aria-hidden='true')
-
-	script#tmpl-listings-map-search-form(type='text/html')
-		.card.m-1
-			.card-block.p-0
-				- var formData = {
-				-      resultsWrap:'#wpas-results',
-				-      resultsPreloader:'#wpas-load',
-				-      buttonText:'Load More Results',
-				-      buttonLoad:'#wpas-load-btn',
-				-      callback:'ajax_callback',
-				-      loadingImageURL:'http://upages.com.ua/wp-content/plugins/wpas/img/loading.gif',
-				-      showDefaultResults:true,
-				-      urlHash:'results',
-				-  }
-				form#listings-map-search-form(data-ajax-form data-ajax-form-option=formData)
-					.container-fluid
-						.row.no-gutters
-							.col-sm-4
-								input.form-control-sm.px-0(type='text' placeholder='Назва')
-							.col-sm-4
-								input.form-control-sm.px-0(type='text', placeholder='Місто')
-							.col-sm-4
-								input.form-control-sm.px-0(type='text', placeholder='Категорія')
-					input#wpas-paged(type='hidden' name="paged" value="1")

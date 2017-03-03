@@ -5,15 +5,8 @@ var template = require('../module/template');
 var AjaxForm = require('../module/ajax-form');
 // var wp = require('../module/wp');
 
-// wp.users().me().then(function (listings) {
-//   console.log(listings);
-// }).catch(function (err) {
-//   console.log(err);
-// });
-
 var viewport = require('../module/viewport');
 var Hooks = require("../module/hooks");
-
 
 function wasp_init() {
   var mapContainer = $$('[data-map-container]');
@@ -22,6 +15,8 @@ function wasp_init() {
     var mapContainerID = '#' + mapContainer.attr('id');
     
     if (mapContainer.length) {
+      
+      
       var overlays = [];
       var map = new GMaps({
         div: mapContainerID,
@@ -43,15 +38,17 @@ function wasp_init() {
       });
       
       map.addControl({
+        id: 'listings-map-view-controll',
         position: 'top_right',
         content: template('listings-map-view-controll'),
         disableDefaultStyles: true
       });
       
       map.addControl({
+        id: 'listings-map-search-form',
         position: 'top_left',
         content: template('listings-map-search-form'),
-        disableDefaultStyles: true,
+        disableDefaultStyles: true
       });
       
       function form_init() {
@@ -102,16 +99,6 @@ function wasp_init() {
           }
         });
       }
-      
-      // var btnControll = $$(map.controls).find('[data-toggle=buttons]');
-      
-      
-      // btnControll.forEach(function (element) {
-      //   new bsn.Button(element);
-      //   element.addEventListener('bs.button.change', function (e) {
-      //     console.log(e);
-      //   })
-      // });
     }
     
     function marcerMouseEvent(e) {

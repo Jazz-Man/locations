@@ -4,6 +4,5 @@
     <option name="eslintRcFile" value="/usr/lib/node_modules/eslint/conf/eslint.json" />
     <option name="eslintExecutable" value="/usr/bin/eslint" />
     <option name="nodeInterpreter" value="/usr/bin/node" />
-    <option name="pluginEnabled" value="true" />
   </component>
 </project>

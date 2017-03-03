@@ -3,6 +3,7 @@ var EventEmitter = require('events').EventEmitter;
 var Hooks = function() {
   
   this.e = new EventEmitter;
+  // this.e.setMaxListeners(10);
   var _this = this;
   
   function addAction(action, callback) {

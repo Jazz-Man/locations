@@ -1,0 +1,36 @@
+script#tmpl-listings-map-view-controll(type='text/html')
+  form.m-1(action='')
+    .btn-group(data-toggle='buttons')
+      label.btn.btn-primary.px-4.active
+        input#view-map(type='radio' name='options' autocomplete='off' checked)
+        i.fa.fa-map-marker(aria-hidden='true')
+      label.btn.btn-primary.px-4
+        input#view-grid(type='radio' name='options' autocomplete='off')
+        i.fa.fa-th(aria-hidden='true')
+      label.btn.btn-primary.px-4
+        input#view-row(type='radio' name='options' autocomplete='off')
+        i.fa.fa-bars(aria-hidden='true')
+
+script#tmpl-listings-map-search-form(type='text/html')
+  .card.m-1
+    .card-block.p-0
+      - var formData = {
+      - resultsWrap:'#wpas-results',
+      - resultsPreloader:'#wpas-load',
+      - buttonText:'Load More Results',
+      - buttonLoad:'#wpas-load-btn',
+      - callback:'ajax_callback',
+      - loadingImageURL:'http://upages.com.ua/wp-content/plugins/wpas/img/loading.gif',
+      - showDefaultResults:true,
+      - urlHash:'results',
+      - }
+      form#listings-map-search-form(data-ajax-form data-ajax-form-option=formData)
+        .container-fluid
+          .row.no-gutters
+            .col-sm-4
+              input.form-control-sm.px-0(type='text' placeholder='Назва')
+            .col-sm-4
+              input.form-control-sm.px-0(type='text', placeholder='Місто')
+            .col-sm-4
+              input.form-control-sm.px-0(type='text', placeholder='Категорія')
+        input#wpas-paged(type='hidden' name="paged" value="1")

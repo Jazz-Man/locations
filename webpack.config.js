@@ -1,47 +1,44 @@
 var path = require('path');
 var webpack = require('webpack');
 var forEach = require('lodash/forEach');
-var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var StyleExtHtmlWebpackPlugin = require('style-ext-html-webpack-plugin');
 
 var pages = [
-  '404',
+  // '404',
   'blog',
-  'blog-detail',
-  'contact',
-  'detail',
-  'detail-2',
+  // 'blog-detail',
+  // 'contact',
+  // 'detail',
+  // 'detail-2',
   'index',
   'map',
-  'submit',
-  'profile',
-  'user',
-  'faq',
-  'sign-in',
-  'register',
-  'reset-password',
-  'edit-listing',
-  'my-listings',
-  'reviews',
-  'terms-and-conditions',
-  'how-it-works',
-  'pricing',
-  'listing-grid-3-items',
-  'listing-grid-4-items',
-  'listing-grid-different-widths',
-  'listing-grid-full-width',
-  'listing-grid-left-sidebar',
-  'listing-grid-right-sidebar',
-  'listing-row-left-sidebar',
-  'listing-row-right-sidebar'
+  // 'submit',
+  // 'profile',
+  // 'user',
+  // 'faq',
+  // 'sign-in',
+  // 'register',
+  // 'reset-password',
+  // 'edit-listing',
+  // 'my-listings',
+  // 'reviews',
+  // 'terms-and-conditions',
+  // 'how-it-works',
+  // 'pricing',
+  // 'listing-grid-3-items',
+  // 'listing-grid-4-items',
+  // 'listing-grid-different-widths',
+  // 'listing-grid-full-width',
+  // 'listing-grid-left-sidebar',
+  // 'listing-grid-right-sidebar',
+  // 'listing-row-left-sidebar',
+  // 'listing-row-right-sidebar'
 ];
 
 var isProd = process.env.NODE_ENV === 'production' ? true : false;
 
 var outputPath = path.join(__dirname, 'dist');
-
 
 var uglifyOption = {
   mangle: true,
@@ -148,8 +145,10 @@ module.exports = {
   context: path.join(__dirname, 'src'),
   entry: {
     vendor: './assets/js/vendor',
-    // inline:'./assets/scss/inline.scss',
-    index: ['./assets/js','./assets/scss']
+    index: [
+      './assets/js',
+      './assets/scss'
+    ]
   },
   output: {
     filename: 'assets/js/[name].js',
@@ -168,6 +167,7 @@ module.exports = {
   resolve: {
     modules: [
       'src',
+      'modules',
       'node_modules'
     ],
     extensions: [
@@ -201,7 +201,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.scss$/,
+        test: /index.scss/,
         include: path.join(__dirname, 'src'),
         use: extractSCSS.extract({
           publicPath: '/',
@@ -232,38 +232,6 @@ module.exports = {
           ]
         })
       },
-      // {
-      //   test: /inline\.scss$/,
-      //   include: path.join(__dirname, 'src'),
-      //   use: bootstrapGrid.extract({
-      //     publicPath: '../',
-      //     fallback: 'style',
-      //     use: [
-      //       {
-      //         loader: 'css',
-      //         options: {
-      //           minimize: true
-      //         }
-      //       },
-      //       {
-      //         loader: 'autoprefixer'
-      //       },
-      //       {
-      //         loader: 'resolve-url',
-      //         options: {
-      //           root: '../',
-      //           keepQuery: true
-      //         }
-      //       },
-      //       {
-      //         loader: 'sass',
-      //         options: {
-      //           outputStyle: 'compressed'
-      //         }
-      //       }
-      //     ]
-      //   })
-      // },
       {
         test: /\.(ttf|eot|svg|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         use: [
@@ -289,9 +257,6 @@ module.exports = {
         ]
       }
     ],
-    noParse: [
-      /reqwest\/reqwest.js/
-    ]
   },
   
   plugins: getPlugins(),
