@@ -108,6 +108,7 @@ function wasp_init() {
           disableDefaultStyles: true
         });
 
+        
         function form_init() {
           var form = new AjaxForm({
             elem: '[data-ajax-form]',

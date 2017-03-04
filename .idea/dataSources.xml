@@ -5,7 +5,7 @@
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://homeking.mysql.ukraine.com.ua:3306/homeking_upages</jdbc-url>
+      <jdbc-url>jdbc:mysql://homeking.mysql.ukraine.com.ua:3306/homeking_updev</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />

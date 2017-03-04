@@ -2,34 +2,16 @@
 <project version="4">
   <component name="PublishConfigData" autoUpload="Always" serverName="uPages" persistUploadOnCheckin="false" autoUploadExternalChanges="true">
     <serverData>
-      <paths name="files.000webhost.com">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
-            <mapping deploy="/" local="$PROJECT_DIR$/../upages" web="/" />
-          </mappings>
-          <excludedPaths>
-            <excludedPath local="true" path="$PROJECT_DIR$" />
-          </excludedPaths>
-        </serverdata>
-      </paths>
       <paths name="uPages">
         <serverdata>
           <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$/../listing" web="/" />
+            <mapping deploy="/" local="$USER_HOME$/lampstack/apps/upages/htdocs" web="/" />
             <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
           </mappings>
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$" />
             <excludedPath path="/wp-config.php" />
           </excludedPaths>
-        </serverdata>
-      </paths>
-      <paths name="ubuntusrv">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
         </serverdata>
       </paths>
     </serverData>
