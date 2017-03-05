@@ -26,8 +26,7 @@
     "form-serialize": "^0.7.1",
     "js-base64": "^2.1.9",
     "pace-js": "^1.0.2",
-    "reqwest": "^2.0.5",
-    "wpapi": "^1.0.2"
+    "reqwest": "^2.0.5"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.3",

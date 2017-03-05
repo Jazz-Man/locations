@@ -70,6 +70,8 @@ var extractSCSS = new ExtractTextPlugin({
   allChunks: true
 });
 
+
+
 function jadePage(name) {
   return new HtmlWebpackPlugin({
     filename: name + '.html',
@@ -96,6 +98,10 @@ function jadePage(name) {
           src: "http://maps.google.com/maps/api/js?key=AIzaSyBEDfNcQRmKQEyulDN8nGWjLYPm8s4YB58&libraries=places"
         },
         "https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js",
+        {
+          tag: "script",
+          innerHTML: "var wpApiSettings = {'root':'http://dev.upages.com.ua/wp-json/','nonce':'a530fa0ec6','versionString':'wp/v2'};"
+        },
         {
           tag: "noscript",
           innerHTML: "JavaScript is disabled in your browser. <a href='http://www.enable-javascript.com/' target='_blank'>Here</a> is how to enable it."
@@ -264,7 +270,9 @@ module.exports = {
   plugins: getPlugins(),
   
   devServer: {
-    // noInfo: true,
+    headers: {
+      "Access-Control-Allow-Origin": "http://localhost:3000",
+      "Access-Control-Allow-Credentials": "true" },
     contentBase: outputPath,
     port: 3000
   }

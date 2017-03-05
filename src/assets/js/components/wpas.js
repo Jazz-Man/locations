@@ -4,6 +4,7 @@ var Hooks = require("../module/hooks");
 
 function wasp_init() {
   var mapContainer = $$('[data-map-container]');
+    
   
   if (mapContainer.length) {
     var mapContainerID = '#' + mapContainer.attr('id');
@@ -11,69 +12,9 @@ function wasp_init() {
     if (mapContainer.length) {
 
       require.ensure([], function(require){
+        var mapStyle = require('../module/map-styles');
         var GMaps = require('../module/gmaps');
         var AjaxForm = require('../module/ajax-form');
-        var mapStylesAdministrative = [
-          {
-            "featureType": "administrative",
-            "elementType": "labels.text.fill",
-            "stylers": [{
-              "color": "#c6c6c6"
-            }]
-          }, {
-            "featureType": "landscape",
-            "elementType": "all",
-            "stylers": [{
-              "color": "#f2f2f2"
-            }]
-          }, {
-            "featureType": "poi",
-            "elementType": "all",
-            "stylers": [{
-              "visibility": "off"
-            }]
-          }, {
-            "featureType": "road",
-            "elementType": "all",
-            "stylers": [{
-              "saturation": -100
-            }, {
-              "lightness": 45
-            }]
-          }, {
-            "featureType": "road.highway",
-            "elementType": "all",
-            "stylers": [{
-              "visibility": "simplified"
-            }]
-          }, {
-            "featureType": "road.highway",
-            "elementType": "geometry.fill",
-            "stylers": [{
-              "color": "#ffffff"
-            }]
-          }, {
-            "featureType": "road.arterial",
-            "elementType": "labels.icon",
-            "stylers": [{
-              "visibility": "off"
-            }]
-          }, {
-            "featureType": "transit",
-            "elementType": "all",
-            "stylers": [{
-              "visibility": "off"
-            }]
-          }, {
-            "featureType": "water",
-            "elementType": "all",
-            "stylers": [{
-              "color": "#dde6e8"
-            }, {
-              "visibility": "on"
-            }]
-          }];
-
         var overlays = [];
         var map = new GMaps({
           div: mapContainerID,
@@ -87,7 +28,7 @@ function wasp_init() {
           mapType: "roadmap",
           height: '100%',
           width: '100%',
-          styles: mapStylesAdministrative,
+          styles: mapStyle,
           idle: function (e) {
             map.removeOverlay();
             form_init();
@@ -156,6 +97,8 @@ function wasp_init() {
 
             }
           });
+          
+          console.log(form);
         }
 
         function marcerMouseEvent(e) {
