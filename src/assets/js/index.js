@@ -7,6 +7,7 @@ var Hooks = require('./module/hooks');
 // var spop = require('./module/spop');
 var doc = $$(document);
 
+
 require('./module/ajaxloader')();
 
 doc.on('complete', init);
