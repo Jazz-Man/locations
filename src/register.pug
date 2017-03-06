@@ -1,46 +1,48 @@
 extends common/layout
 
+block append defaultTitle
+	title Реєстрація | uPages
+
 block append content
-	.container
-		+breadcrumb
-		.row
-			.col-md-4.col-sm-4.col-md-offset-4.col-sm-offset-4
-				section.page-title
-					h1 Register
-				section
-					form.form.inputs-underline
-						.row
-							.col-md-6.col-sm-6
-								.form-group
-									label(for='first_name') First Name
-									input#first_name.form-control(type='text' name='first_name' placeholder='First name')
-								// end form-group
-							// end col-md-6
-							.col-md-6.col-sm-6
-								.form-group
-									label(for='last_name') Last Name
-									input#last_name.form-control(type='text' name='last_name' placeholder='Last name')
-								// end form-group
-							// end col-md-6
-						// enr row
-						.form-group
-							label(for='email') Email
-							input#email.form-control(type='email' name='email' placeholder='Email')
-						// end form-group
-						.form-group
-							label(for='password') Password
-							input#password.form-control(type='password' name='password' placeholder='Password')
-						// end form-group
-						.form-group
-							label(for='confirm_password') Confirm Password
-							input#confirm_password.form-control(type='password' name='confirm_password' placeholder='Confirm Password')
-						// end form-group
-						.form-group.center
-							button.btn.btn-primary.width-100(type='submit') Register Now
-						// end form-group
-					hr
-					p.center
-						| By clicking on “Register Now” button you are accepting the
-						a(href='terms-conditions.html') Terms & Conditions
-			// col-md-4
-		// end ro
+	main#page-content
+		.view.h-100.zindex-xs.full-bg-img
+			.flex-center
+				.container
+					.row
+						.col-md-6.col-lg-5.mx-auto
+							.card
+								.card-block
+									.text-center.text-uppercase
+										h3 Реєстрація
+									form#register-form
+										.md-form
+											i.fa.fa-address-card-o.prefix(aria-hidden='true')
+											input#first_name(type='text' name='first_name' placeholder='Ваше імя')
+										.md-form
+											i.fa.fa-address-card.prefix(aria-hidden='true')
+											input#last_name(type='text' name='last_name' placeholder='Прізвище')
+										.md-form
+											i.fa.fa-envelope.prefix
+											input#email(type='email' name='email' placeholder='Email')
+										.md-form
+											i.fa.fa-lock.prefix
+											input#password(type='password' name='password' placeholder='Пароль')
+										.md-form
+											i.fa.fa-lock.prefix
+											input#confirm_password(type='password' name='confirm_password' placeholder='Підтвердіть Пароль')
+										.text-xs-center
+											button.btn.btn-primary.width-100(type='submit') Register Now
+		.carousel-fade.full-bg-img.view.hm-stylish-light#myCarousel(data-ride='carousel')
+			ol.carousel-indicators
+				li.active(data-target='#myCarousel', data-slide-to='0')
+				li(data-target='#myCarousel', data-slide-to='1')
+				li(data-target='#myCarousel', data-slide-to='2')
+			.carousel-inner.h-100(role='listbox')
+				.carousel-item.h-100.active
+					img.w-100.img-fluid(src='http://upages.com.ua/wp-content/uploads/2016/09/00_listable_demojpg',
+					alt='First slide')
+				.carousel-item.h-100
+					img.w-100.img-fluid(src='http://upages.com.ua/wp-content/uploads/2016/09/01_listable_demojpg', alt='First slide')
+				.carousel-item.h-100
+					img.w-100.img-fluid(src='http://upages.com.ua/wp-content/uploads/2016/09/03_listable_demojpg', alt='First slide')
+			.mask.pattern-1
