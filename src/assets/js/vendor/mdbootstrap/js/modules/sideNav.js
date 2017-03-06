@@ -1,3 +1,6 @@
+require('./velocity.min');
+require('./jquery.hammer');
+
 (function ($) {
   var methods = {
     init : function(options) {
@@ -298,3 +301,8 @@
       }
     }; // Plugin end
 }( jQuery ));
+
+$('.button-collapse').sideNav({
+	edge: 'right', // Choose the horizontal origin
+	closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+});

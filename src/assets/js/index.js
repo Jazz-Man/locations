@@ -15,6 +15,8 @@ doc.on('complete', init);
 doc.ready(init);
 
 function init(e) {
+	
+	require('./module/side-nav');
   
   require('./components/responsive');
 

@@ -42,7 +42,6 @@ RestClient.prototype._request = function (method, url, data, auth) {
     if (null !== auth) {
         reqwest_prop.headers.Authorization = 'Basic ' + Base64.encode('' + auth.username + ':' + auth.password + '')
     }
-    console.log(reqwest_prop);
 
     return reqwest(reqwest_prop);
 };
