@@ -1,25 +1,30 @@
 // Features
 // Feature box
 .feature-box {
-    text-align: center;
-   
+  text-align: center;
+
+  .feature-title {
+    font-weight: 500;
+    margin-bottom: 1rem;
+    }
+
+  .features-big {
+
     .feature-title {
-        font-weight: 500;
-        margin-bottom: 1rem;
+      margin-bottom: 1rem;
+      margin-top: 2rem;
+      }
+
+    .fa {
+      font-size: 4rem;
+      }
     }
-    .features-big {
-        .feature-title {
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-        }
-        .fa {
-            font-size: 4rem;
-        }
+
+  .features-small {
+    text-align: left;
+
+    .fa {
+      font-size: 2rem;
+      }
     }
-    .features-small {
-        text-align: left;
-        .fa {
-            font-size: 2rem;
-        }
-    }
-}
+  }
