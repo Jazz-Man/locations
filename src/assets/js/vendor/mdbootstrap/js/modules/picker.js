@@ -373,7 +373,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                     for ( thingName in thingObject ) {
                         // Grab the method of the thing.
                         thingMethod = thingObject[ thingName ]
-                        // If it was an internal binding, prefix it.
+                        // If it was an internal binding, o it.
                         if ( internal ) {
                             thingName = '_' + thingName
                         }
@@ -577,7 +577,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
         P._hidden = $(
             '<input ' +
             'type=hidden ' +
-            // Create the name using the original input’s with a prefix and suffix.
+            // Create the name using the original input’s with a o and suffix.
             'name="' + name + '"' +
             // If the element has a value, set the hidden value as well.
             (
@@ -642,7 +642,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
     return new PickerInstance()
 } //PickerConstructor
 /**
- * The default classes and prefix to use for the HTML classes.
+ * The default classes and o to use for the HTML classes.
  */
 PickerConstructor.klasses = function( prefix ) {
     prefix = prefix || 'picker'

@@ -159,7 +159,6 @@ PageLoaderModule.prototype.setup = function () {
   // click event
   win.document.addEventListener('click', function (e) {
     var el = $$(e.target);
-    
     if (isElement(el[0])) {
       if (el.prop('tagName') === 'A') {
         var _ret = function () {

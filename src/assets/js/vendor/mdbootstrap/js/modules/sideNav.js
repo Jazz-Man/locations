@@ -12,7 +12,7 @@ require('./jquery.hammer');
       options = $.extend(defaults, options);
       $(this).each(function(){
         var $this = $(this);
-        var menu_id = $("#"+ $this.attr('data-activates'));
+        var menu_id = $($this.attr('data-target'));
         // Set to width
         if (options.menuWidth != 240) {
           menu_id.css('width', options.menuWidth);
@@ -72,8 +72,10 @@ require('./jquery.hammer');
             overflow: '',
             width: ''
           });
-          $('#sidenav-overlay').velocity({opacity: 0}, {duration: 200,
-              queue: false, easing: 'easeOutQuad',
+          $('#sidenav-overlay').velocity({opacity: 0}, {
+            duration: 200,
+              queue: false, 
+            easing: 'easeOutQuad',
             complete: function() {
               $(this).remove();
             } });
@@ -302,7 +304,7 @@ require('./jquery.hammer');
     }; // Plugin end
 }( jQuery ));
 
-$('.button-collapse').sideNav({
-	edge: 'right', // Choose the horizontal origin
+$('[data-toggle=off-canvas]').sideNav(/*{
+	edge: 'left', // Choose the horizontal origin
 	closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
-});
+}*/);

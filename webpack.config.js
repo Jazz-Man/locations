@@ -7,33 +7,33 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var pages = [
   // '404',
   'blog',
-  'blog-detail',
-  'contact',
-  'detail',
-  'detail-2',
+  // 'blog-detail',
+  // 'contact',
+  // 'detail',
+  // 'detail-2',
   'index',
   'map',
-  'submit',
-  'profile',
-  'user',
-  'faq',
+  // 'submit',
+  // 'profile',
+  // 'user',
+  // 'faq',
   'sign-in',
   'register',
   'reset-password',
-  'edit-listing',
-  'my-listings',
-  'reviews',
-  'terms-and-conditions',
-  'how-it-works',
-  'pricing',
-  'listing-grid-3-items',
-  'listing-grid-4-items',
-  'listing-grid-different-widths',
-  'listing-grid-full-width',
-  'listing-grid-left-sidebar',
-  'listing-grid-right-sidebar',
-  'listing-row-left-sidebar',
-  'listing-row-right-sidebar'
+  // 'edit-listing',
+  // 'my-listings',
+  // 'reviews',
+  // 'terms-and-conditions',
+  // 'how-it-works',
+  // 'pricing',
+  // 'listing-grid-3-items',
+  // 'listing-grid-4-items',
+  // 'listing-grid-different-widths',
+  // 'listing-grid-full-width',
+  // 'listing-grid-left-sidebar',
+  // 'listing-grid-right-sidebar',
+  // 'listing-row-left-sidebar',
+  // 'listing-row-right-sidebar'
 ];
 
 var isProd = process.env.NODE_ENV === 'production' ? true : false;
@@ -217,9 +217,9 @@ module.exports = {
           use: [
             {
               loader: 'css',
-              options: {
-                sourceMap: !isProd
-              }
+              // options: {
+              //   sourceMap: !isProd
+              // }
             },
             {
               loader: 'autoprefixer'

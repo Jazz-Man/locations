@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$/../listing" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/node_modules" />
+    </content>
     <content url="file://$USER_HOME$/lampstack/apps/upages/htdocs">
       <excludeFolder url="file://$USER_HOME$/lampstack/apps/upages/htdocs/wp-content/vendor/altorouter/altorouter" />
       <excludeFolder url="file://$USER_HOME$/lampstack/apps/upages/htdocs/wp-content/vendor/asm89/twig-cache-extension" />
@@ -9,12 +15,6 @@
       <excludeFolder url="file://$USER_HOME$/lampstack/apps/upages/htdocs/wp-content/vendor/timber/timber" />
       <excludeFolder url="file://$USER_HOME$/lampstack/apps/upages/htdocs/wp-content/vendor/twig/twig" />
       <excludeFolder url="file://$USER_HOME$/lampstack/apps/upages/htdocs/wp-content/vendor/upstatement/routes" />
-    </content>
-    <content url="file://$MODULE_DIR$/../listing" />
-    <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
-      <excludeFolder url="file://$MODULE_DIR$/dist" />
-      <excludeFolder url="file://$MODULE_DIR$/node_modules" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -25,16 +25,16 @@
     <orderEntry type="module-library">
       <library name="PHARS">
         <CLASSES>
-          <root url="phar://$USER_HOME$/lampstack/apps/upages/htdocs/wp-content/vendor/twig/twig/test/Twig/Tests/Loader/Fixtures/phar/phar-sample.phar/" />
+          <root url="phar://$MODULE_DIR$/../listing/wp-content/vendor/twig/twig/test/Twig/Tests/Loader/Fixtures/phar/phar-sample.phar/" />
         </CLASSES>
         <SOURCES>
-          <root url="phar://$USER_HOME$/lampstack/apps/upages/htdocs/wp-content/vendor/twig/twig/test/Twig/Tests/Loader/Fixtures/phar/phar-sample.phar/" />
+          <root url="phar://$MODULE_DIR$/../listing/wp-content/vendor/twig/twig/test/Twig/Tests/Loader/Fixtures/phar/phar-sample.phar/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="library" name="googlemaps-DefinitelyTyped" level="application" />
     <orderEntry type="module-library">
-      <library name="PHP" type="php">
+      <library name="PHP">
         <CLASSES>
           <root url="file://$USER_HOME$/lampstack/apps/upages/htdocs/wp-content/vendor/altorouter/altorouter" />
           <root url="file://$USER_HOME$/lampstack/apps/upages/htdocs/wp-content/vendor/asm89/twig-cache-extension" />
@@ -56,7 +56,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="PHP Runtime" type="php">
+      <library name="PHP Runtime">
         <CLASSES>
           <root url="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard" />
         </CLASSES>

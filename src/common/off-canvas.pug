@@ -1,26 +1,70 @@
-.off-canvas
-  input#off_canvas(type='checkbox')
-  .cstm-shade
-    .cstm-navi
-      .cstm-navi-content
-        ul.nav.nav-pills.nav-stacked
-          li.active(role='presentation')
-            a(href='#')
-              span.glyphicon.glyphicon-home
-              |  Home
-          li(role='presentation')
-            a(href='#')
-              span.glyphicon.glyphicon-heart
-              |  Favourites
-          li(role='presentation')
-            a(href='#')
-              span.glyphicon.glyphicon-user
-              |  Profile
-          li(role='presentation')
-            a(href='#')
-              span.glyphicon.glyphicon-cog
-              |  Account Settings
-          li(role='presentation')
-            a(href='#')
-              span.glyphicon.glyphicon-off
-              |  Logout
+ul#slide-out.side-nav.fixed.sn-bg-1.zindex-md.collapse.fade
+  li
+    .logo-wrapper.waves-light
+      a(href='#')
+        img.img-fluid.flex-center(src='https://mdbootstrap.com/img/logo/mdb-transparent.png')
+  li
+    ul.social
+      li
+        a.icons-sm.fb-ic
+          i.fa.fa-facebook
+      li
+        a.icons-sm.pin-ic
+          i.fa.fa-pinterest
+      li
+        a.icons-sm.gplus-ic
+          i.fa.fa-google-plus
+      li
+        a.icons-sm.tw-ic
+          i.fa.fa-twitter
+  li
+    form.search-form(role='search')
+      .form-group.waves-light
+        input.form-control(type='text', placeholder='Search')
+  li
+    ul.collapsible.collapsible-accordion
+      li
+        a.collapsible-header.waves-effect.arrow-r
+          i.fa.fa-chevron-right
+          |  Submit blog
+          i.fa.fa-angle-down.rotate-icon
+        .collapsible-body
+          ul
+            li
+              a.waves-effect(href='#') Submit listing
+            li
+              a.waves-effect(href='#') Registration form
+      li
+        a.collapsible-header.waves-effect.arrow-r
+          i.fa.fa-hand-pointer-o
+          |  Instruction
+          i.fa.fa-angle-down.rotate-icon
+        .collapsible-body
+          ul
+            li
+              a.waves-effect(href='#') For bloggers
+            li
+              a.waves-effect(href='#') For authors
+      li
+        a.collapsible-header.waves-effect.arrow-r
+          i.fa.fa-eye
+          |  About
+          i.fa.fa-angle-down.rotate-icon
+        .collapsible-body
+          ul
+            li
+              a.waves-effect(href='#') Introduction
+            li
+              a.waves-effect(href='#') Monthly meetings
+      li
+        a.collapsible-header.waves-effect.arrow-r
+          i.fa.fa-envelope-o
+          |  Contact me
+          i.fa.fa-angle-down.rotate-icon
+        .collapsible-body
+          ul
+            li
+              a.waves-effect(href='#') FAQ
+            li
+              a.waves-effect(href='#') Write a message
+  .sidenav-bg.mask-strong
