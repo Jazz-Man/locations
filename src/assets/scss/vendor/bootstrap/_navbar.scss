@@ -121,8 +121,6 @@
     $next: breakpoint-next($breakpoint, $grid-breakpoints);
     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
-    @debug $infix;
-
     &#{$infix} {
       @include media-breakpoint-down($breakpoint) {
         .navbar-nav {

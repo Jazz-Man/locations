@@ -14,7 +14,7 @@ var pages = [
   'index',
   'map',
   // 'submit',
-  // 'profile',
+   'profile',
   // 'user',
   // 'faq',
   'sign-in',

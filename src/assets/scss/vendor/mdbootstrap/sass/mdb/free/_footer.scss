@@ -36,16 +36,3 @@ footer.page-footer {
       }
     }
   }
-
-/* Instagram photos */
-ul.instagram-photos {
-  li {
-    display: inline-block;
-    max-width: 100px;
-    margin: 4px;
-    img {
-      margin: 0;
-      @extend .z-depth-1-half;
-      }
-    }
-  }

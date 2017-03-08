@@ -21,14 +21,12 @@
   },
   "homepage": "https://bitbucket.org/tirastec/locations_dev#readme",
   "dependencies": {
-    "animate-sass": "git+https://github.com/tgdev/animate-sass.git",
     "bootstrap.native": "^2.0.6",
+    "decouple": "^1.0.1",
     "domtastic": "^0.12.3",
-    "form-serialize": "^0.7.1",
     "js-base64": "^2.1.9",
     "pace-js": "^1.0.2",
-    "reqwest": "^2.0.5",
-    "slideout": "^1.0.1"
+    "reqwest": "^2.0.5"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.3",

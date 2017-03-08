@@ -1,5 +1,4 @@
 var $$ = require('domtastic');
-// var serialize = require('form-serialize');
 var Hooks = require('./hooks');
 var reqwest = require('reqwest');
 var template = require('../module/template');
