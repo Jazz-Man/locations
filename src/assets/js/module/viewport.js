@@ -3,19 +3,19 @@ var Hooks = require("./hooks");
 var win = $$(window);
 
 var ViewPort = {
-  queries : [],
-  current : "",
-  atLeast : function(size) {
+  queries :        [],
+  current :        "",
+  atLeast :        function(size) {
     var query = this.get(size);
     if (query) {
       return window.matchMedia(query).matches;
     }
     return false;
   },
-  is : function(size) {
+  is :             function(size) {
     size = size.trim().split(" ");
     if (size.length > 1 && size[1] === "only") {
-      if (size[0] === this._getCurrentSize()) {
+      if (size[0] === this.getCurrentSize()) {
         return true;
       }
     } else {
@@ -23,39 +23,34 @@ var ViewPort = {
     }
     return false;
   },
-  get : function(size) {
+  get :            function(size) {
     var _this = this;
-    var matched;
-    $$(this.queries).forEach(function (queries,i) {
+    $$(_this.queries).forEach(function (queries,i) {
       if (_this.queries.hasOwnProperty(i)) {
         var query = _this.queries[i];
         if (size === query.name) {
-          matched = query.value;
+	        return query.value;
         }
       }
     });
-    return matched;
+    return null;
   },
-  _getCurrentSize : function() {
+  getCurrentSize : function() {
     var _this = this;
     var matched;
-    $$(this.queries).forEach(function (queries,i) {
+    $$(_this.queries).forEach(function (queries,i) {
       var query = _this.queries[i];
       if (window.matchMedia(query.value).matches) {
         matched = query;
       }
     });
-
-    if (typeof matched === "object") {
-      return matched.name;
-    } else {
-      return matched;
-    }
+	
+	  return typeof matched === "object" ? matched.name : matched;
   },
-  _watcher : function() {
+  watcher :        function() {
     var _this = this;
     win.on("resize.mq.mediaquery", function() {
-      var newSize = _this._getCurrentSize();
+      var newSize = _this.getCurrentSize();
       var currentSize = _this.current;
       if (newSize !== currentSize) {
         _this.current = newSize;
@@ -113,6 +108,7 @@ function view_port_init() {
     xl : "1200px"
   };
   var key;
+  
   for (key in namedQueries) {
     if (namedQueries.hasOwnProperty(key)) {
       self.queries.push({
@@ -121,8 +117,8 @@ function view_port_init() {
       });
     }
   }
-  self.current = self._getCurrentSize();
-  self._watcher();
+  self.current = self.getCurrentSize();
+  self.watcher();
 }
 
 Hooks.addAction("_init", view_port_init);

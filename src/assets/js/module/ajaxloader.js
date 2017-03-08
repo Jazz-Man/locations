@@ -4,7 +4,6 @@ var clone = require('lodash/clone');
 var map = require('lodash/map');
 var $$ = require('domtastic');
 var Hooks = require('./hooks');
-// var reqwest = require('reqwest');
 
 var win = window;
 

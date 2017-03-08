@@ -1,70 +1,43 @@
-ul#slide-out.side-nav.fixed.sn-bg-1.zindex-md.collapse.fade
-  li
-    .logo-wrapper.waves-light
-      a(href='#')
-        img.img-fluid.flex-center(src='https://mdbootstrap.com/img/logo/mdb-transparent.png')
-  li
-    ul.social
+#slide-out.slideout-menu.nav.flex-column.special-color.h-100.zindex-md
+  li.nav-item.avatar
+    a.nav-link.py-4.flex-center(href='#')
+      img.img-fluid(src='https://mdbootstrap.com/img/logo/mdb-transparent.png')
+
+  li.nav-item(data-parent="#slide-out" data-toggle='collapse' data-target='#products')
+    a.nav-link(href='#')
+      i.fa.fa-gift.fa-lg
+      |  UI Elements
+      span.arrow
+    ul#products.collapse.collapsible
+      li.active
+        a(href='#') CSS3 Animation
       li
-        a.icons-sm.fb-ic
-          i.fa.fa-facebook
+        a(href='#') General
       li
-        a.icons-sm.pin-ic
-          i.fa.fa-pinterest
+        a(href='#') Buttons
       li
-        a.icons-sm.gplus-ic
-          i.fa.fa-google-plus
+        a(href='#') Tabs & Accordions
       li
-        a.icons-sm.tw-ic
-          i.fa.fa-twitter
-  li
-    form.search-form(role='search')
-      .form-group.waves-light
-        input.form-control(type='text', placeholder='Search')
-  li
-    ul.collapsible.collapsible-accordion
+        a(href='#') Typography
       li
-        a.collapsible-header.waves-effect.arrow-r
-          i.fa.fa-chevron-right
-          |  Submit blog
-          i.fa.fa-angle-down.rotate-icon
-        .collapsible-body
-          ul
-            li
-              a.waves-effect(href='#') Submit listing
-            li
-              a.waves-effect(href='#') Registration form
+        a(href='#') FontAwesome
       li
-        a.collapsible-header.waves-effect.arrow-r
-          i.fa.fa-hand-pointer-o
-          |  Instruction
-          i.fa.fa-angle-down.rotate-icon
-        .collapsible-body
-          ul
-            li
-              a.waves-effect(href='#') For bloggers
-            li
-              a.waves-effect(href='#') For authors
+        a(href='#') Slider
       li
-        a.collapsible-header.waves-effect.arrow-r
-          i.fa.fa-eye
-          |  About
-          i.fa.fa-angle-down.rotate-icon
-        .collapsible-body
-          ul
-            li
-              a.waves-effect(href='#') Introduction
-            li
-              a.waves-effect(href='#') Monthly meetings
+        a(href='#') Panels
       li
-        a.collapsible-header.waves-effect.arrow-r
-          i.fa.fa-envelope-o
-          |  Contact me
-          i.fa.fa-angle-down.rotate-icon
-        .collapsible-body
-          ul
-            li
-              a.waves-effect(href='#') FAQ
-            li
-              a.waves-effect(href='#') Write a message
+        a(href='#') Widgets
+      li
+        a(href='#') Bootstrap Model
+
+  li.nav-item(data-parent="#slide-out" data-toggle='collapse' data-target='#service')
+    a.nav-link(href='#')
+      i.fa.fa-globe.fa-lg
+      |  Services
+      span.arrow
+    ul#service.collapse
+      li.nav-item New Service 1
+      li.nav-item New Service 2
+      li.nav-item New Service 3
+
   .sidenav-bg.mask-strong

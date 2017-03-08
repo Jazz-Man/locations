@@ -9,10 +9,7 @@
   }
 
 @mixin animation-direction($direction) {
-  -webkit-animation-direction: $direction;
-  -moz-animation-direction: $direction;
-  -ms-animation-direction: $direction;
-  -o-animation-direction: $direction;
+  animation-direction: $direction;
   }
 
 @mixin animation-duration($duration) {
