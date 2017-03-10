@@ -11,9 +11,9 @@ mixin navbar-item
     +link('/sign-in.html','Sign In')(class="nav-link page-loader-ignore")
 
 
-header#page-header
+header#page-header.fixed-top.zindex-sm
   include off-canvas
-  nav#page-navbar.navbar.fixed-top.navbar-toggleable-sm.warning-color-dark.navbar-light.zindex-sm.double-nav
+  nav#page-navbar.navbar.navbar-toggleable-sm.warning-color-dark.navbar-light.double-nav
     button.navbar-toggler.show(data-toggle='off-canvas' aria-expanded="false" aria-controls="slide-out")
       span.navbar-toggler-icon
     a.navbar-brand.mr-auto(href='#')
@@ -29,9 +29,9 @@ header#page-header
       li.nav-item
         +link('/blog.html','Blog')(class="nav-link page-loader-ignore")
       li.nav-item
-        +link('/register.html','Register')(class="nav-link page-loader-ignore")
+        +link('/register.html','Register')(class="nav-link")
       li.nav-item
-        +link('/sign-in.html','Sign In')(class="nav-link page-loader-ignore")
+        +link('/sign-in.html','Sign In')(class="nav-link")
 
     ul.nav.navbar-nav.ml-auto.flex-row.hidden-md-up
       li.nav-item.dropdown
@@ -42,5 +42,5 @@ header#page-header
           +link('/map.html','Map')(class="nav-link dropdown-item")
           +link('/profile.html','Profile')(class="nav-link dropdown-item")
           +link('/blog.html','Blog')(class="dropdown-item page-loader-ignore")
-          +link('/register.html','Register')(class="dropdown-item page-loader-ignore")
-          +link('/sign-in.html','Sign In')(class="dropdown-item page-loader-ignore")
+          +link('/register.html','Register')(class="dropdown-item")
+          +link('/sign-in.html','Sign In')(class="dropdown-item")
