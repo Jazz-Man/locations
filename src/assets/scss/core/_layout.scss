@@ -1,27 +1,16 @@
 @import "../variables";
 @import "../mixin";
 
-.home{
-  header{
-    @extend .h-100;
-    }
+#page-header {
+  min-height: 56px;
   }
 
-//.page-wrapper {
-//  display: table;
-//  @include size(100%);
-//  overflow: hidden;
-//
-//
-//  #page-content {
-//    height: auto;
-//    overflow: hidden;
-//    position: relative;
-//    display: table-row;
-//    }
-//
-//  .map-wrapper {
-//    display: inline-block;
-//    width: 100%;
-//    }
-//  }
+#page-content {
+  margin-bottom: 50px;
+  margin-top: 56px;
+  position: relative;
+  }
+
+#page-footer {
+  min-height: 50px;
+  }

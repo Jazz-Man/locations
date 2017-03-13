@@ -104,5 +104,5 @@ function isObject(input) {
   return Object.prototype.toString.call(input) === '[object Object]'
 }
 
-Hooks.addAction("init", fitvids);
+Hooks.addAction("_init", fitvids);
 Hooks.addAction("pageLoader.processEnd", fitvids);

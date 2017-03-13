@@ -22,6 +22,7 @@
   "homepage": "https://bitbucket.org/tirastec/locations_dev#readme",
   "dependencies": {
     "bootstrap.native": "^2.0.6",
+    "chart.js": "^2.5.0",
     "decouple": "^1.0.1",
     "domtastic": "^0.12.3",
     "js-base64": "^2.1.9",

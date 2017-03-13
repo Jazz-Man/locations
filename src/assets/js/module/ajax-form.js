@@ -2,6 +2,11 @@ var $$ = require('domtastic');
 var Hooks = require('./hooks');
 var reqwest = require('reqwest');
 var template = require('../module/template');
+var RestClient = require('./rest-client');
+var api = new RestClient('http://dev.upages.com.ua/wp-json/wp/v2');
+api.res('posts');
+api.res('listing_category');
+api.res('listing_city');
 
 var AutoComplete = require('./autoComplete');
 
@@ -38,6 +43,8 @@ AjaxForm.prototype.hideEl = function (el) {
 };
 
 AjaxForm.prototype.lockForm = function () {
+	
+	
 	this.elem.addClass('wpas-locked')
 	    .find('[type="submit"]')
 	    .attr('disabled', 'disabled');
@@ -66,7 +73,7 @@ AjaxForm.prototype.getOption = function (option) {
 };
 
 AjaxForm.prototype.getSerialize = function (option) {
-	return reqwest.serialize(this.elem[0]);
+	return reqwest.serialize(this.elem[0],{type:'map'});
 };
 
 AjaxForm.prototype.setPage = function (pagenum) {
@@ -133,52 +140,57 @@ AjaxForm.prototype.sendRequest = function (data, page) {
 	
 	var _this = this;
 	
-	_this.hideEl(_this.button_load);
-	_this.showEl(_this.loadingImage);
+//	_this.hideEl(_this.button_load);
+//	_this.showEl(_this.loadingImage);
 	
 	console.log(data);
-	
-	reqwest({
-		url:         'http://dev.upages.com.ua/wp-json/wp/v2/posts',
-		method:      'get',
-		crossOrigin: true,
-		type:        'json',
-		success:     function (resp) {
-			console.log(resp);
-			var res = _this.respData(resp);
-			//
-			// var posts = res.query.posts;
-			//
-			// var listingItemTemplate = '';
-			//
-			// posts.forEach(function (item) {
-			//   listingItemTemplate += template('map-listing-item', item);
-			// });
-			// _this.appendResContainer(listingItemTemplate);
-			// _this.hideEl(_this.loadingImage);
-			// _this.current_page = res.current_page;
-			// var max_page = res.max_page;
-			//
-			// if (max_page < 1 || this.current_page == max_page) {
-			//   _this.hideEl(_this.button_load);
-			// } else {
-			//   _this.showEl(_this.button_load);
-			// }
-			// window.location.hash = _this.urlHash();
-			// _this.storeInstance(res);
-			// _this.unlockForm();
-		},
-		complete:    function (resp) {
-			// if (_this.ajax_complete) {
-			//   var _resp = _this.respData(resp);
-			//   _this.ajax_complete.apply(_resp, [_resp]);
-			//
-			// }
-		},
-		error:       function (err) {
-			console.log(err);
-		}
+	api.posts.get(data).then(function (res) {
+		console.log(res);
+	}).catch(function (e) {
+		console.log(e);
 	});
+	
+//	reqwest({
+//		url:         'http://dev.upages.com.ua/wp-json/wp/v2/posts',
+//		method:      'get',
+//		crossOrigin: true,
+//		type:        'json',
+//		success:     function (resp) {
+//			console.log(resp);
+////			var res = _this.respData(resp);
+//			//
+//			// var posts = res.query.posts;
+//			//
+//			// var listingItemTemplate = '';
+//			//
+//			// posts.forEach(function (item) {
+//			//   listingItemTemplate += template('map-listing-item', item);
+//			// });
+//			// _this.appendResContainer(listingItemTemplate);
+//			// _this.hideEl(_this.loadingImage);
+//			// _this.current_page = res.current_page;
+//			// var max_page = res.max_page;
+//			//
+//			// if (max_page < 1 || this.current_page == max_page) {
+//			//   _this.hideEl(_this.button_load);
+//			// } else {
+//			//   _this.showEl(_this.button_load);
+//			// }
+//			// window.location.hash = _this.urlHash();
+//			// _this.storeInstance(res);
+//			// _this.unlockForm();
+//		},
+//		complete:    function (resp) {
+//			// if (_this.ajax_complete) {
+//			//   var _resp = _this.respData(resp);
+//			//   _this.ajax_complete.apply(_resp, [_resp]);
+//			//
+//			// }
+//		},
+//		error:       function (err) {
+//			console.log(err);
+//		}
+//	});
 };
 
 AjaxForm.prototype.autoComplete = function () {
@@ -196,44 +208,69 @@ AjaxForm.prototype.autoComplete = function () {
 				if (autocomplete_params) {
 					autocomplete_params = JSON.parse(autocomplete_params);
 					var type = autocomplete_params.type;
+					
 					switch (type) {
 						case 'post':
 							
-							require.ensure([],function (require) {
-								var RestClient = require('./rest-client');
-								var api = new RestClient('http://dev.upages.com.ua/wp-json/wp/v2');
-								api.res('posts');
-								
-								api.posts.get({
-									'filter[post_type]':'listing',
-									'filter[taxonomy]':'listing-category',
-									'filter[term]':'A impedit'
+							api.posts.get({
+								'filter[post_type]': autocomplete_params.post_type
+							}).then(function (res) {
+								process(res);
+							}).catch(function (e) {
+								console.log(e);
+							});
+						case 'taxonomy':
+							var taxonomy = autocomplete_params.taxonomy;
+							
+							switch (taxonomy) {
+								case 'listing-city':
 									
-								}/*,{
-									username:'jazzman',
-									password:'jazzman.sv1'
-								}*/).then(function (res) {
-									console.log(res);
-									choices = res;
-									var suggestions = [];
-									if (choices.length) {
-										choices.forEach(function (e) {
-											var resTitle = e.title.rendered;
-											 console.log(resTitle);
-											if (~resTitle.toLowerCase().indexOf(term)) {
-												suggestions.push(resTitle);
-											}
-										});
-									}
-									suggest(suggestions);
-								
-								}).catch(function (e) {
-									console.log(e);
-								});
-							},'api');
+									api.listing_city.get({
+										'filter[name__like]': term
+									}).then(function (res) {
+										process(res);
+									}).catch(function (e) {
+										console.log(e);
+									});
+								case 'listing-category':
+									
+									api.listing_category.get({
+										'filter[name__like]': term
+									}).then(function (res) {
+										process(res);
+									}).catch(function (e) {
+										console.log(e);
+									});
+							}
+						
 						default:
 							return;
 						
+					}
+					
+					function process(res) {
+						choices = res;
+						var suggestions = [];
+						if (choices.length !== 0) {
+							choices.forEach(function (e) {
+								var resTitle = '';
+								
+								if (e.name) {
+									resTitle = e.name;
+								}
+								if(e.title.rendered){
+									resTitle = e.title.rendered;
+								}
+								
+								if(resTitle === ''){
+									return;
+								}
+								if (~resTitle.toLowerCase().indexOf(term)) {
+									suggestions.push(resTitle);
+								}
+							});
+						}
+						suggest(suggestions);
 					}
 				}
 				else {
@@ -246,7 +283,7 @@ AjaxForm.prototype.autoComplete = function () {
 				if (_this.formLocked()) {
 					return;
 				}
-				_this.lockForm();
+//				_this.lockForm();
 				_this.submitForm();
 			}
 		});

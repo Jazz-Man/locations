@@ -97,6 +97,10 @@ function jadePage(name) {
           tag: "script",
           src: "http://maps.google.com/maps/api/js?key=AIzaSyBEDfNcQRmKQEyulDN8nGWjLYPm8s4YB58&libraries=places"
         },
+	      {
+          tag: "script",
+          src: "https://www.gstatic.com/charts/loader.js"
+        },
         "https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js",
         {
           tag: "script",
@@ -150,7 +154,9 @@ function getPlugins() {
 module.exports = {
   context: path.join(__dirname, 'src'),
   entry: {
-    vendor: './assets/js/vendor',
+    vendor: [
+    	'expose?window.bsn!bootstrap.native'
+    ],
     index: [
       './assets/js',
       './assets/scss'
@@ -187,7 +193,7 @@ module.exports = {
       '.jpg'
     ],
     alias: {
-      'bootstrap.native': 'bootstrap.native/dist/bootstrap-native-v4'
+      'bootstrap.native': 'bootstrap.native/dist/bootstrap-native-v4',
     }
   },
   resolveLoader: {

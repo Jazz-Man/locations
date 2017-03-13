@@ -4,157 +4,76 @@ block append defaultTitle
   title Profile - uPages
 
 block append content
+  .container.py-3
+    section.section.section-intro
+      .divider-new.my-5
+        h2 Statistics
+      .row
+        - var n = 1;
+          while n <= 4
+            -var idCurrent = n++
+            .col-md-3
+              .card
+                .admin-up
+                  i.fa.fa-money.blue.darken-3
+                  .data
+                    p SALES
+                    h3 2000$
+                .card-block
+                  .progress.w-100.rounded-0
+                    -var style = 'width: '+idCurrent+'5%'
+                    .progress-bar.bg-success(role='progressbar' style=style aria-valuenow='25' aria-valuemin='0' aria-valuemax='100')
+                  p.card-text Better than last week (#{idCurrent}5%)
 
-  main#page-content
-    .container
-      section.section.statistics
-        h1.section-heading Ваша статистика
-        .row
-          .col-md-3
-            .card.card-cascade.cascading-admin-card
-              .admin-up
-                i.fa.fa-money.blue.darken-3
-                .data
-                  p SALES
-                  h3 2000$
-              .card-block
-                .progress
-                  .progress-bar.bg-success(role='progressbar' style='width: 25%' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100')
-                p.card-text Better than last week (25%)
-          .col-md-3
-            .card.card-cascade.cascading-admin-card
-              .admin-up
-                i.fa.fa-line-chart.deep-purple.darken-4
-                .data
-                  p SUBSCRIPTIONS
-                  h3 200
-              .card-block
-                .progress
-                  .progress-bar.bg-danger(role='progressbar', style='width: 25%', aria-valuenow='25', aria-valuemin='0', aria-valuemax='100')
-                p.card-text Worse than last week (25%)
-          .col-md-3
-            .card.card-cascade.cascading-admin-card
-              .admin-up
-                i.fa.fa-pie-chart.indigo
-                .data
-                  p TRAFFIC
-                  h3 20000
-              .card-block
-                .progress
-                  .progress-bar.bg-success(role='progressbar', style='width: 75%', aria-valuenow='75', aria-valuemin='0', aria-valuemax='100')
-                p.card-text Better than last week (75%)
-          .col-md-3
-            .card.card-cascade.cascading-admin-card
-              .admin-up
-                i.fa.fa-bar-chart.purple
-                .data
-                  p ORGANIC TRAFFIC
-                  h3 2000
-              .card-block
-                .progress
-                  .progress-bar.bg-success(role='progressbar', style='width: 25%', aria-valuenow='25', aria-valuemin='0', aria-valuemax='100')
-                p.card-text Better than last week (25%)
+    section.section.statistics.card
+      .row
+        .col-md-12
+          .row
+            .col-md-5
+            .col-md-7
+              canvas#myChart
 
-      section.section.listing-list
-        h1.section-heading Manage your listing
-        .card-group
-          .card.card-cascade.narrower
-            .view.overlay.hm-white-slight
-              img.img-fluid(src='https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/img%20(4).jpg', alt='')
-              a
-                .mask
-            .card-block.text-xs-center
-              a.text-muted(href='')
-                h5 Category
-              h4.card-title
-                strong
-                  a(href='') Product name
-              ul.rating
-                li
-                  i.fa.fa-star
-                li
-                  i.fa.fa-star
-                li
-                  i.fa.fa-star
-                li
-                  i.fa.fa-star
-                li
-                  i.fa.fa-star-o
-              p.card-text
-                | Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
-              .card-footer
-                span.left 49$
-                span.right
-                  a(data-toggle='tooltip', data-placement='top', title='', data-original-title='Add to Cart')
-                    i.fa.fa-eye
-                  a(data-toggle='tooltip', data-placement='top', title='', data-original-title='Share')
-                    i.fa.fa-pencil
-                  a(data-toggle='tooltip', data-placement='top', title='', data-original-title='Added to Wishlist')
-                    i.fa.fa-remove
-          .card.card-cascade.narrower
-            .view.overlay.hm-white-slight
-              img.img-fluid(src='https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/img%20(3).jpg', alt='')
-              a
-                .mask
-            .card-block.text-xs-center
-              a.text-muted(href='')
-                h5 Category
-              h4.card-title
-                strong
-                  a(href='') Product name
-              ul.rating
-                li
-                  i.fa.fa-star
-                li
-                  i.fa.fa-star
-                li
-                  i.fa.fa-star
-                li
-                  i.fa.fa-star
-                li
-                  i.fa.fa-star
-              p.card-text
-                | Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
-              .card-footer
-                span.left 89$
-                span.right
-                  a(data-toggle='tooltip', data-placement='top', title='', data-original-title='Add to Cart')
-                    i.fa.fa-eye
-                  a(data-toggle='tooltip', data-placement='top', title='', data-original-title='Share')
-                    i.fa.fa-pencil
-                  a(data-toggle='tooltip', data-placement='top', title='', data-original-title='Added to Wishlist')
-                    i.fa.fa-remove
 
-          .card.card-cascade.narrower
-            .view.overlay.hm-white-slight
-              img.img-fluid(src='https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/img%20(2).jpg', alt='')
-              a
-                .mask
-            .card-block.text-xs-center
-              a.text-muted(href='')
-                h5 Category
-              h4.card-title
-                strong
-                  a(href='') Product name
-              ul.rating
-                li
-                  i.fa.fa-star
-                li
-                  i.fa.fa-star
-                li
-                  i.fa.fa-star
-                li
-                  i.fa.fa-star
-                li
-                  i.fa.fa-star-half-o
-              p.card-text
-                | Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
-              .card-footer
-                span.left 59$
-                span.right
-                  a(data-toggle='tooltip', data-placement='top', title='', data-original-title='Add to Cart')
-                    i.fa.fa-eye
-                  a(data-toggle='tooltip', data-placement='top', title='', data-original-title='Share')
-                    i.fa.fa-pencil
-                  a(data-toggle='tooltip', data-placement='top', title='', data-original-title='Added to Wishlist')
-                    i.fa.fa-remove
+    section.section.listing-list
+      .divider-new.my-5
+        h2 Manage your listing
+      .card-group
+        - var n = 1;
+          while n <= 3
+            -var idCurrent = n++
+            .card.card-cascade.narrower
+              .view.overlay.hm-white-slight
+                img.img-fluid(src=require('assets/img/items/2' + idCurrent + '.jpg') alt='')
+                a
+                  .mask
+              .card-block.text-xs-center
+                a.text-muted(href='')
+                  h5 Category
+                h4.card-title
+                  strong
+                    a(href='') Product name
+                ul.rating
+                  li
+                    i.fa.fa-star
+                  li
+                    i.fa.fa-star
+                  li
+                    i.fa.fa-star
+                  li
+                    i.fa.fa-star
+                  li
+                    i.fa.fa-star-o
+                p.card-text
+                  | Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
+                .card-footer
+                  span.left 49$
+                  span.right
+                    a(href="#" data-toggle='tooltip', data-placement='top', title='', data-original-title='Add to Cart')
+                      i.fa.fa-eye
+                    a(href="#" data-toggle='tooltip', data-placement='top', title='', data-original-title='Share')
+                      i.fa.fa-pencil
+                    a(href="#" data-toggle='tooltip', data-placement='top', title='', data-original-title='Added to Wishlist')
+                      i.fa.fa-remove
+
+      .card-block
+        a.btn.btn-primary(href="#") Переглянути більше

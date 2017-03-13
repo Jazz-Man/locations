@@ -5,32 +5,31 @@ block append defaultTitle
 
 block append content
 
-  main#page-content
-    .container-fluid
-      .row.no-gatters.full-height
-        .col-md-8.p-0
-          #map-homepage.map(data-map-container)
-        .col-md-4.results-wrapper
-          .row.no-gatters
-            .col-sm-12.p-0
-              .results.h-100
-                h2.results-title.m-3 Search Results
-                  small.results-number.text-muted 30
+  .container-fluid
+    .row.no-gatters.full-height
+      .col-md-8.p-0
+        #map-homepage.map(data-map-container)
+      .col-md-4.results-wrapper
+        .row.no-gatters
+          .col-sm-12.p-0
+            .results.h-100
+              h2.results-title.m-3 Search Results
+                small.results-number.text-muted 30
 
-                .list-group#results-content
-                  - var n = 1;
-                  while n <= 30
-                    -var idCurrent = n++
-                    a.list-group-item.list-group-item-action.flex-column.align-items-start.result-item(href='#')
-                      .d-flex.w-100.justify-content-between
-                        h3.mb-1.blue-text.h3-responsive Відпочинковий комплекс “Канада”
-                      .mb-1.media
-                        - var imgSrc = 'http://upages.com.ua/wp-content/uploads/2016/09/00_listable_demo-1024x636.jpg'
-                        img.img-fluid.w-50.mr-1(src=imgSrc)
-                        .media-body
-                          h5
-                            i.fa.fa-map-marker.fa-fw
-                            | #{idCurrent} вулиця Бориславська
-                          .badge.grey Відпочинково-оздоровчі бази
-                          .badge.grey Спорт та відпочинок
+              .list-group#results-content
+                - var n = 1;
+                while n <= 30
+                  -var idCurrent = n++
+                  a.list-group-item.list-group-item-action.flex-column.align-items-start.result-item(href='#')
+                    .d-flex.w-100.justify-content-between
+                      h3.mb-1.blue-text.h3-responsive Відпочинковий комплекс “Канада”
+                    .mb-1.media
+                      - var imgSrc = 'http://upages.com.ua/wp-content/uploads/2016/09/00_listable_demo-1024x636.jpg'
+                      img.img-fluid.w-50.mr-1(src=imgSrc)
+                      .media-body
+                        h5
+                          i.fa.fa-map-marker.fa-fw
+                          | #{idCurrent} вулиця Бориславська
+                        .badge.grey Відпочинково-оздоровчі бази
+                        .badge.grey Спорт та відпочинок
 

@@ -1,16 +1,3 @@
-mixin navbar-item
-  li.nav-item.active
-    +link('/index.html','Home')(class="nav-link")
-  li.nav-item
-    +link('/map.html','Map')(class="nav-link")
-  li.nav-item
-    +link('/blog.html','Blog')(class="nav-link page-loader-ignore")
-  li.nav-item
-    +link('/register.html','Register')(class="nav-link page-loader-ignore")
-  li.nav-item
-    +link('/sign-in.html','Sign In')(class="nav-link page-loader-ignore")
-
-
 header#page-header.fixed-top.zindex-sm
   include off-canvas
   nav#page-navbar.navbar.navbar-toggleable-sm.warning-color-dark.navbar-light.double-nav
@@ -27,7 +14,7 @@ header#page-header.fixed-top.zindex-sm
       li.nav-item
         +link('/profile.html','Profile')(class="nav-link")
       li.nav-item
-        +link('/blog.html','Blog')(class="nav-link page-loader-ignore")
+        +link('/blog.html','Blog')(class="nav-link")
       li.nav-item
         +link('/register.html','Register')(class="nav-link")
       li.nav-item
@@ -41,6 +28,6 @@ header#page-header.fixed-top.zindex-sm
           +link('/index.html','Home')(class="nav-link dropdown-item")
           +link('/map.html','Map')(class="nav-link dropdown-item")
           +link('/profile.html','Profile')(class="nav-link dropdown-item")
-          +link('/blog.html','Blog')(class="dropdown-item page-loader-ignore")
-          +link('/register.html','Register')(class="dropdown-item")
-          +link('/sign-in.html','Sign In')(class="dropdown-item")
+          +link('/blog.html','Blog')(class="nav-link dropdown-item")
+          +link('/register.html','Register')(class="nav-link dropdown-item")
+          +link('/sign-in.html','Sign In')(class="nav-link dropdown-item")

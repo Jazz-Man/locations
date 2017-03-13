@@ -19,8 +19,14 @@ html(lang=htmlWebpackPlugin.options.lang, manifest=htmlWebpackPlugin.files.manif
     - var bodyClass = 'white'
   body(class=bodyClass)
     include header
-    block content
+    block contentClass
+      - var contentClass = ''
+
+    main#page-content(class=contentClass)
+      block content
+
     include footer
+
     block defaultBody
       +injectExtrasBody
       +JS

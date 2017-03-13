@@ -1,23 +1,5 @@
 var $$ = require("domtastic");
 
-//function transitionEnd(element, handler) {
-//	var o = {
-//		doc:        document.documentElement,
-//		Transition: "Transition",
-//		Webkit:     "Webkit"
-//	};
-//	var supportTransitions = o.Webkit + o.Transition in o.doc.style || o.Transition.toLowerCase() in o.doc.style;
-//	var transitionEndEvent = o.Webkit + o.Transition in o.doc.style ? o.Webkit.toLowerCase() + o.Transition + "End" : o.Transition.toLowerCase() + "end";
-//	if (supportTransitions) {
-//		$$(element).one(transitionEndEvent, function (e) {
-//			handler.apply(e);
-//		});
-//	}
-//	else {
-//		handler.apply();
-//	}
-//}
-
 function getOuterHeight(child) {
 	var childStyle = child && window.getComputedStyle(child);
 	var btp = /px/.test(childStyle.borderTopWidth) ? Math.round(childStyle.borderTopWidth.replace("px", "")) : 0;
@@ -28,12 +10,11 @@ function getOuterHeight(child) {
 }
 
 function getMaxHeight(parent) {
-	var _this = this;
 	var parentHeight = 0;
 	var children = parent.children();
 	if (children.length) {
 		children.forEach(function (i) {
-			parentHeight += _this.getOuterHeight(i);
+			parentHeight += getOuterHeight(i);
 		});
 	}
 	return parentHeight;

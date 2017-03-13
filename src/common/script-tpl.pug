@@ -31,6 +31,7 @@ script#tmpl-listings-map-search-form(type='text/html')
               - }
               input.form-control-sm.px-0(
               type='text'
+              name="search"
               placeholder='Назва'
               data-autocomplete=autocomplete_name
               )
@@ -54,6 +55,7 @@ script#tmpl-listings-map-search-form(type='text/html')
               placeholder='Категорія'
               data-autocomplete=autocomplete_cat
               )
+        input(type='hidden' name="filter[post_type]" value="listing")
         input#wpas-paged(type='hidden' name="paged" value="1")
 
 script#tmpl-listings-map-result-item(type='text/html')
