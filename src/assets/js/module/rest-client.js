@@ -29,7 +29,7 @@ RestClient.prototype.conf = function (options) {
 	return Object.assign({}, this._opts);
 };
 
-RestClient.prototype._request = function (method, url, data, auth) {
+RestClient.prototype._request = function (method, url, data) {
 	
 	data = data || null;
 	var reqwest_prop = {
@@ -40,6 +40,7 @@ RestClient.prototype._request = function (method, url, data, auth) {
 		data:        data
 	};
 	var auth = localStorage.getItem('token');
+	
 	if (null !== auth) {
 		reqwest_prop.headers = {'Authorization': 'Bearer ' + auth}
 	}

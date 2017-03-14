@@ -1,5 +1,3 @@
-// require('./../scss/style.scss');
-
 var $$ = require('domtastic');
 require('./module/viewport');
 // var acf = require('./lib/acf-input');

@@ -580,7 +580,6 @@ var GMaps = (
         for (i = 0; i < markers_length; i++) {
           if (typeof(
               this.markers[i].visible) === 'boolean' && this.markers[i].visible) {
-            console.log(this.markers[i].getPosition());
             latLngs.push(this.markers[i].getPosition());
           }
         }

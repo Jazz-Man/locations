@@ -7,6 +7,8 @@ if (loginForm.length) {
 		var Base64 = require('js-base64').Base64;
 		var RestClient = require('./rest-client');
 		var jwt = new RestClient('http://dev.upages.com.ua/wp-json/jwt-auth/v1');
+		var test = new RestClient('http://dev.upages.com.ua/wp-json/wp/v2/users/me');
+//		test;
 		jwt.res('token');
 		
 		var signInBtn = loginForm.find('#sign-in');
@@ -22,6 +24,13 @@ if (loginForm.length) {
 			}).then(function (res) {
 				console.log(res);
 				localStorage.setItem('token', res.token);
+				
+			}).catch(function (e) {
+				console.error( 'Error', e );
+			});
+			
+			test.get().then(function (res) {
+				console.log(res);
 				
 			}).catch(function (e) {
 				console.error( 'Error', e );

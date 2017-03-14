@@ -8,6 +8,8 @@ api.res('posts');
 api.res('listing_category');
 api.res('listing_city');
 
+api.res('users');
+
 var AutoComplete = require('./autoComplete');
 
 function AjaxForm(options) {
@@ -16,16 +18,17 @@ function AjaxForm(options) {
 	_this.elem = $$(options.elem);
 	if (_this.elem.length) {
 		_this.elemID = _this.elem.attr('id');
+		_this.all_text_input = _this.elem.find('[type="text"]');
 		_this.ajax_complete = options.ajax_complete;
 		_this.current_page = 1;
-		
 		_this.post_type = _this.getOption('post_type');
+		_this.url_hash = _this.getOption('url_hash');
 		_this.results_container = $$(_this.getOption('results_container'));
 		
 		_this.button_load = $$(_this.getOption('button_load'));
 		_this.storage = null;
-		_this.storege_key = "wpasInstance_" + _this.elemID;
-		_this.show_default = _this.getOption('showDefaultResults');
+		_this.storege_key = "wpas_instance_" + _this.elemID;
+		_this.show_default = _this.getOption('show_default');
 		
 		_this.init();
 	}
@@ -43,7 +46,6 @@ AjaxForm.prototype.hideEl = function (el) {
 };
 
 AjaxForm.prototype.lockForm = function () {
-	
 	
 	this.elem.addClass('wpas-locked')
 	    .find('[type="submit"]')
@@ -72,8 +74,8 @@ AjaxForm.prototype.getOption = function (option) {
 	}
 };
 
-AjaxForm.prototype.getSerialize = function (option) {
-	return reqwest.serialize(this.elem[0],{type:'map'});
+AjaxForm.prototype.getSerialize = function () {
+	return reqwest.serialize(this.elem[0], {type: 'map'});
 };
 
 AjaxForm.prototype.setPage = function (pagenum) {
@@ -100,9 +102,6 @@ AjaxForm.prototype.storeInstance = function (requestResults) {
 	var _this = this;
 	var instance = {
 		request: _this.request_data,
-		form:    _this.getSerialize({
-			hash: true
-		}),
 		results: {
 			html: _this.results_container.html(),
 			ajax: requestResults
@@ -126,10 +125,6 @@ AjaxForm.prototype.appendResContainer = function (res) {
 	return this.results_container.append(res);
 };
 
-AjaxForm.prototype.urlHash = function () {
-	return this.getOption('urlHash');
-};
-
 AjaxForm.prototype.respData = function (resp) {
 	var _this = this;
 	_this.resp_data = JSON.parse(resp.data);
@@ -139,46 +134,43 @@ AjaxForm.prototype.respData = function (resp) {
 AjaxForm.prototype.sendRequest = function (data, page) {
 	
 	var _this = this;
-	
+
 //	_this.hideEl(_this.button_load);
 //	_this.showEl(_this.loadingImage);
 	
-	console.log(data);
 	api.posts.get(data).then(function (res) {
-		console.log(res);
+		var listingItemTemplate = template('listings-map-result-item', {'item': res});
+		_this.appendResContainer(listingItemTemplate);
+		_this.storeInstance(res);
+		
+		if (_this.ajax_complete) {
+//			var _resp = _this.respData(resp);
+			_this.ajax_complete.apply(res, [res]);
+			
+		}
+		
 	}).catch(function (e) {
 		console.log(e);
 	});
-	
+
 //	reqwest({
 //		url:         'http://dev.upages.com.ua/wp-json/wp/v2/posts',
 //		method:      'get',
 //		crossOrigin: true,
 //		type:        'json',
 //		success:     function (resp) {
-//			console.log(resp);
-////			var res = _this.respData(resp);
-//			//
-//			// var posts = res.query.posts;
-//			//
-//			// var listingItemTemplate = '';
-//			//
-//			// posts.forEach(function (item) {
-//			//   listingItemTemplate += template('map-listing-item', item);
-//			// });
-//			// _this.appendResContainer(listingItemTemplate);
-//			// _this.hideEl(_this.loadingImage);
-//			// _this.current_page = res.current_page;
-//			// var max_page = res.max_page;
-//			//
-//			// if (max_page < 1 || this.current_page == max_page) {
-//			//   _this.hideEl(_this.button_load);
-//			// } else {
-//			//   _this.showEl(_this.button_load);
-//			// }
-//			// window.location.hash = _this.urlHash();
-//			// _this.storeInstance(res);
-//			// _this.unlockForm();
+
+//			 _this.hideEl(_this.loadingImage);
+//			 _this.current_page = res.current_page;
+//			 var max_page = res.max_page;
+//
+//			 if (max_page < 1 || this.current_page == max_page) {
+//			   _this.hideEl(_this.button_load);
+//			 } else {
+//			   _this.showEl(_this.button_load);
+//			 }
+//			 _this.storeInstance(res);
+//			 _this.unlockForm();
 //		},
 //		complete:    function (resp) {
 //			// if (_this.ajax_complete) {
@@ -195,9 +187,8 @@ AjaxForm.prototype.sendRequest = function (data, page) {
 
 AjaxForm.prototype.autoComplete = function () {
 	var _this = this;
-	var inputs = _this.elem.find('input[type="text"]');
 	
-	inputs.forEach(function (e) {
+	_this.all_text_input.forEach(function (e) {
 		var complete = new AutoComplete({
 			selector: e,
 			minChars: 1,
@@ -215,7 +206,7 @@ AjaxForm.prototype.autoComplete = function () {
 							api.posts.get({
 								'filter[post_type]': autocomplete_params.post_type
 							}).then(function (res) {
-								process(res);
+								process(res, type);
 							}).catch(function (e) {
 								console.log(e);
 							});
@@ -228,7 +219,7 @@ AjaxForm.prototype.autoComplete = function () {
 									api.listing_city.get({
 										'filter[name__like]': term
 									}).then(function (res) {
-										process(res);
+										process(res, type);
 									}).catch(function (e) {
 										console.log(e);
 									});
@@ -237,7 +228,7 @@ AjaxForm.prototype.autoComplete = function () {
 									api.listing_category.get({
 										'filter[name__like]': term
 									}).then(function (res) {
-										process(res);
+										process(res, type);
 									}).catch(function (e) {
 										console.log(e);
 									});
@@ -248,21 +239,26 @@ AjaxForm.prototype.autoComplete = function () {
 						
 					}
 					
-					function process(res) {
+					function process(res, type) {
 						choices = res;
 						var suggestions = [];
 						if (choices.length !== 0) {
 							choices.forEach(function (e) {
-								var resTitle = '';
+								var resTitle;
 								
-								if (e.name) {
-									resTitle = e.name;
-								}
-								if(e.title.rendered){
-									resTitle = e.title.rendered;
+								switch (type) {
+									case 'taxonomy':
+										resTitle = e.name;
+										break;
+									case 'post':
+										resTitle = e.title.rendered;
+										break;
+									default:
+										resTitle = '';
+									
 								}
 								
-								if(resTitle === ''){
+								if (resTitle === '') {
 									return;
 								}
 								if (~resTitle.toLowerCase().indexOf(term)) {
@@ -294,41 +290,38 @@ AjaxForm.prototype.init = function () {
 	
 	var _this = this;
 	// _this.preloaderInit();
-	if (window.location.hash.slice(1) == _this.urlHash()) {
-		_this.storage = JSON.parse(localStorage.getItem("wpasInstance_" + _this.elemID));
-	}
+	
+	_this.storage = JSON.parse(localStorage.getItem(_this.storege_key));
+	
 	_this.autoComplete();
 	_this.setPage(1);
 	_this.setRequest(_this.getSerialize());
 	
 	if (_this.results_container.length) {
 		if (_this.storage !== null) {
-			_this.results_container.html(_this.storage.results.html);
 			
+			_this.all_text_input.forEach(function (e) {
+				var _e = $$(e);
+				var _name = _e.attr('name');
+				
+				if (_name !== null && _this.storage.request[_name]) {
+					var _val = _this.storage.request[_name];
+					_e.val(_val);
+				}
+				
+			});
+
+//			_this.results_container.html(_this.storage.results.html);
+			_this.appendResContainer(_this.storage.results.html);
+
 			if (_this.ajax_complete) {
 				var _resp = _this.storage.results.ajax;
 				_this.ajax_complete.apply(_resp, [_resp]);
 			}
 		}
-		else if (_this.show_default) {
-			// тимчасово відключаємо посилання запитів
+		else {
 			_this.sendRequest(_this.request_data, _this.current_page);
 		}
-	}
-	
-	var allInput = _this.elem.find('[type="text"]');
-	
-	if (_this.storage !== null) {
-		allInput.forEach(function (e) {
-			var _e = $$(e);
-			var _id = _e.attr('id');
-			var storage = _this.storage.form;
-			if (_id in storage) {
-				var _val = [storage][0][_id];
-				_e.val(_val);
-			}
-			
-		});
 	}
 	
 	_this.elem.on('submit', function (e) {

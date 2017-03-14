@@ -18,10 +18,13 @@ script#tmpl-listings-map-search-form(type='text/html')
       - results_container:'#results-content',
       - post_type:'listing',
       - button_load:'#wpas-load-btn',
-      - showDefaultResults:false,
-      - urlHash:'results',
+      - show_default:false,
       - }
-      form#listings-map-search-form(data-ajax-form data-ajax-form-option=formData)
+
+      - var formAttributes = {
+      - 'data-ajax-form-option':formData
+      - };
+      form#listings-map-search-form(data-ajax-form)&attributes(formAttributes)
         .container-fluid
           .row.no-gutters
             .col-sm-4
@@ -33,8 +36,7 @@ script#tmpl-listings-map-search-form(type='text/html')
               type='text'
               name="search"
               placeholder='Назва'
-              data-autocomplete=autocomplete_name
-              )
+              )&attributes({'data-autocomplete':autocomplete_name})
             .col-sm-4
               - var autocomplete_city = {
               - 'type':'taxonomy',
@@ -43,8 +45,7 @@ script#tmpl-listings-map-search-form(type='text/html')
               input.form-control-sm.px-0(
               type='text'
               placeholder='Місто'
-              data-autocomplete=autocomplete_city
-              )
+              )&attributes({'data-autocomplete':autocomplete_city})
             .col-sm-4
               - var autocomplete_cat = {
               - 'type':'taxonomy',
@@ -53,21 +54,45 @@ script#tmpl-listings-map-search-form(type='text/html')
               input.form-control-sm.px-0(
               type='text'
               placeholder='Категорія'
-              data-autocomplete=autocomplete_cat
-              )
+              )&attributes({'data-autocomplete':autocomplete_cat})
+
         input(type='hidden' name="filter[post_type]" value="listing")
+        input(type='hidden' name="per_page" value="100")
         input#wpas-paged(type='hidden' name="paged" value="1")
 
 script#tmpl-listings-map-result-item(type='text/html')
-  a.list-group-item.list-group-item-action.flex-column.align-items-start.result-item(href='#')
+  <% $$(data.item).forEach(function(item) { %>
+  - var attributes = {
+  - 'class':'list-group-item list-group-item-action flex-column align-items-start result-item',
+  - 'href':'<%- item.link %>',
+  - 'data-listing-id':'<%- item.id %>',
+  - };
+  a&attributes(attributes)
     .d-flex.w-100.justify-content-between
-      h3.mb-1.blue-text.h3-responsive Відпочинковий комплекс “Канада”
+      h3.mb-1.blue-text.h3-responsive <%- item.title.rendered %>
     .mb-1.media
-      - var imgSrc = 'http://upages.com.ua/wp-content/uploads/2016/09/00_listable_demo-1024x636.jpg'
-      img.img-fluid.w-50.mr-1(src=imgSrc)
+      - var imgSrc = {};
+      - imgSrc.class = 'img-fluid w-50 mr-1'
+      - imgSrc.src = '<%- item.acf.listing_main_image.url %>'
+      img&attributes(imgSrc)
       .media-body
         h5
           i.fa.fa-map-marker.fa-fw
-          | 1 вулиця Бориславська
-        .badge.grey Відпочинково-оздоровчі бази
-        .badge.grey Спорт та відпочинок
+          <%- item.acf.listing_address.address %>
+        .badge.grey <%- item.acf.listing_category.name %>
+        <% $$(item.acf.listing_tags).forEach(function(tags) { %>
+        .badge.grey <%- tags.name %>
+        <% }); %>
+  <% }); %>
+
+script#tmpl-map-marker(type='text/html')
+  .marker&attributes({
+    'data-marker-id':'<%- data.id %>'
+  })
+    .title <%- data.title.rendered %>
+    .marker-wrapper
+      .pin
+        .image&attributes({'style': 'background-image: url(<%- data.acf.listing_main_image.url %>)'})
+    <% $$(data.users).forEach(function(user) { %>
+    li <%- user %>
+    <% }); %>
