@@ -15,8 +15,10 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/tirastec/locations#readme",
   "devDependencies": {
+    "autoprefixer-loader": "^3.2.0",
     "css-loader": "^0.24.0",
     "exports-loader": "^0.6.3",
+    "expose-loader": "^0.7.5",
     "extract-loader": "0.0.2",
     "extract-text-webpack-plugin": "^2.0.0-beta.2",
     "file-loader": "^0.9.0",
@@ -24,13 +26,19 @@
     "html-webpack-plugin": "^2.24.1",
     "node-sass": "^4.5.3",
     "pug-html-loader": "^1.0.9",
+    "pug-loader": "^2.4.0",
     "resolve-url-loader": "^1.6.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^2.1.0-beta.27",
-    "webpack-dev-server": "^2.1.0-beta.11",
-    "webpack-loader": "0.0.1"
+    "webpack-dev-server": "^2.1.0-beta.11"
   },
-  "dependencies": {}
+  "dependencies": {
+    "bootstrap.native": "^2.0.27",
+    "compass-mixins": "^0.12.10",
+    "html-webpack-template-pug": "^1.1.1",
+    "jquery": "2.2.1",
+    "jquery-migrate": "1.2.1"
+  }
 }

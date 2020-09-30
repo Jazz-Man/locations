@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+@import "~compass-mixins/lib/compass";
+
+@import 'helpers/mixin';
+@import 'helpers/variables';
+/* 1. Header */
+@import 'helpers/header';
+/* 2. Hero Slider */
+//@import 'helpers/hero-slider';
+/* 3. Elements Styling */
+@import 'helpers/elements';
+/* 4. Universal classes */
+@import 'helpers/universal-classes';
+/* 5. Classes */
+@import 'helpers/classes';
+/* 6. Forms */
+@import 'helpers/forms';
+/* 7. Responsive */
+@import 'helpers/responsive';
