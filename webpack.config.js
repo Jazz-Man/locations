@@ -151,6 +151,8 @@ function getPlugins() {
   return plugins;
 }
 
+const _publicPath = isProd? '/assets/': '/'
+
 module.exports = {
   context: path.join(__dirname, 'src'),
   entry: {
@@ -166,7 +168,7 @@ module.exports = {
     filename: 'js/[name].js',
     chunkFilename: "js/[id]-[name].chunk.js",
     path: outputPath,
-    publicPath: '/assets/',
+    publicPath: _publicPath,
     pathinfo: true
   },
   
@@ -218,7 +220,7 @@ module.exports = {
         test: /index.scss/,
         include: path.join(__dirname, 'src'),
         use: extractSCSS.extract({
-          publicPath: '/assets/',
+          publicPath: '../',
           fallback: 'style',
           use: [
             {
@@ -252,7 +254,7 @@ module.exports = {
           {
             loader: 'file',
             options: {
-              publicPath: '/assets/',
+              publicPath: _publicPath,
               name: 'fonts/[name].[ext]'
             }
           }
@@ -264,7 +266,7 @@ module.exports = {
           {
             loader: 'file',
             options: {
-              publicPath: '/assets/',
+              publicPath: _publicPath,
               name: 'img/[name].[ext]'
             }
           }
