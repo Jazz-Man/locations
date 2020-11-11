@@ -4,6 +4,7 @@ const forEach = require('lodash/forEach');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+
 const pages = [
   '404',
   'blog',
