@@ -1,10 +1,10 @@
-var path = require('path');
-var webpack = require('webpack');
-var forEach = require('lodash/forEach');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const forEach = require('lodash/forEach');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var pages = [
+const pages = [
   '404',
   'blog',
   'blog-detail',
@@ -14,7 +14,7 @@ var pages = [
   'index',
   'map',
   'submit',
-   'profile',
+  'profile',
   'user',
   'faq',
   'sign-in',
@@ -36,11 +36,11 @@ var pages = [
   // 'listing-row-right-sidebar'
 ];
 
-var isProd = process.env.NODE_ENV === 'production' ? true : false;
+const isProd = process.env.NODE_ENV === 'production' ? true : false;
 
-var outputPath = path.join(__dirname, 'dist');
+const outputPath = path.join(__dirname, 'dist');
 
-var uglifyOption = {
+const uglifyOption = {
   mangle: true,
   output: {
     comments: false
@@ -64,12 +64,11 @@ var uglifyOption = {
     warnings: false
   }
 };
-var extractSCSS = new ExtractTextPlugin({
+const extractSCSS = new ExtractTextPlugin({
   filename: 'css/[name].css',
   disable: false,
   allChunks: true
 });
-
 
 
 function jadePage(name) {
@@ -116,8 +115,8 @@ function jadePage(name) {
 }
 
 function getPlugins() {
-  var plugins = [];
-  
+  const plugins = [];
+
   plugins.push(
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
