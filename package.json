@@ -8,7 +8,7 @@
     "wds-prod": "NODE_ENV=production webpack-dev-server --hot --inline --devtool eval",
     "webpack-watch": "webpack --watch --display-error-details",
     "webpack-test": "webpack --display-error-details",
-    "webpack-prod": "webpack -p"
+    "build": "webpack -p"
   },
   "repository": {
     "type": "git",
