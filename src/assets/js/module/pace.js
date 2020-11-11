@@ -1,37 +1,30 @@
-let AjaxMonitor, Bar, DocumentMonitor, ElementMonitor, ElementTracker, EventLagMonitor, Evented, Events, NoTargetError,
-    Pace, RequestIntercept, SOURCE_KEYS, Scaler, SocketRequestTracker, XHRRequestTracker, animation, avgAmplitude, bar,
-    cancelAnimation, cancelAnimationFrame, defaultOptions, extend, extendNative, getFromDOM, getIntercept,
-    handlePushState, ignoreStack, init, now, options, requestAnimationFrame, result, runAnimation, scalers,
-    shouldIgnoreURL, shouldTrack, source, sources, uniScaler, _WebSocket, _XDomainRequest, _XMLHttpRequest, _i,
-    _intercept, _len, _pushState, _ref, _ref1, _replaceState;
-const __slice = [].slice,
-    __hasProp = {}.hasOwnProperty,
-    __extends = function (child, parent) {
-      for (let key in parent) {
-        if (__hasProp.call(parent, key)) {
-          child[key] = parent[key];
-        }
+var AjaxMonitor, Bar, DocumentMonitor, ElementMonitor, ElementTracker, EventLagMonitor, Evented, Events, NoTargetError, Pace, RequestIntercept, SOURCE_KEYS, Scaler, SocketRequestTracker, XHRRequestTracker, animation, avgAmplitude, bar, cancelAnimation, cancelAnimationFrame, defaultOptions, extend, extendNative, getFromDOM, getIntercept, handlePushState, ignoreStack, init, now, options, requestAnimationFrame, result, runAnimation, scalers, shouldIgnoreURL, shouldTrack, source, sources, uniScaler, _WebSocket, _XDomainRequest, _XMLHttpRequest, _i, _intercept, _len, _pushState, _ref, _ref1, _replaceState,
+  __slice = [].slice,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function (child, parent) {
+    for (var key in parent) {
+      if (__hasProp.call(parent, key)) {
+        child[key] = parent[key];
       }
+    }
 
-      function ctor() {
-        this.constructor = child;
-      }
+    function ctor() {
+      this.constructor = child;
+    }
 
-      ctor.prototype = parent.prototype;
-      child.prototype = new ctor();
-      child.__super__ = parent.prototype;
-      return child;
-    },
-    __indexOf = [].indexOf || function (item) {
-      let i = 0;
-      const l = this.length;
-      for (; i < l; i++) {
-        if (i in this && this[i] === item) {
-          return i;
-        }
+    ctor.prototype = parent.prototype;
+    child.prototype = new ctor();
+    child.__super__ = parent.prototype;
+    return child;
+  },
+  __indexOf = [].indexOf || function (item) {
+    for (var i = 0, l = this.length; i < l; i++) {
+      if (i in this && this[i] === item) {
+        return i;
       }
-      return -1;
-    };
+    }
+    return -1;
+  };
 
 defaultOptions = {
   catchupTime: 100,
@@ -61,7 +54,7 @@ defaultOptions = {
 };
 
 now = function () {
-  let _ref;
+  var _ref;
   return (
     _ref = typeof performance !== "undefined" && performance !== null ? typeof performance.now === "function" ? performance.now() : void 0 : void 0) != null ? _ref : +(
     new Date);
@@ -81,10 +74,10 @@ if (requestAnimationFrame == null) {
 }
 
 runAnimation = function (fn) {
-  let last, tick;
+  var last, tick;
   last = now();
   tick = function () {
-    let diff;
+    var diff;
     diff = now() - last;
     if (diff >= 33) {
       last = now();
@@ -99,7 +92,7 @@ runAnimation = function (fn) {
 };
 
 result = function () {
-  let args, key, obj;
+  var args, key, obj;
   obj = arguments[0], key = arguments[1], args = 3 <= arguments.length ? __slice.call(arguments, 2) : [];
   if (typeof obj[key] === 'function') {
     return obj[key].apply(obj, args);
@@ -109,7 +102,7 @@ result = function () {
 };
 
 extend = function () {
-  let key, out, source, sources, val, _i, _len;
+  var key, out, source, sources, val, _i, _len;
   out = arguments[0], sources = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
   for (_i = 0, _len = sources.length; _i < _len; _i++) {
     source = sources[_i];
@@ -133,7 +126,7 @@ extend = function () {
 };
 
 avgAmplitude = function (arr) {
-  let count, sum, v, _i, _len;
+  var count, sum, v, _i, _len;
   sum = count = 0;
   for (_i = 0, _len = arr.length; _i < _len; _i++) {
     v = arr[_i];
@@ -144,7 +137,7 @@ avgAmplitude = function (arr) {
 };
 
 getFromDOM = function (key, json) {
-  let data, e, el;
+  var data, e, el;
   if (key == null) {
     key = 'options';
   }
@@ -172,7 +165,7 @@ Evented = (
     function Evented() {}
 
     Evented.prototype.on = function (event, handler, ctx, once) {
-      let _base;
+      var _base;
       if (once == null) {
         once = false;
       }
@@ -195,7 +188,7 @@ Evented = (
     };
 
     Evented.prototype.off = function (event, handler) {
-      let i, _ref, _results;
+      var i, _ref, _results;
       if ((
           (
             _ref = this.bindings) != null ? _ref[event] : void 0) == null) {
@@ -218,7 +211,7 @@ Evented = (
     };
 
     Evented.prototype.trigger = function () {
-      let args, ctx, event, handler, i, once, _ref, _ref1, _results;
+      var args, ctx, event, handler, i, once, _ref, _ref1, _results;
       event = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
       if ((
           _ref = this.bindings) != null ? _ref[event] : void 0) {
@@ -283,7 +276,7 @@ Bar = (
     }
 
     Bar.prototype.getElement = function () {
-      let targetElement;
+      var targetElement;
       if (this.el == null) {
         targetElement = document.querySelector(options.target);
         if (!targetElement) {
@@ -304,7 +297,7 @@ Bar = (
     };
 
     Bar.prototype.finish = function () {
-      let el;
+      var el;
       el = this.getElement();
       el.className = el.className.replace('pace-active', '');
       el.className += ' pace-inactive';
@@ -328,7 +321,7 @@ Bar = (
     };
 
     Bar.prototype.render = function () {
-      let el, key, progressStr, transform, _j, _len1, _ref2;
+      var el, key, progressStr, transform, _j, _len1, _ref2;
       if (document.querySelector(options.target) == null) {
         return false;
       }
@@ -372,7 +365,7 @@ Events = (
     }
 
     Events.prototype.trigger = function (name, val) {
-      let binding, _j, _len1, _ref2, _results;
+      var binding, _j, _len1, _ref2, _results;
       if (this.bindings[name] != null) {
         _ref2 = this.bindings[name];
         _results = [];
@@ -385,7 +378,7 @@ Events = (
     };
 
     Events.prototype.on = function (name, fn) {
-      let _base;
+      var _base;
       if ((
           _base = this.bindings)[name] == null) {
         _base[name] = [];
@@ -404,7 +397,7 @@ _XDomainRequest = window.XDomainRequest;
 _WebSocket = window.WebSocket;
 
 extendNative = function (to, from) {
-  let e, key, _results;
+  var e, key, _results;
   _results = [];
   for (key in from.prototype) {
     try {
@@ -434,7 +427,7 @@ extendNative = function (to, from) {
 ignoreStack = [];
 
 Pace.ignore = function () {
-  let args, fn, ret;
+  var args, fn, ret;
   fn = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
   ignoreStack.unshift('ignore');
   ret = fn.apply(null, args);
@@ -443,7 +436,7 @@ Pace.ignore = function () {
 };
 
 Pace.track = function () {
-  let args, fn, ret;
+  var args, fn, ret;
   fn = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
   ignoreStack.unshift('track');
   ret = fn.apply(null, args);
@@ -452,7 +445,7 @@ Pace.track = function () {
 };
 
 shouldTrack = function (method) {
-  let _ref2;
+  var _ref2;
   if (method == null) {
     method = 'GET';
   }
@@ -474,11 +467,11 @@ RequestIntercept = (
     __extends(RequestIntercept, _super);
 
     function RequestIntercept() {
-      let monitorXHR;
-      const _this = this;
+      var monitorXHR,
+        _this = this;
       RequestIntercept.__super__.constructor.apply(this, arguments);
       monitorXHR = function (req) {
-        let _open;
+        var _open;
         _open = req.open;
         return req.open = function (type, url, async) {
           if (shouldTrack(type)) {
@@ -492,7 +485,7 @@ RequestIntercept = (
         };
       };
       window.XMLHttpRequest = function (flags) {
-        let req;
+        var req;
         req = new _XMLHttpRequest(flags);
         monitorXHR(req);
         return req;
@@ -502,7 +495,7 @@ RequestIntercept = (
       } catch (_error) {}
       if (_XDomainRequest != null) {
         window.XDomainRequest = function () {
-          let req;
+          var req;
           req = new _XDomainRequest;
           monitorXHR(req);
           return req;
@@ -514,7 +507,7 @@ RequestIntercept = (
       if ((
           _WebSocket != null) && options.ajax.trackWebSockets) {
         window.WebSocket = function (url, protocols) {
-          let req;
+          var req;
           if (protocols != null) {
             req = new _WebSocket(url, protocols);
           } else {
@@ -550,7 +543,7 @@ getIntercept = function () {
 };
 
 shouldIgnoreURL = function (url) {
-  let pattern, _j, _len1, _ref2;
+  var pattern, _j, _len1, _ref2;
   _ref2 = options.ajax.ignoreURLs;
   for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
     pattern = _ref2[_j];
@@ -568,8 +561,8 @@ shouldIgnoreURL = function (url) {
 };
 
 getIntercept().on('request', function (_arg) {
-  let after, args, request, type, url;
-  type = _arg.type, request = _arg.request, url = _arg.url;
+    var after, args, request, type, url;
+    type = _arg.type, request = _arg.request, url = _arg.url;
     if (shouldIgnoreURL(url)) {
       return;
     }
@@ -581,7 +574,7 @@ getIntercept().on('request', function (_arg) {
         after = 0;
       }
       return setTimeout(function () {
-        let stillActive, _j, _len1, _ref2, _ref3, _results;
+        var stillActive, _j, _len1, _ref2, _ref3, _results;
         if (type === 'socket') {
           stillActive = request.readyState < 2;
         } else {
@@ -611,7 +604,7 @@ getIntercept().on('request', function (_arg) {
 AjaxMonitor = (
   function () {
     function AjaxMonitor() {
-      const _this = this;
+      var _this = this;
       this.elements = [];
       getIntercept()
         .on('request', function () {
@@ -620,7 +613,7 @@ AjaxMonitor = (
     }
 
     AjaxMonitor.prototype.watch = function (_arg) {
-      let request, tracker, type, url;
+      var request, tracker, type, url;
       type = _arg.type, request = _arg.request, url = _arg.url;
       if (shouldIgnoreURL(url)) {
         return;
@@ -640,8 +633,8 @@ AjaxMonitor = (
 XHRRequestTracker = (
   function () {
     function XHRRequestTracker(request) {
-      let event, size, _j, _len1, _onreadystatechange, _ref2;
-      const _this = this;
+      var event, size, _j, _len1, _onreadystatechange, _ref2,
+        _this = this;
       this.progress = 0;
       if (window.ProgressEvent != null) {
         size = null;
@@ -668,7 +661,7 @@ XHRRequestTracker = (
       } else {
         _onreadystatechange = request.onreadystatechange;
         request.onreadystatechange = function () {
-          let _ref3;
+          var _ref3;
           if ((
               _ref3 = request.readyState) === 0 || _ref3 === 4) {
             _this.progress = 100;
@@ -687,8 +680,8 @@ XHRRequestTracker = (
 SocketRequestTracker = (
   function () {
     function SocketRequestTracker(request) {
-      let event, _j, _len1, _ref2;
-      const _this = this;
+      var event, _j, _len1, _ref2,
+        _this = this;
       this.progress = 0;
       _ref2 = [
         'error',
@@ -709,7 +702,7 @@ SocketRequestTracker = (
 ElementMonitor = (
   function () {
     function ElementMonitor(options) {
-      let selector, _j, _len1, _ref2;
+      var selector, _j, _len1, _ref2;
       if (options == null) {
         options = {};
       }
@@ -737,7 +730,7 @@ ElementTracker = (
     }
 
     ElementTracker.prototype.check = function () {
-      const _this = this;
+      var _this = this;
       if (document.querySelector(this.selector)) {
         return this.done();
       } else {
@@ -765,8 +758,8 @@ DocumentMonitor = (
     };
 
     function DocumentMonitor() {
-      let _onreadystatechange, _ref2;
-      const _this = this;
+      var _onreadystatechange, _ref2,
+        _this = this;
       this.progress = (
         _ref2 = this.states[document.readyState]) != null ? _ref2 : 100;
       _onreadystatechange = document.onreadystatechange;
@@ -785,15 +778,15 @@ DocumentMonitor = (
 EventLagMonitor = (
   function () {
     function EventLagMonitor() {
-      let avg, interval, last, points, samples;
-      const _this = this;
+      var avg, interval, last, points, samples,
+        _this = this;
       this.progress = 0;
       avg = 0;
       samples = [];
       points = 0;
       last = now();
       interval = setInterval(function () {
-        let diff;
+        var diff;
         diff = now() - last - 50;
         last = now();
         samples.push(diff);
@@ -830,7 +823,7 @@ Scaler = (
     }
 
     Scaler.prototype.tick = function (frameTime, val) {
-      let scaling;
+      var scaling;
       if (val == null) {
         val = result(this.source, 'progress');
       }
@@ -910,7 +903,7 @@ SOURCE_KEYS = {
 
 (
   init = function () {
-    let type, _j, _k, _len1, _len2, _ref2, _ref3, _ref4;
+    var type, _j, _k, _len1, _len2, _ref2, _ref3, _ref4;
     Pace.sources = sources = [];
     _ref2 = [
       'ajax',
@@ -956,13 +949,13 @@ Pace.restart = function () {
 };
 
 Pace.go = function () {
-  let start;
+  var start;
   Pace.running = true;
   bar.render();
   start = now();
   cancelAnimation = false;
   return animation = runAnimation(function (frameTime, enqueueNextFrame) {
-    let avg, count, done, element, elements, i, j, remaining, scaler, scalerList, sum, _j, _k, _len1, _len2, _ref2;
+    var avg, count, done, element, elements, i, j, remaining, scaler, scalerList, sum, _j, _k, _len1, _len2, _ref2;
     remaining = 100 - bar.progress;
     count = sum = 0;
     done = true;

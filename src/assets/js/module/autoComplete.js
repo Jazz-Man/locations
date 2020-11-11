@@ -1,4 +1,4 @@
-const $$ = require('domtastic');
+var $$ = require('domtastic');
 
 function AutoComplete(options) {
   
@@ -22,7 +22,7 @@ function AutoComplete(options) {
   
   function live(elClass, event, cb, context) {
     addEvent(context || document, event, function (e) {
-      let found, el = e.target || e.srcElement;
+      var found, el = e.target || e.srcElement;
       while (el && !(found = $$(el).hasClass(elClass))) {
         el = el.parentElement;
       }
@@ -31,8 +31,8 @@ function AutoComplete(options) {
       }
     });
   }
-
-  const o = {
+  
+  var o = {
     selector: 0,
     source: 0,
     minChars: 3,
@@ -41,27 +41,26 @@ function AutoComplete(options) {
     offsetTop: 1,
     cache: 1,
     menuClass: '',
-
+    
     renderItem: function (item, search) {
       // escape special characters
       search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-      const re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+      var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
       return '<div class="autocomplete-suggestion" data-val="' + item + '">' + item.replace(re, "<b>$1</b>") + '</div>';
     },
-    onSelect: function (e, term, item) {
-    }
+    onSelect: function (e, term, item) {}
   };
-  for (let k in options) {
+  for (var k in options) {
     if (options.hasOwnProperty(k)) {
       o[k] = options[k];
     }
   }
   
   // init
-  const elems = $$(o.selector);
-
+  var elems = $$(o.selector);
+  
   elems.forEach(function (e) {
-    const that = e;
+    var that = e;
     that.sc = document.createElement('div');
     that.sc.className = 'autocomplete-suggestions ' + o.menuClass;
     that.autocompleteAttr = that.getAttribute('autocomplete');
@@ -70,8 +69,8 @@ function AutoComplete(options) {
     that.last_val = '';
   
     that.updateSC = function (resize, next) {
-      const rect = that.getBoundingClientRect();
-
+      var rect = that.getBoundingClientRect();
+      
       that.sc.style.left = Math.round(rect.left + (window.pageXOffset || document.documentElement.scrollLeft) + o.offsetLeft) + 'px';
       that.sc.style.top = Math.round(rect.bottom + (
           window.pageYOffset || document.documentElement.scrollTop) + o.offsetTop) + 'px';
@@ -90,8 +89,8 @@ function AutoComplete(options) {
             that.sc.scrollTop = 0;
           }
           else {
-            const scrTop = that.sc.scrollTop,
-                selTop = next.getBoundingClientRect().top - that.sc.getBoundingClientRect().top;
+            var scrTop = that.sc.scrollTop,
+              selTop = next.getBoundingClientRect().top - that.sc.getBoundingClientRect().top;
             if (selTop + that.sc.suggestionHeight - that.sc.maxHeight > 0) {
               that.sc.scrollTop = selTop + that.sc.suggestionHeight + scrTop - that.sc.maxHeight;
             }
@@ -108,7 +107,7 @@ function AutoComplete(options) {
     document.body.appendChild(that.sc);
   
     live('autocomplete-suggestion', 'mouseleave', function (e) {
-      const sel = that.sc.querySelector('.autocomplete-suggestion.selected');
+      var sel = that.sc.querySelector('.autocomplete-suggestion.selected');
       if (sel) {
         setTimeout(function () {
           sel.className = sel.className.replace('selected', '');
@@ -117,7 +116,7 @@ function AutoComplete(options) {
     }, that.sc);
   
     live('autocomplete-suggestion', 'mouseover', function (e) {
-      const sel = that.sc.querySelector('.autocomplete-suggestion.selected');
+      var sel = that.sc.querySelector('.autocomplete-suggestion.selected');
       if (sel) {
         sel.className = sel.className.replace('selected', '');
       }
@@ -126,7 +125,7 @@ function AutoComplete(options) {
   
     live('autocomplete-suggestion', 'mousedown', function (e) {
       if ($$(this).hasClass('autocomplete-suggestion')) { // else outside click
-        const v = this.getAttribute('data-val');
+        var v = this.getAttribute('data-val');
         that.value = v;
         o.onSelect(e, v, this);
         that.sc.style.display = 'none';
@@ -154,24 +153,25 @@ function AutoComplete(options) {
       }
     };
     addEvent(that, 'blur', that.blurHandler);
-
-    const suggest = function (data) {
-      const val = that.value;
+  
+    var suggest = function (data) {
+      var val = that.value;
       that.cache[val] = data;
       if (data.length && val.length >= o.minChars) {
-        let s = '';
-        for (let i = 0; i < data.length; i++) {
+        var s = '';
+        for (var i = 0; i < data.length; i++) {
           s += o.renderItem(data[i], val);
         }
         that.sc.innerHTML = s;
         that.updateSC(0);
-      } else {
+      }
+      else {
         that.sc.style.display = 'none';
       }
     };
-
+  
     that.keydownHandler = function (e) {
-      const key = window.event ? e.keyCode : e.which;
+      var key = window.event ? e.keyCode : e.which;
       // down (40), up (38)
       if ((key == 40 || key == 38) && that.sc.innerHTML) {
         var next, sel = that.sc.querySelector('.autocomplete-suggestion.selected');
@@ -215,9 +215,9 @@ function AutoComplete(options) {
     addEvent(that, 'keydown', that.keydownHandler);
   
     that.keyupHandler = function (e) {
-      const key = window.event ? e.keyCode : e.which;
+      var key = window.event ? e.keyCode : e.which;
       if (!key || (key < 35 || key > 40) && key != 13 && key != 27) {
-        const val = that.value;
+        var val = that.value;
         if (val.length >= o.minChars) {
           if (val != that.last_val) {
             that.last_val = val;
@@ -228,8 +228,8 @@ function AutoComplete(options) {
                 return;
               }
               // no requests if previous suggestions were empty
-              for (let i = 1; i < val.length - o.minChars; i++) {
-                const part = val.slice(0, val.length - i);
+              for (var i = 1; i < val.length - o.minChars; i++) {
+                var part = val.slice(0, val.length - i);
                 if (part in that.cache && !that.cache[part].length) {
                   suggest([]);
                   return;
@@ -261,8 +261,8 @@ function AutoComplete(options) {
   
   // public destroy method
   this.destroy = function () {
-    for (let i = 0; i < elems.length; i++) {
-      let that = elems[i];
+    for (var i = 0; i < elems.length; i++) {
+      var that = elems[i];
       removeEvent(window, 'resize', that.updateSC);
       removeEvent(that, 'blur', that.blurHandler);
       removeEvent(that, 'focus', that.focusHandler);

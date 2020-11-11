@@ -1,20 +1,20 @@
-const $$ = require('domtastic');
-const Hooks = require('./hooks');
-const reqwest = require('reqwest');
-const template = require('../module/template');
-const RestClient = require('./rest-client');
-const api = new RestClient('http://dev.upages.com.ua/wp-json/wp/v2');
+var $$ = require('domtastic');
+var Hooks = require('./hooks');
+var reqwest = require('reqwest');
+var template = require('../module/template');
+var RestClient = require('./rest-client');
+var api = new RestClient('http://dev.upages.com.ua/wp-json/wp/v2');
 api.res('posts');
 api.res('listing_category');
 api.res('listing_city');
 
 api.res('users');
 
-const AutoComplete = require('./autoComplete');
+var AutoComplete = require('./autoComplete');
 
 function AjaxForm(options) {
-	const _this = this;
-
+	var _this = this;
+	
 	_this.elem = $$(options.elem);
 	if (_this.elem.length) {
 		_this.elemID = _this.elem.attr('id');
@@ -63,9 +63,9 @@ AjaxForm.prototype.unlockForm = function () {
 };
 
 AjaxForm.prototype.getOption = function (option) {
-
-	const elOption = JSON.parse(this.elem.attr('data-ajax-form-option'));
-
+	
+	var elOption = JSON.parse(this.elem.attr('data-ajax-form-option'));
+	
 	if (elOption[option] !== null) {
 		return elOption[option];
 	}
@@ -79,15 +79,15 @@ AjaxForm.prototype.getSerialize = function () {
 };
 
 AjaxForm.prototype.setPage = function (pagenum) {
-	const _this = this;
+	var _this = this;
 	_this.current_page = pagenum;
-	const elemPageField = _this.elem.find('#wpas-paged');
+	var elemPageField = _this.elem.find('#wpas-paged');
 	elemPageField[0].value = pagenum
 };
 
 AjaxForm.prototype.submitForm = function () {
-	const _this = this;
-
+	var _this = this;
+	
 	_this.setPage(1);
 	_this.setRequest(_this.getSerialize());
 	_this.results_container.empty();
@@ -99,14 +99,14 @@ AjaxForm.prototype.setRequest = function () {
 };
 
 AjaxForm.prototype.storeInstance = function (requestResults) {
-	const _this = this;
-	let instance = {
+	var _this = this;
+	var instance = {
 		request: _this.request_data,
 		results: {
 			html: _this.results_container.html(),
 			ajax: requestResults
 		},
-		page: _this.current_page
+		page:    _this.current_page
 	};
 	instance = JSON.stringify(instance);
 	localStorage.setItem(_this.storege_key, instance);
@@ -114,8 +114,8 @@ AjaxForm.prototype.storeInstance = function (requestResults) {
 };
 
 AjaxForm.prototype.preloaderInit = function () {
-	const _this = this;
-
+	var _this = this;
+	
 	_this.loadingImage = $$("<img id='wpas-loading-img' src='" + _this.getOption('loadingImageURL') + "'>");
 	
 	_this.results_preloader.append(_this.loadingImage.addClass('hide'));
@@ -126,20 +126,20 @@ AjaxForm.prototype.appendResContainer = function (res) {
 };
 
 AjaxForm.prototype.respData = function (resp) {
-	const _this = this;
+	var _this = this;
 	_this.resp_data = JSON.parse(resp.data);
 	return _this.resp_data
 };
 
 AjaxForm.prototype.sendRequest = function (data, page) {
-
-	const _this = this;
+	
+	var _this = this;
 
 //	_this.hideEl(_this.button_load);
 //	_this.showEl(_this.loadingImage);
 	
 	api.posts.get(data).then(function (res) {
-		const listingItemTemplate = template('listings-map-result-item', {'item': res});
+		var listingItemTemplate = template('listings-map-result-item', {'item': res});
 		_this.appendResContainer(listingItemTemplate);
 		_this.storeInstance(res);
 		
@@ -186,23 +186,23 @@ AjaxForm.prototype.sendRequest = function (data, page) {
 };
 
 AjaxForm.prototype.autoComplete = function () {
-	const _this = this;
-
+	var _this = this;
+	
 	_this.all_text_input.forEach(function (e) {
-		const complete = new AutoComplete({
+		var complete = new AutoComplete({
 			selector: e,
 			minChars: 1,
-			source: function (term, suggest) {
+			source:   function (term, suggest) {
 				term = term.toLowerCase();
-				let choices;
-				let autocomplete_params = $$(e).attr('data-autocomplete');
+				var choices;
+				var autocomplete_params = $$(e).attr('data-autocomplete');
 				if (autocomplete_params) {
 					autocomplete_params = JSON.parse(autocomplete_params);
-					const type = autocomplete_params.type;
-
+					var type = autocomplete_params.type;
+					
 					switch (type) {
 						case 'post':
-
+							
 							api.posts.get({
 								'filter[post_type]': autocomplete_params.post_type
 							}).then(function (res) {
@@ -211,11 +211,11 @@ AjaxForm.prototype.autoComplete = function () {
 								console.log(e);
 							});
 						case 'taxonomy':
-							const taxonomy = autocomplete_params.taxonomy;
-
+							var taxonomy = autocomplete_params.taxonomy;
+							
 							switch (taxonomy) {
 								case 'listing-city':
-
+									
 									api.listing_city.get({
 										'filter[name__like]': term
 									}).then(function (res) {
@@ -224,7 +224,7 @@ AjaxForm.prototype.autoComplete = function () {
 										console.log(e);
 									});
 								case 'listing-category':
-
+									
 									api.listing_category.get({
 										'filter[name__like]': term
 									}).then(function (res) {
@@ -233,19 +233,19 @@ AjaxForm.prototype.autoComplete = function () {
 										console.log(e);
 									});
 							}
-
+						
 						default:
 							return;
-
+						
 					}
-
+					
 					function process(res, type) {
 						choices = res;
-						const suggestions = [];
+						var suggestions = [];
 						if (choices.length !== 0) {
 							choices.forEach(function (e) {
-								let resTitle;
-
+								var resTitle;
+								
 								switch (type) {
 									case 'taxonomy':
 										resTitle = e.name;
@@ -255,9 +255,9 @@ AjaxForm.prototype.autoComplete = function () {
 										break;
 									default:
 										resTitle = '';
-
+									
 								}
-
+								
 								if (resTitle === '') {
 									return;
 								}
@@ -268,10 +268,11 @@ AjaxForm.prototype.autoComplete = function () {
 						}
 						suggest(suggestions);
 					}
-				} else {
+				}
+				else {
 					return;
 				}
-
+				
 			},
 			onSelect: function (e, term, item) {
 				e.preventDefault();
@@ -286,8 +287,8 @@ AjaxForm.prototype.autoComplete = function () {
 };
 
 AjaxForm.prototype.init = function () {
-
-	const _this = this;
+	
+	var _this = this;
 	// _this.preloaderInit();
 	
 	_this.storage = JSON.parse(localStorage.getItem(_this.storege_key));
@@ -300,11 +301,11 @@ AjaxForm.prototype.init = function () {
 		if (_this.storage !== null) {
 			
 			_this.all_text_input.forEach(function (e) {
-				const _e = $$(e);
-				const _name = _e.attr('name');
-
+				var _e = $$(e);
+				var _name = _e.attr('name');
+				
 				if (_name !== null && _this.storage.request[_name]) {
-					const _val = _this.storage.request[_name];
+					var _val = _this.storage.request[_name];
 					_e.val(_val);
 				}
 				
@@ -314,7 +315,7 @@ AjaxForm.prototype.init = function () {
 			_this.appendResContainer(_this.storage.results.html);
 
 			if (_this.ajax_complete) {
-				const _resp = _this.storage.results.ajax;
+				var _resp = _this.storage.results.ajax;
 				_this.ajax_complete.apply(_resp, [_resp]);
 			}
 		}

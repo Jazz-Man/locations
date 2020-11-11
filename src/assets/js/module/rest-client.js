@@ -1,5 +1,5 @@
-const reqwest = require('reqwest');
-const Base64 = require('js-base64').Base64;
+var reqwest = require('reqwest');
+var Base64 = require('js-base64').Base64;
 
 function RestClient(host, options) {
 	this.host = host;
@@ -10,20 +10,20 @@ function RestClient(host, options) {
 
 RestClient.prototype.conf = function (options) {
 	options = options || {};
-
-	const currentOptions = this._opts || {
-		trailing: '',
-		shortcut: true,
-		contentType: 'application/json',
+	
+	var currentOptions = this._opts || {
+			trailing:           '',
+			shortcut:           true,
+			contentType:        'application/json',
 //			'application/x-www-form-urlencoded': {
 //				encode: encodeUrl
 //			},
-		'application/json': {
-			encode: JSON.stringify,
-			decode: JSON.parse
-		}
-	};
-
+			'application/json': {
+				encode: JSON.stringify,
+				decode: JSON.parse
+			}
+		};
+	
 	this._opts = Object.assign(currentOptions, options);
 	
 	return Object.assign({}, this._opts);
@@ -32,15 +32,15 @@ RestClient.prototype.conf = function (options) {
 RestClient.prototype._request = function (method, url, data) {
 	
 	data = data || null;
-	const reqwest_prop = {
-		url: this.host + url,
-		type: 'json',
+	var reqwest_prop = {
+		url:         this.host + url,
+		type:        'json',
 		crossOrigin: true,
-		method: method,
-		data: data
+		method:      method,
+		data:        data
 	};
-	const auth = localStorage.getItem('token');
-
+	var auth = localStorage.getItem('token');
+	
 	if (null !== auth) {
 		reqwest_prop.headers = {'Authorization': 'Bearer ' + auth}
 	}
@@ -49,7 +49,7 @@ RestClient.prototype._request = function (method, url, data) {
 };
 
 function resource(client, parent, name, id, ctx) {
-	let self;
+	var self;
 	if (ctx) {
 		self = ctx;
 	}
@@ -66,9 +66,9 @@ function resource(client, parent, name, id, ctx) {
 	self._shortcuts = {};
 	
 	self._clone = function (parent, newId) {
-		const copy = resource(client, parent, name, newId);
+		var copy = resource(client, parent, name, newId);
 		copy._shortcuts = self._shortcuts;
-		for (let resName in self._resources) {
+		for (var resName in self._resources) {
 			copy._resources[resName] = self._resources[resName]._clone(copy);
 			
 			if (resName in copy._shortcuts) {
@@ -80,13 +80,13 @@ function resource(client, parent, name, id, ctx) {
 	
 	self.res = function (resources, shortcut) {
 		shortcut = shortcut || client._opts.shortcut;
-
-		const makeRes = function makeRes(resName) {
+		
+		var makeRes = function makeRes(resName) {
 			if (resName in self._resources) {
 				return self._resources[resName];
 			}
-
-			const r = resource(client, self, resName);
+			
+			var r = resource(client, self, resName);
 			self._resources[resName] = r;
 			if (shortcut) {
 				self._shortcuts[resName] = r;
@@ -94,7 +94,7 @@ function resource(client, parent, name, id, ctx) {
 			}
 			return r;
 		};
-
+		
 		// (resources instanceof String) don't work. Fuck you, javascript.
 		if ( resources.constructor == String) {
 			return makeRes(resources);
@@ -105,7 +105,7 @@ function resource(client, parent, name, id, ctx) {
 		}
 		
 		if (resources instanceof Object) {
-			const res = {};
+			var res = {};
 			for (var resName in resources) {
 				var r = makeRes(resName);
 				if (resources[resName]) {
@@ -118,7 +118,7 @@ function resource(client, parent, name, id, ctx) {
 	};
 	
 	self.url = function () {
-		let url = parent ? parent.url() : '';
+		var url = parent ? parent.url() : '';
 		if (name) {
 			url += '/' + name;
 		}
@@ -129,9 +129,9 @@ function resource(client, parent, name, id, ctx) {
 	};
 	
 	self.get = function (args) {
-		const url = self.url();
-		const data = reqwest.toQueryString(args);
-
+		var url = self.url();
+		var data = reqwest.toQueryString(args);
+		
 		return client._request('GET', url, data);
 	};
 	

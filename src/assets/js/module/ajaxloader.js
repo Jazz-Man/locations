@@ -1,24 +1,24 @@
-const isElement = require('lodash/isElement');
-const isPlainObject = require('lodash/isPlainObject');
-const clone = require('lodash/clone');
-const map = require('lodash/map');
-const $$ = require('domtastic');
-const Hooks = require('./hooks');
+var isElement = require('lodash/isElement');
+var isPlainObject = require('lodash/isPlainObject');
+var clone = require('lodash/clone');
+var map = require('lodash/map');
+var $$ = require('domtastic');
+var Hooks = require('./hooks');
 
-const win = window;
+var win = window;
 
-let _response = null;
-const _promises = {
+var _response = null;
+var _promises = {
   beforeLoad: [],
   whileLoad: [],
   afterLoad: [],
   beforeReplace: [],
   afterReplace: []
 };
-let _cache = {};
-const _support = [
+var _cache = {};
+var _support = [
   !!(
-      win.history && win.history.pushState),
+  win.history && win.history.pushState),
   !!win.addEventListener,
   !!win.DOMParser,
   !!win.fetch
@@ -77,8 +77,8 @@ PageLoaderModule.prototype.available = function () {
 };
 
 PageLoaderModule.prototype.setup = function () {
-  const _this = this;
-
+  var _this = this;
+  
   if (!_this.available()) {
     return;
   }
@@ -108,7 +108,7 @@ PageLoaderModule.prototype.setup = function () {
     // set cache, skip if is already cache response
     if (_this.config.cacheActive && !_response.fromCache) {
 
-      const cacheResponse = clone(_response);
+      var cacheResponse = clone(_response);
       cacheResponse.time = Date.now();
       cacheResponse.fromCache = true;
       _cache[cacheResponse.url] = cacheResponse;
@@ -157,31 +157,31 @@ PageLoaderModule.prototype.setup = function () {
   
   // click event
   win.document.addEventListener('click', function (e) {
-    let el = $$(e.target);
+    var el = $$(e.target);
     if (isElement(el[0])) {
       if (el.prop('tagName') === 'A') {
-        const _ret = function () {
-          const a = $$(document.createElement('a'));
-          const href = el.attr('href');
-          let valid = true;
-
+        var _ret = function () {
+          var a = $$(document.createElement('a'));
+          var href = el.attr('href');
+          var valid = true;
+          
           a.attr('href', href);
-
+          
           // test ignore class
           if (el.hasClass(_this.config.ignoreClass)) {
             valid = false;
           }
-
+          
           // test blank target attribute
           if (_this.config.ignoreBlank && el.attr('target') === '_blank') {
             valid = false;
           }
-
+          
           // test host
           if (a.prop('host') !== win.location.host) {
             valid = false;
           }
-
+          
           // test href regexp
           if (_this.config.ignoreHref) {
             _this.config.ignoreHref.forEach(function (regexp) {
@@ -190,7 +190,7 @@ PageLoaderModule.prototype.setup = function () {
               }
             });
           }
-
+          
           if (valid) {
             Hooks.doAction('pageLoader.click', a.attr('href'), el);
             _this.process({url: a.attr('href')});
@@ -199,7 +199,7 @@ PageLoaderModule.prototype.setup = function () {
               v: false
             };
           }
-
+          
           el = null;
         }();
         if ((typeof _ret === 'undefined' ? 'undefined' : typeof _ret) === "object") {
@@ -214,19 +214,19 @@ PageLoaderModule.prototype.setup = function () {
 };
 
 PageLoaderModule.prototype.preload = function (url, force) {
-  const _this = this;
-
+  var _this = this;
+  
   if (!force) {
     force = false;
   }
   if (!force && _cache[url]) {
     return;
   }
-  const response = {
+  var response = {
     url: url,
     isPopState: false
   };
-
+  
   return Promise.resolve().then(function () {
     return _this.load(url);
   }).then(function (text) {
@@ -266,8 +266,8 @@ PageLoaderModule.prototype.preload = function (url, force) {
 };
 
 PageLoaderModule.prototype.process = function (params) {
-  const _this = this;
-
+  var _this = this;
+  
   if (!this.available()) {
     return;
   }
@@ -321,9 +321,9 @@ PageLoaderModule.prototype.initialize = function () {
 };
 
 PageLoaderModule.prototype.load = function (url, forceLoad) {
-
-  let isProcess = false;
-
+  
+  var isProcess = false;
+  
   if (!forceLoad) {
     forceLoad = false;
   }
@@ -334,7 +334,7 @@ PageLoaderModule.prototype.load = function (url, forceLoad) {
   }
 
   // set cache response
-  const cacheResponse = _cache[url];
+  var cacheResponse = _cache[url];
   if (isProcess && cacheResponse && !forceLoad && cacheResponse.time + this.config.cacheTimeout > Date.now()) {
     cacheResponse.isPopState = !!_response.isPopState; // set current _response isPopState property to cache response.
     _response = cacheResponse;
@@ -401,13 +401,13 @@ PageLoaderModule.prototype.clean = function (html) {
 };
 
 PageLoaderModule.prototype.parsePreload = function () {
-  const _this = this;
-
+  var _this = this;
+  
   if (!this.config.cacheActive) {
     return;
   }
   $$("a." + this.config.preloadClass).forEach(function (a) {
-    const url = a.href;
+    var url = a.href;
     if('' !== url){
       setTimeout(function () {
         return _this.preload(url);
@@ -428,10 +428,10 @@ PageLoaderModule.prototype.parse = function (html) {
   if (!html) {
     return;
   }
-
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, 'text/html');
-
+  
+  var parser = new DOMParser();
+  var doc = parser.parseFromString(html, 'text/html');
+  
   Hooks.doAction('pageLoader.loadedPage', doc);
   
   return doc;
@@ -441,10 +441,10 @@ PageLoaderModule.prototype.replace = function (content) {
   if (!_response) {
     return;
   }
-
-  const newContent = isElement(content) ? content : $$(_response.document).find(this.config.contentSelector).clone()[0];
-  const oldContent = $$(this.config.contentSelector)[0];
-
+  
+  var newContent = isElement(content) ? content : $$(_response.document).find(this.config.contentSelector).clone()[0];
+  var oldContent = $$(this.config.contentSelector)[0];
+  
   if (isElement(newContent) && isElement(oldContent)) {
     Hooks.doAction('pageLoader.beforeReplace', newContent, oldContent);
     oldContent.parentNode.replaceChild(newContent, oldContent);

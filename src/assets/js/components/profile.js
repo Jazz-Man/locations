@@ -1,12 +1,12 @@
-const $$ = require('domtastic');
+var $$ = require('domtastic');
 
 require.ensure([], function (require) {
-	const Chart = require('chart.js');
-
+	var Chart = require('chart.js');
+	
 	Chart.defaults.global.hover.mode = 'nearest';
-
-	const data = {
-		labels: [
+	
+	var data = {
+		labels:   [
 			"January",
 			"February",
 			"March",
@@ -17,14 +17,14 @@ require.ensure([], function (require) {
 		],
 		datasets: [
 			{
-				label: "My First dataset",
-				fillColor: "rgba(220,220,220,0.2)",
-				strokeColor: "rgba(220,220,220,1)",
-				pointColor: "rgba(220,220,220,1)",
-				pointStrokeColor: "#fff",
-				pointHighlightFill: "#fff",
+				label:                "My First dataset",
+				fillColor:            "rgba(220,220,220,0.2)",
+				strokeColor:          "rgba(220,220,220,1)",
+				pointColor:           "rgba(220,220,220,1)",
+				pointStrokeColor:     "#fff",
+				pointHighlightFill:   "#fff",
 				pointHighlightStroke: "rgba(0,0,0,.15)",
-				data: [
+				data:                 [
 					65,
 					59,
 					80,
@@ -33,17 +33,17 @@ require.ensure([], function (require) {
 					55,
 					40
 				],
-				backgroundColor: "#4CAF50"
+				backgroundColor:      "#4CAF50"
 			},
 			{
-				label: "My Second dataset",
-				fillColor: "rgba(255,255,255,.25)",
-				strokeColor: "rgba(255,255,255,.75)",
-				pointColor: "#fff",
-				pointStrokeColor: "#fff",
-				pointHighlightFill: "#fff",
+				label:                "My Second dataset",
+				fillColor:            "rgba(255,255,255,.25)",
+				strokeColor:          "rgba(255,255,255,.75)",
+				pointColor:           "#fff",
+				pointStrokeColor:     "#fff",
+				pointHighlightFill:   "#fff",
 				pointHighlightStroke: "rgba(0,0,0,.15)",
-				data: [
+				data:                 [
 					28,
 					48,
 					40,
@@ -55,40 +55,40 @@ require.ensure([], function (require) {
 			}
 		]
 	};
-
-	const dataPie = [
+	
+	var dataPie = [
 		{
-			value: 300,
-			color: "#F7464A",
+			value:     300,
+			color:     "#F7464A",
 			highlight: "#FF5A5E",
-			label: "Red"
+			label:     "Red"
 		},
 		{
-			value: 50,
-			color: "#46BFBD",
+			value:     50,
+			color:     "#46BFBD",
 			highlight: "#5AD3D1",
-			label: "Green"
+			label:     "Green"
 		},
 		{
-			value: 100,
-			color: "#FDB45C",
+			value:     100,
+			color:     "#FDB45C",
 			highlight: "#FFC870",
-			label: "Yellow"
+			label:     "Yellow"
 		}
 	];
-
-	const option = {
+	
+	var option = {
 //		responsive:             true,
 		// set font color
-		scaleFontColor: "#fff",
+		scaleFontColor:         "#fff",
 		// font family
-		defaultFontFamily: "'Roboto', sans-serif",
+		defaultFontFamily:      "'Roboto', sans-serif",
 		// background grid lines color
-		scaleGridLineColor: "rgba(255,255,255,.1)",
+		scaleGridLineColor:     "rgba(255,255,255,.1)",
 		// hide vertical lines
 		scaleShowVerticalLines: false
 	};
-
+	
 //	var ctx = document.getElementById("myChart");
 //	var myLineChart = new Chart(ctx,{
 //		type: 'line',

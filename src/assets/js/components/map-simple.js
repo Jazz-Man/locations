@@ -1,20 +1,20 @@
-const GMaps = require('../module/gmaps');
-const mapStylesAdministrative = require('../module/map-styles');
-const $$ = require('domtastic');
-const template = require('../module/template');
+var GMaps = require('../module/gmaps');
+var mapStylesAdministrative = require('../module/map-styles');
+var $$ = require('domtastic');
+var template = require('../module/template');
 
 if ($$(document.body).hasClass("single")) {
-  const mapContainer = $$('[data-map-container]');
+  var mapContainer = $$('[data-map-container]');
   if (mapContainer.length) {
-    const mapContainerID = '#' + mapContainer.attr('id');
-    const mapData = {
+    var mapContainerID = '#' + mapContainer.attr('id');
+    var mapData = {
       id: mapContainer.attr('data-map-id'),
       title: mapContainer.attr('data-map-title'),
       thumbnail: mapContainer.attr('data-map-thumbnail'),
       lat: mapContainer.attr('data-map-lat'),
       long: mapContainer.attr('data-map-long'),
     };
-    const mapSimple = new GMaps({
+    var mapSimple = new GMaps({
       div: mapContainerID,
       zoom: Number(upages_params.map_zoom),
       zoomControl: false,
@@ -28,9 +28,9 @@ if ($$(document.body).hasClass("single")) {
       width: '100%',
       styles: mapStylesAdministrative,
       idle: function (e) {
-
-        const markerContent = template('map-marker', mapData);
-
+  
+        var markerContent = template('map-marker',mapData);
+        
         mapSimple.drawOverlay({
           lat: mapData.lat,
           lng: mapData.long,

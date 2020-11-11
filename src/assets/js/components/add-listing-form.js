@@ -1,14 +1,14 @@
-const GMaps = require('../module/gmaps');
-const mapStylesAdministrative = require('../module/map-styles');
-const $$ = require('domtastic');
+var GMaps = require('../module/gmaps');
+var mapStylesAdministrative = require('../module/map-styles');
+var $$ = require('domtastic');
 
 if ($$(document.body).hasClass('add-listing')) {
-  const input_adress = $$('.input-address');
-  const input_lat = $$('.input-lat');
-  const input_lng = $$('.input-lng');
-  const input = document.getElementById('listing_address');
-  const searchBox = new google.maps.places.SearchBox(input);
-  const map = new GMaps({
+  var input_adress = $$('.input-address');
+  var input_lat = $$('.input-lat');
+  var input_lng = $$('.input-lng');
+  var input = document.getElementById('listing_address');
+  var searchBox = new google.maps.places.SearchBox(input);
+  var map = new GMaps({
     div: '#map',
     zoom: 5,
     zoomControl: false,
@@ -26,28 +26,28 @@ if ($$(document.body).hasClass('add-listing')) {
     }
   });
   searchBox.addListener('places_changed', function () {
-    const places = searchBox.getPlaces();
+    var places = searchBox.getPlaces();
     if (places.length == 0) {
       return;
     }
-
-    const bounds = new google.maps.LatLngBounds();
+    
+    var bounds = new google.maps.LatLngBounds();
     places.forEach(function (place) {
       
       input_adress.val(place.formatted_address);
       input_lat.val(place.geometry.location.lat());
       input_lng.val(place.geometry.location.lng());
-
-      const markerContent = '<div class="marker">' +
-          '<div class="title">' + place.name + ', ' + place.vicinity + '</div>' +
-          '<div class="marker-wrapper">' +
-          '<div class="tag"><i class="fa fa-check"></i></div>' +
-          '<div class="pin">' +
-          '<div class="image"></div>' +
-          '</div>' +
-          '</div>' +
-          '</div>';
-
+      
+      var markerContent = '<div class="marker">' +
+                          '<div class="title">' + place.name + ', ' + place.vicinity + '</div>' +
+                          '<div class="marker-wrapper">' +
+                          '<div class="tag"><i class="fa fa-check"></i></div>' +
+                          '<div class="pin">' +
+                          '<div class="image"></div>' +
+                          '</div>' +
+                          '</div>' +
+                          '</div>';
+      
       map.drawOverlay({
         lat: place.geometry.location.lat(),
         lng: place.geometry.location.lng(),

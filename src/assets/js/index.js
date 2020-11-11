@@ -1,9 +1,9 @@
-const $$ = require('domtastic');
+var $$ = require('domtastic');
 require('./module/viewport');
 // var acf = require('./lib/acf-input');
-const Hooks = require('./module/hooks');
+var Hooks = require('./module/hooks');
 // var spop = require('./module/spop');
-const doc = $$(document);
+var doc = $$(document);
 
 // require('./module/ajaxloader')();
 
