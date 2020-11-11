@@ -1,15 +1,15 @@
-var $$ = require('domtastic');
-var Hooks = require("../module/hooks");
-var util = require("../module/util");
+const $$ = require('domtastic');
+const Hooks = require("../module/hooks");
+const util = require("../module/util");
 
 function responsive_init() {
-  var pageHeader = $$("#page-header");
-	var pageHeaderHeight = util.getMaxHeight(pageHeader);
-  var pageFooter = $$("#page-footer");
-  var pageFooterHeight =  util.getMaxHeight(pageFooter);
-  var fullWrapper = $$(".full-height");
-  var body = $$(document.body);
-  
+  const pageHeader = $$("#page-header");
+  const pageHeaderHeight = util.getMaxHeight(pageHeader);
+  const pageFooter = $$("#page-footer");
+  const pageFooterHeight = util.getMaxHeight(pageFooter);
+  const fullWrapper = $$(".full-height");
+  const body = $$(document.body);
+
 //  if(pageHeader.hasClass('fixed-top')){
 //	  body.css({
 //	  	'padding-top':pageHeaderHeight+'px',

@@ -1,8 +1,8 @@
-var $$ = require("domtastic");
-var util = require("./util");
-var Hooks = require("./hooks");
+const $$ = require("domtastic");
+const util = require("./util");
+const Hooks = require("./hooks");
 
-var offCanvasToggle = $$("[data-toggle=off-canvas]");
+const offCanvasToggle = $$("[data-toggle=off-canvas]");
 
 //if (offCanvasToggle.length) {
 //	offCanvasToggle.css('margin-left', '300px');
@@ -19,21 +19,21 @@ var offCanvasToggle = $$("[data-toggle=off-canvas]");
 //
 //}
 
-var decouple = require("decouple");
-var scrollTimeout;
-var scrolling = false;
-var doc = window.document;
-var html = doc.documentElement;
-var msPointerSupported = window.navigator.msPointerEnabled;
-var touch = {
+const decouple = require("decouple");
+let scrollTimeout;
+let scrolling = false;
+const doc = window.document;
+const html = doc.documentElement;
+const msPointerSupported = window.navigator.msPointerEnabled;
+const touch = {
 	"start": msPointerSupported ? "MSPointerDown" : "touchstart",
-	"move":  msPointerSupported ? "MSPointerMove" : "touchmove",
-	"end":   msPointerSupported ? "MSPointerUp" : "touchend"
+	"move": msPointerSupported ? "MSPointerMove" : "touchmove",
+	"end": msPointerSupported ? "MSPointerUp" : "touchend"
 };
-var prefix = function prefix() {
-	var regex = /^(Webkit|Khtml|Moz|ms|O)(?=[A-Z])/;
-	var styleDeclaration = doc.getElementsByTagName("script")[0].style;
-	var prop;
+const prefix = function prefix() {
+	const regex = /^(Webkit|Khtml|Moz|ms|O)(?=[A-Z])/;
+	const styleDeclaration = doc.getElementsByTagName("script")[0].style;
+	let prop;
 	for (prop in styleDeclaration) {
 		if (regex.test(prop)) {
 			return "-" + prop.match(regex)[0].toLowerCase() + "-";
@@ -59,7 +59,7 @@ function hasIgnoredElements(el) {
 }
 function Slideout(options) {
 	options = options || {};
-	var self = this;
+	const self = this;
 	self._startOffsetX = 0;
 	self._currentOffsetX = 0;
 	self._opening = false;
@@ -98,7 +98,7 @@ function Slideout(options) {
 	}
 }
 Slideout.prototype.open = function () {
-	var self = this;
+	const self = this;
 	Hooks.doAction("beforeopen");
 	if (!html.classList.contains("slideout-open")) {
 		html.classList.add("slideout-open");
@@ -122,7 +122,7 @@ Slideout.prototype.open = function () {
 	return self;
 };
 Slideout.prototype.close = function () {
-	var self = this;
+	const self = this;
 	if (!self.isOpen() && !self._opening) {
 		return self;
 	}
@@ -132,13 +132,13 @@ Slideout.prototype.close = function () {
 	self._opened = false;
 	setTimeout(function () {
 		html.classList.remove("slideout-open");
-		
-		var css = {
-			'transition':         '',
+
+		const css = {
+			'transition': '',
 			'-webkit-transition': '',
-			'transform':          ''
+			'transform': ''
 		};
-		
+
 		css[prefix + "transform"] = css['transition'];
 		
 		self.panel.css(css);
@@ -148,17 +148,17 @@ Slideout.prototype.close = function () {
 	return self;
 };
 Slideout.prototype.toggle = function () {
-	var self = this;
+	const self = this;
 	return self.isOpen() ? self.close() : self.open();
 };
 Slideout.prototype.isOpen = function () {
 	return this._opened;
 };
 Slideout.prototype._translateXTo = function (translateX) {
-	var self = this;
+	const self = this;
 	self._currentOffsetX = translateX;
-	
-	var css = {
+
+	const css = {
 		'transform': "translateX(" + translateX + "px)"
 	};
 	css[prefix + "transform"] = css['transform'];
@@ -169,11 +169,11 @@ Slideout.prototype._translateXTo = function (translateX) {
 	return self;
 };
 Slideout.prototype._setTransition = function () {
-	var self = this;
-	var css = {
+	const self = this;
+	const css = {
 		'transition': prefix + "transform " + self._duration + "ms " + self._fx
 	};
-	
+
 	css[prefix + "transition"] = css['transition'];
 	
 	self.panel.css(css);
@@ -181,7 +181,7 @@ Slideout.prototype._setTransition = function () {
 	return self;
 };
 Slideout.prototype._initTouchEvents = function () {
-	var self = this;
+	const self = this;
 	self._onScrollFn = decouple(doc, "scroll", function () {
 		if (!self._moved) {
 			clearTimeout(scrollTimeout);
@@ -229,14 +229,14 @@ Slideout.prototype._initTouchEvents = function () {
 		if (scrolling || (self._preventOpen || (typeof eve.touches === "undefined" || hasIgnoredElements(eve.target)))) {
 			return;
 		}
-		var dif_x = eve.touches[0].clientX - self._startOffsetX;
-		var translateX = self._currentOffsetX = dif_x;
+		const dif_x = eve.touches[0].clientX - self._startOffsetX;
+		let translateX = self._currentOffsetX = dif_x;
 		if (Math.abs(translateX) > self._padding) {
 			return;
 		}
 		if (Math.abs(dif_x) > 20) {
 			self._opening = true;
-			var oriented_dif_x = dif_x * self._orientation;
+			const oriented_dif_x = dif_x * self._orientation;
 			if (self._opened && oriented_dif_x > 0 || !self._opened && oriented_dif_x < 0) {
 				return;
 			}
@@ -251,10 +251,10 @@ Slideout.prototype._initTouchEvents = function () {
 				html.classList.add("slideout-open");
 			}
 //			self.panel.style[prefix + "transform"] = self.panel.style.transform = "translateX(" + translateX + "px)";
-			var css = {
+			const css = {
 				'transform': "translateX(" + translateX + "px)"
 			};
-			
+
 			css[prefix + "transform"] = css['transform'];
 			
 			self.panel.css(css);
@@ -274,7 +274,7 @@ Slideout.prototype.disableTouch = function () {
 	return this;
 };
 Slideout.prototype.destroy = function () {
-	var self = this;
+	const self = this;
 	self.close();
 	doc.removeEventListener(touch.move, self._preventMove);
 	self.panel.off(touch.start, self._resetTouchFn);
@@ -285,10 +285,10 @@ Slideout.prototype.destroy = function () {
 	self.open = self.close = function () {};
 	return self;
 };
-var slideout = new Slideout({
-	'panel':     "#page-navbar",
-	'menu':      "#slide-out",
-	'padding':   256,
+const slideout = new Slideout({
+	'panel': "#page-navbar",
+	'menu': "#slide-out",
+	'padding': 256,
 	'tolerance': 70
 });
 offCanvasToggle.on("click", function () {

@@ -1,16 +1,16 @@
-var $$ = require('domtastic');
+const $$ = require('domtastic');
 
 module.exports = function (id, data) {
-	
-	var tpl = $$('#tmpl-' + id).html();
-	var options = {
+
+	const tpl = $$('#tmpl-' + id).html();
+	const options = {
 		variable: 'data',
-		imports:  {'$$': $$}
+		imports: {'$$': $$}
 	};
-	
-	var template = require('lodash/template');
-	var compiled = template(tpl, options);
-	
+
+	const template = require('lodash/template');
+	const compiled = template(tpl, options);
+
 	return compiled(data);
 	
 };

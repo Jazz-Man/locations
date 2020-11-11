@@ -1,7 +1,7 @@
-var $$ = require('domtastic');
+const $$ = require('domtastic');
 
-var animationTime = 390;
-var options, defaults, container, icon, layout, popStyle, positions, close;
+const animationTime = 390;
+let options, defaults, container, icon, layout, popStyle, positions, close;
 
 function getStyle(sufix, arg) {
 
@@ -28,7 +28,7 @@ function getPosition(sufix, position) {
     positions[position] || 'top-right');
 };
 
-var SmallPop = function (template, style) {
+const SmallPop = function (template, style) {
 
   this.defaults = {
     template: null,
@@ -57,7 +57,7 @@ var SmallPop = function (template, style) {
 
   this.opt = $$.extend(defaults, options);
 
-  var group = $$('#spop--' + this.opt.group);
+  const group = $$('#spop--' + this.opt.group);
 
   if (group.length) {
 
@@ -68,7 +68,7 @@ var SmallPop = function (template, style) {
 };
 
 SmallPop.prototype.create = function (template) {
-  var position = '#' + getPosition('spop--', this.opt.position);
+  const position = '#' + getPosition('spop--', this.opt.position);
   container = $$(position);
 
   icon = (!this.opt.icon) ? '' : '<i class="spop-icon ' +
@@ -88,11 +88,11 @@ SmallPop.prototype.create = function (template) {
 
     this.popContainer = $$(document.createElement('div'));
 
-    var popContainerClass = [
+    const popContainerClass = [
       'spop-container',
       getPosition('spop--', this.opt.position)
     ].join(' ');
-    var popContainerId = getPosition('spop--', this.opt.position);
+    const popContainerId = getPosition('spop--', this.opt.position);
 
 
     this.popContainer.attr({
@@ -106,7 +106,7 @@ SmallPop.prototype.create = function (template) {
     container = $$(position);
   }
 
-  var popClass = [
+  const popClass = [
     'spop',
     'pop--out',
     'spop--in',
@@ -177,7 +177,7 @@ SmallPop.prototype.remove = function (elm) {
   }, animationTime);
 };
 
-var spop = function (template, style) {
+const spop = function (template, style) {
   if (!template || !window.addEventListener) {
     return false;
   }

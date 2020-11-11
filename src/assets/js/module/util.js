@@ -1,17 +1,17 @@
-var $$ = require("domtastic");
+const $$ = require("domtastic");
 
 function getOuterHeight(child) {
-	var childStyle = child && window.getComputedStyle(child);
-	var btp = /px/.test(childStyle.borderTopWidth) ? Math.round(childStyle.borderTopWidth.replace("px", "")) : 0;
-	var btb = /px/.test(childStyle.borderBottomWidth) ? Math.round(childStyle.borderBottomWidth.replace("px", "")) : 0;
-	var mtp = /px/.test(childStyle.marginTop) ? Math.round(childStyle.marginTop.replace("px", "")) : 0;
-	var mbp = /px/.test(childStyle.marginBottom) ? Math.round(childStyle.marginBottom.replace("px", "")) : 0;
+	const childStyle = child && window.getComputedStyle(child);
+	const btp = /px/.test(childStyle.borderTopWidth) ? Math.round(childStyle.borderTopWidth.replace("px", "")) : 0;
+	const btb = /px/.test(childStyle.borderBottomWidth) ? Math.round(childStyle.borderBottomWidth.replace("px", "")) : 0;
+	const mtp = /px/.test(childStyle.marginTop) ? Math.round(childStyle.marginTop.replace("px", "")) : 0;
+	const mbp = /px/.test(childStyle.marginBottom) ? Math.round(childStyle.marginBottom.replace("px", "")) : 0;
 	return child["clientHeight"] + parseInt(btp) + parseInt(btb) + parseInt(mtp) + parseInt(mbp);
 }
 
 function getMaxHeight(parent) {
-	var parentHeight = 0;
-	var children = parent.children();
+	let parentHeight = 0;
+	const children = parent.children();
 	if (children.length) {
 		children.forEach(function (i) {
 			parentHeight += getOuterHeight(i);
@@ -20,30 +20,30 @@ function getMaxHeight(parent) {
 	return parentHeight;
 }
 
-var setAnimationDuration = function (el, duration) {
-	var durationMs = duration ? duration + "ms" : "";
+const setAnimationDuration = function (el, duration) {
+	const durationMs = duration ? duration + "ms" : "";
 	el = $$(el);
 	el.css({
-		"-webkit-animation-duration":durationMs,
-		"animation-duration":durationMs
+		"-webkit-animation-duration": durationMs,
+		"animation-duration": durationMs
 	});
-	
+
 };
 
-var setAnimateCssClasses = function (el, animationName, doAdd) {
-	
+const setAnimateCssClasses = function (el, animationName, doAdd) {
+
 	["animated", animationName].forEach(function (str) {
-		$$(el).toggleClass(str,doAdd);
+		$$(el).toggleClass(str, doAdd);
 	});
 };
 
-var whichAnimationEvent = function () {
-	var el = document.createElement("fakeelement");
-	var t;
-	var animations = {
-		"animation":       "animationend",
-		"OAnimation":      "oAnimationEnd",
-		"MozAnimation":    "animationend",
+const whichAnimationEvent = function () {
+	const el = document.createElement("fakeelement");
+	let t;
+	const animations = {
+		"animation": "animationend",
+		"OAnimation": "oAnimationEnd",
+		"MozAnimation": "animationend",
 		"WebkitAnimation": "webkitAnimationEnd"
 	};
 	for (t in animations) {
@@ -53,8 +53,9 @@ var whichAnimationEvent = function () {
 	}
 };
 
-var animate = function (el, opts) {
+const animate = function (el, opts) {
 	el = $$(el);
+
 	function animEnd() {
 		el.off(animationEventName, animEnd);
 		setAnimateCssClasses(el, opts.animationName, false);
@@ -66,7 +67,7 @@ var animate = function (el, opts) {
 		});
 		opts.callbacks = [];
 	}
-	
+
 	opts.callbacks = opts.callbacks || [];
 	var animationEventName = whichAnimationEvent();
 	if (opts.duration) {
@@ -76,7 +77,7 @@ var animate = function (el, opts) {
 	el.on(animationEventName, animEnd);
 };
 
-var show = function (el, opts) {
+const show = function (el, opts) {
 	el = $$(el);
 	opts = opts || {};
 	opts.animationName = opts.animationName || "slideInDown";
@@ -85,26 +86,26 @@ var show = function (el, opts) {
 	animate(el, opts);
 };
 
-var hide = function (el, opts) {
+const hide = function (el, opts) {
 	el = $$(el);
 	opts = opts || {};
 	opts.animationName = opts.animationName || "slideOutUp";
 	opts.duration = opts.duration || 300;
 	opts.callbacks = opts.callbacks || [];
-	
+
 	opts.callbacks.push(function () {
 		el.removeClass("show").addClass("hide");
 	});
-	
+
 	animate(el, opts);
 };
 
-var util = {
+const util = {
 	getOuterHeight: getOuterHeight,
-	getMaxHeight:   getMaxHeight,
+	getMaxHeight: getMaxHeight,
 //	transitionEnd:  transitionEnd,
-	animate:        animate,
-	show:           show,
-	hide:           hide
+	animate: animate,
+	show: show,
+	hide: hide
 };
 module.exports = util;

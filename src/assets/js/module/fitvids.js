@@ -1,8 +1,8 @@
-var $$ = require('domtastic');
+const $$ = require('domtastic');
 
-var Hooks = require("./hooks");
+const Hooks = require("./hooks");
 
-var selectors = [
+const selectors = [
   'iframe[src*="player.vimeo.com"]',
   'iframe[src*="youtube.com"]',
   'iframe[src*="youtube-nocookie.com"]',
@@ -20,21 +20,21 @@ function fitvids(parentSelector, opts) {
   
   opts.ignore = opts.ignore || '';
   opts.players = opts.players || '';
-  
-  var containers = $$(parentSelector);
+
+  const containers = $$(parentSelector);
   if (!containers.length) {
     return;
   }
-  var custom = toSelectorArray(opts.players) || [];
-  var ignored = toSelectorArray(opts.ignore) || [];
-  var selector = selectors.filter(notIgnored(ignored)).concat(custom).join();
-  
+  const custom = toSelectorArray(opts.players) || [];
+  const ignored = toSelectorArray(opts.ignore) || [];
+  const selector = selectors.filter(notIgnored(ignored)).concat(custom).join();
+
   if (!hasLength(selector)) {
     return;
   }
   
   containers.forEach(function (container) {
-    var videos = $$(container).find(selector);
+    const videos = $$(container).find(selector);
     videos.forEach(function (video) {
       wrap(video)
     })
@@ -52,23 +52,23 @@ function toSelectorArray(input) {
 }
 
 function wrap(el) {
-  var _this = $$(el);
-  var parent = _this.parent();
+  const _this = $$(el);
+  const parent = _this.parent();
   if (parent.hasClass('fluid-width-video-wrapper')) {
     return;
   }
 
-  var widthAttr = parseInt(_this.attr('width'), 10);
-  var heightAttr = parseInt(_this.attr('height'), 10);
-  
-  var width = !isNaN(widthAttr) ? widthAttr : _this[0].clientWidth;
-  var height = !isNaN(heightAttr) ? heightAttr : _this[0].clientHeight;
-  var aspect = height / width;
-  
+  const widthAttr = parseInt(_this.attr('width'), 10);
+  const heightAttr = parseInt(_this.attr('height'), 10);
+
+  const width = !isNaN(widthAttr) ? widthAttr : _this[0].clientWidth;
+  const height = !isNaN(heightAttr) ? heightAttr : _this[0].clientHeight;
+  const aspect = height / width;
+
   _this.removeAttr('width');
   _this.removeAttr('height');
-  
-  var wrapper = $$(document.createElement('div'));
+
+  const wrapper = $$(document.createElement('div'));
   wrapper.addClass('fluid-width-video-wrapper').css({
     'padding-top':(aspect * 100) + '%'
   }).append(_this);

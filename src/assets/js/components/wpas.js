@@ -1,39 +1,39 @@
-var $$ = require('domtastic');
-var template = require('../module/template');
-var Hooks = require("../module/hooks");
+const $$ = require('domtastic');
+const template = require('../module/template');
+const Hooks = require("../module/hooks");
 
 function wasp_init() {
-	var mapContainer = $$('[data-map-container]');
-	
+	const mapContainer = $$('[data-map-container]');
+
 	if (mapContainer.length) {
-		var mapContainerID = '#' + mapContainer.attr('id');
-		
+		const mapContainerID = '#' + mapContainer.attr('id');
+
 		if (mapContainer.length) {
 			
 			require.ensure([], function (require) {
-				var mapStyle = require('../module/map-styles');
-				var GMaps = require('../module/gmaps');
-				var AjaxForm = require('../module/ajax-form');
-				var overlays = [];
-				var map = new GMaps({
-					div:               mapContainerID,
-					zoom:              7,
+				const mapStyle = require('../module/map-styles');
+				const GMaps = require('../module/gmaps');
+				const AjaxForm = require('../module/ajax-form');
+				const overlays = [];
+				const map = new GMaps({
+					div: mapContainerID,
+					zoom: 7,
 //					zoomControl:       false,
-					mapTypeControl:    false,
-					scaleControl:      false,
+					mapTypeControl: false,
+					scaleControl: false,
 					streetViewControl: false,
-					lat:               48.3028985,
-					lng:               26.6933423,
-					mapType:           "roadmap",
-					height:            '100%',
-					width:             '100%',
-					styles:            mapStyle,
-					idle:              function (e) {
+					lat: 48.3028985,
+					lng: 26.6933423,
+					mapType: "roadmap",
+					height: '100%',
+					width: '100%',
+					styles: mapStyle,
+					idle: function (e) {
 						map.removeOverlay();
 						form_init();
 					}
 				});
-				
+
 				map.addControl({
 					id:                   'listings-map-view-controll',
 					position:             'top_right',
@@ -49,47 +49,47 @@ function wasp_init() {
 				});
 				
 				function form_init() {
-					var form = new AjaxForm({
+					const form = new AjaxForm({
 						elem: '[data-ajax-form]',
-						
+
 						ajax_complete: function (data) {
-							
+
 							if (data.length) {
-								var marcers = data;
+								const marcers = data;
 								marcers.forEach(function (item) {
 									if (!item.acf.listing_address.lat || !item.acf.listing_address.lng) {
 										return;
 									}
-									var lat = item.acf.listing_address.lat;
-									var lng = item.acf.listing_address.lng;
-									
-									var markerContent = template('map-marker', item);
-									
+									const lat = item.acf.listing_address.lat;
+									const lng = item.acf.listing_address.lng;
+
+									const markerContent = template('map-marker', item);
+
 									map.drawOverlay({
-										mouseenter:      function (e) {
+										mouseenter: function (e) {
 											marcerMouseEvent(e);
 										},
-										mouseleave:      function (e) {
+										mouseleave: function (e) {
 											marcerMouseEvent(e);
 										},
-										click:           function (e) {
-											var current_zoom = map.map.getZoom();
-											
+										click: function (e) {
+											const current_zoom = map.map.getZoom();
+
 											map.setCenter(e.lat(), e.lng());
 											map.map.setZoom(current_zoom + 2);
 										},
-										lat:             lat,
-										lng:             lng,
-										content:         markerContent,
-										layer:           'overlayImage',
-										verticalAlign:   'bottom',
+										lat: lat,
+										lng: lng,
+										content: markerContent,
+										layer: 'overlayImage',
+										verticalAlign: 'bottom',
 										horizontalAlign: 'center'
 									});
-									
+
 									overlays.push(new google.maps.LatLng(lat, lng));
-									
+
 								});
-								
+
 //								if (overlays.length) {
 //									var bounds = new google.maps.LatLngBounds();
 //									overlays.forEach(function (e) {
@@ -98,17 +98,17 @@ function wasp_init() {
 //									map.map.fitBounds(bounds);
 //								}
 							}
-							
+
 						}
 					});
 				}
 				
 				function marcerMouseEvent(e) {
-					var marker = $$(e.el).find('.marker');
-					var markerID = marker.attr('data-marker-id');
-					var resultsContent = $$('#results-content');
-					var itemResult = resultsContent.find("[data-listing-id='" + markerID + "'] > a");
-					
+					const marker = $$(e.el).find('.marker');
+					const markerID = marker.attr('data-marker-id');
+					const resultsContent = $$('#results-content');
+					const itemResult = resultsContent.find("[data-listing-id='" + markerID + "'] > a");
+
 					itemResult.toggleClass('hover-state');
 				}
 				
